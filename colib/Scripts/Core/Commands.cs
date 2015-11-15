@@ -72,7 +72,8 @@ static public partial class Commands
 	/// The command to execute. Must be non-null.
 	/// </param>
 	/// <param name="duration">
-	/// The duration of time, in seconds, to apply the command over. Must be greater than 0.
+	/// The duration of time, in seconds, to apply the command over. 
+	/// Must be greater than or equal to 0.
 	/// </param>
 	/// <param name="ease">
 	/// An easing function to apply to the <c>t</c> parameter of an
@@ -83,8 +84,19 @@ static public partial class Commands
 	public static CommandDelegate Duration(CommandDuration command, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(command);
-		CheckDurationGreaterThanZero(duration);
+		CheckDurationGreaterThanOrEqualToZero(duration);
+		if (duration == 0.0) {
+			// Sometimes it is convenient to create duration commands with
+			// a time of zero, so we have a special case.
+			return Commands.Do( () => {
+				double t = 1.0;
+				if (ease != null) { t = ease(t); }
+				command(t);
+			});
+		}
+
 		double elapsedTime = 0.0;
+
 		return Commands.Sequence(
 			Commands.Do( () => elapsedTime = 0.0),
 			delegate(ref double deltaTime) {
@@ -375,7 +387,9 @@ static public partial class Commands
 	/// <exception cref="System.ArgumentOutOfRangeException"></exception>
 	public static CommandDelegate Repeat(int repeatCount, params CommandDelegate[] commands)
 	{
-		if (repeatCount <= 0) { throw new System.ArgumentOutOfRangeException("repeatCount",repeatCount, "repeatCount must be > 0."); }
+		if (repeatCount <= 0) { 
+			throw new System.ArgumentOutOfRangeException("repeatCount",repeatCount, "repeatCount must be > 0."); 
+		}
 		foreach (var command in commands) {
 			CheckArgumentNonNull(command);
 		}
@@ -479,6 +493,7 @@ static public partial class Commands
 	/// </example>
 	public static CommandDelegate Coroutine(CommandCoroutine command)
 	{
+		CheckArgumentNonNull(command);
 		IEnumerator<CommandDelegate> coroutine = null;
 		bool isEmpty = false;
 		CommandDelegate currentCommand = null;
@@ -616,6 +631,13 @@ static public partial class Commands
 	{
 		if (duration <= 0.0) {
 			throw new System.ArgumentOutOfRangeException("duration", duration, "duration must be > 0");
+		}
+	}
+
+	private static void CheckDurationGreaterThanOrEqualToZero(double duration)
+	{
+		if (duration < 0.0) {
+			throw new System.ArgumentOutOfRangeException("duration", duration, "duration must be >= 0");
 		}
 	}
 

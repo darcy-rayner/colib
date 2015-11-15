@@ -12,6 +12,7 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeTo(Ref<Vector2> vector, Vector2 endVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
 		Vector2 startVector = Vector2.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -25,6 +26,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeTo(Ref<Vector3> vector, Vector3 endVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		Vector3 startVector = Vector3.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -38,6 +41,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeTo(Ref<Vector4> vector, Vector4 endVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		Vector4 startVector = Vector4.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -51,11 +56,15 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeTo(Ref<Rect> rect, Rect endRect, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rect, "rect");
+
 		return ChangeTo(rect, endRect, duration, new Vector2(0.5f, 0.5f), ease);
 	}
 
 	public static CommandDelegate ChangeTo(Ref<Rect> rect, Rect endRect, double duration, Vector2 anchorPoint, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rect, "rect");
+
 		Rect startRect = new Rect();
 		Vector2 startAnchorPoint = Vector2.zero;
 		Vector2 endAnchorPoint = Vector2.zero;
@@ -89,6 +98,8 @@ public static partial class Commands
 	
 	public static CommandDelegate ChangeBy(Ref<Vector2> vector, Vector2 offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -103,6 +114,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeBy(Ref<Vector3> vector, Vector3 offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -117,6 +130,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeBy(Ref<Vector4> vector, Vector4 offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -135,6 +150,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeFrom(Ref<Vector2> vector, Vector2 startVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		Vector2 endVector = Vector2.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -148,6 +165,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeFrom(Ref<Vector3> vector, Vector3 startVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		Vector3 endVector = Vector3.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -161,6 +180,8 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeFrom(Ref<Vector4> vector, Vector4 startVector, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(vector, "vector");
+
 		Vector4 endVector = Vector4.zero;
 		return Commands.Sequence(
 			Commands.Do(delegate() {
@@ -174,11 +195,15 @@ public static partial class Commands
 
 	public static CommandDelegate ChangeFrom(Ref<Rect> rect, Rect startRect, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rect, "rect");
+
 		return ChangeFrom(rect, startRect, duration, new Vector2(0.5f, 0.5f), ease);
 	}
 
 	public static CommandDelegate ChangeFrom(Ref<Rect> rect, Rect startRect, double duration, Vector2 anchorPoint, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rect, "rect");
+
 		Rect endRect = new Rect();
 		Vector2 startAnchorPoint = Vector2.zero;
 		Vector2 endAnchorPoint = Vector2.zero;
@@ -212,6 +237,8 @@ public static partial class Commands
 
 	public static CommandDelegate RotateTo(Ref<Quaternion> rotation, Quaternion endRotation, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rotation, "rotation");
+
 		Quaternion startRotation = Quaternion.identity;
 		return Commands.Sequence(
 			Commands.Do( delegate() {
@@ -225,6 +252,8 @@ public static partial class Commands
 
 	public static CommandDelegate RotateBy(Ref<Quaternion> rotation, Quaternion offsetRotation, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rotation, "rotation");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do( delegate() {
@@ -240,6 +269,8 @@ public static partial class Commands
 
 	public static CommandDelegate RotateFrom(Ref<Quaternion> rotation, Quaternion startRotation, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(rotation, "rotation");
+
 		Quaternion endRotation = Quaternion.identity;
 		return Commands.Sequence(
 			Commands.Do( delegate() {
@@ -257,6 +288,8 @@ public static partial class Commands
 
 	public static CommandDelegate ScaleBy(Ref<Vector2> scale, Vector2 scaleFactor, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(scale, "scale");
+
 		Vector2 lastScaleFactor = Vector2.one;
 		return Commands.Sequence(
 			Commands.Do(delegate(){
@@ -275,6 +308,8 @@ public static partial class Commands
 
 	public static CommandDelegate ScaleBy(Ref<Vector3> scale, Vector3 scaleFactor, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(scale, "scale");
+
 		Vector3 lastScaleFactor = Vector3.one;
 		return Commands.Sequence(
 			Commands.Do(delegate(){
@@ -294,6 +329,8 @@ public static partial class Commands
 
 	public static CommandDelegate ScaleBy(Ref<Vector4> scale, Vector4 scaleFactor, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(scale, "scale");
+
 		Vector4 lastScaleFactor = Vector4.one;
 		return Commands.Sequence(
 			Commands.Do(delegate(){
@@ -316,87 +353,99 @@ public static partial class Commands
 
 	#region Tint
 
-	public static CommandDelegate TintTo(Ref<Color> colour, Color endColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintTo(Ref<Color> color, Color endColor, double duration, CommandEase ease = null)
 	{
-		Color startColour = Color.white;
+		CheckArgumentNonNull(color, "color");
+
+		Color startColor = Color.white;
 		return Commands.Sequence(
 			Commands.Do (delegate() {
-				startColour = colour.Value;
+				startColor = color.Value;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value = Color.Lerp(startColour, endColour, (float)t);
+				color.Value = Color.Lerp(startColor, endColor, (float)t);
 			}, duration, ease)
 		);
 	}
 
-	public static CommandDelegate TintTo(Ref<Color32> colour, Color32 endColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintTo(Ref<Color32> color, Color32 endColor, double duration, CommandEase ease = null)
 	{
-		Color32 startColour = new Color32();
+		CheckArgumentNonNull(color, "color");
+
+		Color32 startColor = new Color32();
 		return Commands.Sequence(
 			Commands.Do (delegate() {
-				startColour = colour.Value;
+				startColor = color.Value;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value = Color32.Lerp(startColour, endColour, (float)t);
+				color.Value = Color32.Lerp(startColor, endColor, (float)t);
 			}, duration, ease)
 		);
 	}
 
-	public static CommandDelegate TintBy(Ref<Color> colour, Color offset, double duration, CommandEase ease = null)
+	public static CommandDelegate TintBy(Ref<Color> color, Color offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do (delegate() {
 				lastT = 0.0;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value += offset * (float)(t - lastT);
+				color.Value += offset * (float)(t - lastT);
 				lastT = t;
 			}, duration, ease)
 		);
 	}
 
-	public static CommandDelegate TintBy(Ref<Color32> colour, Color32 offset, double duration, CommandEase ease = null)
+	public static CommandDelegate TintBy(Ref<Color32> color, Color32 offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		double lastT = 0.0;
 		return Commands.Sequence(
 			Commands.Do (delegate() {
 				lastT = 0.0;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value = new Color32(
-					(byte) (colour.Value.r + offset.r * (t - lastT)),
-					(byte) (colour.Value.g + offset.g * (t - lastT)),
-					(byte) (colour.Value.b + offset.b * (t - lastT)),
-					(byte) (colour.Value.a + offset.a * (t - lastT))
+				color.Value = new Color32(
+					(byte) (color.Value.r + offset.r * (t - lastT)),
+					(byte) (color.Value.g + offset.g * (t - lastT)),
+					(byte) (color.Value.b + offset.b * (t - lastT)),
+					(byte) (color.Value.a + offset.a * (t - lastT))
 				);
 				lastT = t;
 			}, duration, ease)
 		);
 	}
 
-	public static CommandDelegate TintFrom(Ref<Color> colour, Color startColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintFrom(Ref<Color> color, Color startColor, double duration, CommandEase ease = null)
 	{
-		Color endColour = Color.white;
+		CheckArgumentNonNull(color, "color");
+
+		Color endColor = Color.white;
 		return Commands.Sequence(
 			Commands.Do (delegate() {
-				endColour = colour.Value;
+				endColor = color.Value;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value = Color.Lerp(startColour, endColour, (float)t);
+				color.Value = Color.Lerp(startColor, endColor, (float)t);
 			}, duration, ease)
 		);
 	}
 
-	public static CommandDelegate TintFrom(Ref<Color32> colour, Color32 startColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintFrom(Ref<Color32> color, Color32 startColor, double duration, CommandEase ease = null)
 	{
-		Color32 endColour = new Color32();
+		CheckArgumentNonNull(color, "color");
+
+		Color32 endColor = new Color32();
 		return Commands.Sequence(
 			Commands.Do (delegate() {
-				endColour = colour.Value;
+				endColor = color.Value;
 			}),
 			Commands.Duration(delegate(double t) {
-				colour.Value = Color32.Lerp(startColour, endColour, (float)t);
+				color.Value = Color32.Lerp(startColor, endColor, (float)t);
 			}, duration, ease)
 		);
 	}
@@ -405,86 +454,97 @@ public static partial class Commands
 
 	#region Alpha
 
-	public static CommandDelegate AlphaTo(Ref<Color> colour, float endAlpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaTo(Ref<Color> color, float endAlpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<float> alphaRef = new Ref<float>(
-			() => colour.Value.a,
+			() => color.Value.a,
 			(t) => {
-				Color tempColour = colour.Value;
-				tempColour.a = t;
-				colour.Value = tempColour; 
+				Color tempColor = color.Value;
+				tempColor.a = t;
+				color.Value = tempColor; 
 			}
 		);
 		return ChangeTo(alphaRef, endAlpha, duration, ease);
 	}
 
-	public static CommandDelegate AlphaTo(Ref<Color32> colour, byte endAlpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaTo(Ref<Color32> color, byte endAlpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<double> alphaRef = new Ref<double>(
-			() => colour.Value.a / 255.0,
+			() => color.Value.a / 255.0,
 			(t) => {
-				Color32 tempColour = colour.Value;
-				tempColour.a = (byte) (t * 255);
-				colour.Value = tempColour; 
+				Color32 tempColor = color.Value;
+				tempColor.a = (byte) (t * 255);
+				color.Value = tempColor; 
 			}
 		);
 		return ChangeTo(alphaRef, endAlpha, duration, ease);
 	}
 
-	public static CommandDelegate AlphaBy(Ref<Color> colour, float offset, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaBy(Ref<Color> color, float offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<float> alphaRef = new Ref<float>(
-			() => colour.Value.a,
+			() => color.Value.a,
 			(t) => {
-				Color tempColour = colour.Value;
-				tempColour.a = t;
-				colour.Value = tempColour; 
+				Color tempColor = color.Value;
+				tempColor.a = t;
+				color.Value = tempColor; 
 			}
 		);
 
 		return ChangeBy(alphaRef, offset, duration, ease);
 	}
 
-	public static CommandDelegate AlphaBy(Ref<Color32> colour, byte offset, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaBy(Ref<Color32> color, byte offset, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<double> alphaRef = new Ref<double>(
-			() => colour.Value.a / 255.0,
+			() => color.Value.a / 255.0,
 			(t) => {
-				Color32 tempColour = colour.Value;
-				tempColour.a = (byte) (t * 255);
-				colour.Value = tempColour; 
+				Color32 tempColor = color.Value;
+				tempColor.a = (byte) (t * 255);
+				color.Value = tempColor; 
 			}
 		);
 		return ChangeBy(alphaRef, offset, duration, ease);
 	}
 
-	public static CommandDelegate AlphaFrom(Ref<Color> colour, float startAlpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaFrom(Ref<Color> color, float startAlpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<float> alphaRef = new Ref<float>(
-			() => colour.Value.a,
+			() => color.Value.a,
 			(t) => {
-				Color tempColour = colour.Value;
-				tempColour.a = t;
-				colour.Value = tempColour; 
+				Color tempColor = color.Value;
+				tempColor.a = t;
+				color.Value = tempColor; 
 			}
 		);
 
 		return ChangeFrom(alphaRef, startAlpha, duration, ease);
 	}
 
-	public static CommandDelegate AlphaFrom(Ref<Color32> colour, float startAlpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaFrom(Ref<Color32> color, float startAlpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(color, "color");
+
 		Ref<double> alphaRef = new Ref<double>(
-			() => colour.Value.a / 255.0,
+			() => color.Value.a / 255.0,
 			(t) => {
-				Color32 tempColour = colour.Value;
-				tempColour.a = (byte) (t * 255);
-				colour.Value = tempColour; 
+				Color32 tempColor = color.Value;
+				tempColor.a = (byte) (t * 255);
+				color.Value = tempColor; 
 			}
 		);
 		return ChangeFrom(alphaRef, startAlpha, duration, ease);
 	}
-
 
 	#endregion
 }

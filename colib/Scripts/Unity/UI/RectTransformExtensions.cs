@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CoLib
@@ -6,8 +7,11 @@ namespace CoLib
 
 public static class RectTransformExtensions
 {
+	#region Extension methods
+
 	public static Ref<Vector2> ToOffsetMinRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
 		return new Ref<Vector2>(
 			() => transform.offsetMin,
 			(t) => transform.offsetMin = t
@@ -16,6 +20,8 @@ public static class RectTransformExtensions
 	
 	public static Ref<Vector2> ToOffsetMaxRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.offsetMax,
 			(t) => transform.offsetMax = t
@@ -24,6 +30,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToAnchorMinRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.anchorMin,
 			(t) => transform.anchorMin = t
@@ -32,6 +40,8 @@ public static class RectTransformExtensions
 	
 	public static Ref<Vector2> ToAnchorMaxRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.anchorMax,
 			(t) => transform.anchorMax = t
@@ -40,6 +50,8 @@ public static class RectTransformExtensions
 	
 	public static Ref<Vector2> ToAnchorRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.anchoredPosition,
 			(t) => transform.anchoredPosition = t
@@ -48,6 +60,8 @@ public static class RectTransformExtensions
 	
 	public static Ref<Vector2> ToSizeDeltaRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.sizeDelta,
 			(t) => transform.sizeDelta = t
@@ -56,6 +70,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToScaleRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<Vector2>(
 			() => transform.rect.size,
 			t => {
@@ -67,6 +83,8 @@ public static class RectTransformExtensions
 
 	public static Ref<float> ToEdgeInsetRef(this RectTransform transform, RectTransform.Edge edge)
 	{
+		CheckTransformNonNull(transform);
+
 		return new Ref<float>(
 			() => {
 				switch (edge) {
@@ -94,6 +112,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToBottomLeftRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		var leftRef = transform.ToEdgeInsetRef(RectTransform.Edge.Left);
 		var bottomRef = transform.ToEdgeInsetRef(RectTransform.Edge.Bottom);
 		return new Ref<Vector2>(
@@ -107,6 +127,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToTopLeftRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		var leftRef = transform.ToEdgeInsetRef(RectTransform.Edge.Left);
 		var topRef = transform.ToEdgeInsetRef(RectTransform.Edge.Top);
 		return new Ref<Vector2>(
@@ -120,6 +142,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToTopRightRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		var rightRef = transform.ToEdgeInsetRef(RectTransform.Edge.Right);
 		var topRef = transform.ToEdgeInsetRef(RectTransform.Edge.Top);
 		return new Ref<Vector2>(
@@ -133,6 +157,8 @@ public static class RectTransformExtensions
 
 	public static Ref<Vector2> ToBottomRightRef(this RectTransform transform)
 	{
+		CheckTransformNonNull(transform);
+
 		var rightRef = transform.ToEdgeInsetRef(RectTransform.Edge.Right);
 		var bottomRef = transform.ToEdgeInsetRef(RectTransform.Edge.Bottom);
 		return new Ref<Vector2>(
@@ -143,6 +169,19 @@ public static class RectTransformExtensions
 			}
 		);
 	}
+
+	#endregion
+
+	#region Private methods
+
+	private static void CheckTransformNonNull(RectTransform transform)
+	{
+		if (transform == null) {
+			throw new ArgumentNullException("transform");
+		}
+	}
+
+	#endregion
 }
 
 }

@@ -6,122 +6,63 @@ namespace CoLib
 	
 public static partial class Commands
 {
-	#region Image
+	#region Graphic
 
-	public static CommandDelegate TintTo(Image image, Color endColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintTo(Graphic graphic, Color endColor, double duration, CommandEase ease = null)
 	{
-		return TintTo(image.ToColorRef(), endColour, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return TintTo(graphic.ToColorRef(), endColor, duration, ease);
 	}
 
-	public static CommandDelegate TintFrom(Image image, Color startColour, double duration, CommandEase ease = null)
+	public static CommandDelegate TintFrom(Graphic graphic, Color startColor, double duration, CommandEase ease = null)
 	{
-		return TintFrom(image.ToColorRef(), startColour, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return TintFrom(graphic.ToColorRef(), startColor, duration, ease);
 	}
 
-	public static CommandDelegate TintBy(Image image, Color offset, double duration, CommandEase ease = null)
+	public static CommandDelegate TintBy(Graphic graphic, Color offset, double duration, CommandEase ease = null)
 	{
-		return TintBy(image.ToColorRef(), offset, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return TintBy(graphic.ToColorRef(), offset, duration, ease);
 	}
 
-	public static CommandDelegate AlphaTo(Image image, float alpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaTo(Graphic graphic, float alpha, double duration, CommandEase ease = null)
 	{
-		return AlphaTo(image.ToColorRef(), alpha, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return AlphaTo(graphic.ToColorRef(), alpha, duration, ease);
 	}
 
-	public static CommandDelegate AlphaFrom(Image image, float alpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaFrom(Graphic graphic, float alpha, double duration, CommandEase ease = null)
 	{
-		return AlphaFrom(image.ToColorRef(), alpha, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return AlphaFrom(graphic.ToColorRef(), alpha, duration, ease);
 	}
 
-	public static CommandDelegate AlphaBy(Image image, float alpha, double duration, CommandEase ease = null)
+	public static CommandDelegate AlphaBy(Graphic graphic, float alpha, double duration, CommandEase ease = null)
 	{
-		return AlphaBy(image.ToColorRef(), alpha, duration, ease);
-	}
-	
-	#endregion
-
-	#region Text
-
-	public static CommandDelegate TintTo(Text text, Color endColour, double duration, CommandEase ease = null)
-	{
-		return TintTo(text.ToColorRef(), endColour, duration, ease);
-	}
-
-	public static CommandDelegate TintFrom(Text text, Color startColour, double duration, CommandEase ease = null)
-	{
-			return TintFrom(text.ToColorRef(), startColour, duration, ease);
-	}
-
-	public static CommandDelegate TintBy(Text text, Color offset, double duration, CommandEase ease = null)
-	{
-		return TintBy(text.ToColorRef(), offset, duration, ease);
-	}
-
-	public static CommandDelegate AlphaTo(Text text, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaTo(text.ToColorRef(), alpha, duration, ease);
-	}
-
-	public static CommandDelegate AlphaFrom(Text text, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaFrom(text.ToColorRef(), alpha, duration, ease);
-	}
-
-	public static CommandDelegate AlphaBy(Text text, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaBy(text.ToColorRef(), alpha, duration, ease);
+		CheckArgumentNonNull(graphic, "graphic");
+		return AlphaBy(graphic.ToColorRef(), alpha, duration, ease);
 	}
 	
-	#endregion
-
-	#region RawImage
-
-	public static CommandDelegate TintTo(RawImage image, Color endColour, double duration, CommandEase ease = null)
-	{
-		return TintTo(image.ToColorRef(), endColour, duration, ease);
-	}
-
-	public static CommandDelegate TintFrom(RawImage image, Color startColour, double duration, CommandEase ease = null)
-	{
-		return TintFrom(image.ToColorRef(), startColour, duration, ease);
-	}
-
-	public static CommandDelegate TintBy(RawImage image, Color offset, double duration, CommandEase ease = null)
-	{
-		return TintBy(image.ToColorRef(), offset, duration, ease);
-	}
-
-	public static CommandDelegate AlphaTo(RawImage image, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaTo(image.ToColorRef(), alpha, duration, ease);
-	}
-
-	public static CommandDelegate AlphaFrom(RawImage image, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaFrom(image.ToColorRef(), alpha, duration, ease);
-	}
-
-	public static CommandDelegate AlphaBy(RawImage image, float alpha, double duration, CommandEase ease = null)
-	{
-		return AlphaBy(image.ToColorRef(), alpha, duration, ease);
-	}
-
 	#endregion
 
 	#region CanvasGroup
 
 	public static CommandDelegate AlphaTo(CanvasGroup group, float alpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(group, "group");
 		return ChangeTo(group.ToAlphaRef(), alpha, duration, ease);
 	}
 
 	public static CommandDelegate AlphaFrom(CanvasGroup group, float alpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(group, "group");
 		return ChangeFrom(group.ToAlphaRef(), alpha, duration, ease);
 	}
 
 	public static CommandDelegate AlphaBy(CanvasGroup group, float alpha, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(group, "group");
 		return ChangeBy(group.ToAlphaRef(), alpha, duration, ease);
 	}
 
@@ -131,16 +72,19 @@ public static partial class Commands
 
 	public static CommandDelegate ScaleTo(RectTransform transform, Vector2 endScale, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(transform, "transform");
 		return ChangeTo(transform.ToScaleRef(), endScale, duration, ease);
 	}
 
 	public static CommandDelegate ScaleFrom(RectTransform transform, Vector2 startScale, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(transform, "transform");
 		return ChangeTo(transform.ToScaleRef(), startScale, duration, ease);
 	}
 
 	public static CommandDelegate ScaleBy(RectTransform transform, Vector2 scaleFactor, double duration, CommandEase ease = null)
 	{
+		CheckArgumentNonNull(transform, "transform");
 		return ScaleBy(transform.ToScaleRef(), scaleFactor, duration, ease);
 	}
 
