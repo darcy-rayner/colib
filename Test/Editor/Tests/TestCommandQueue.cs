@@ -525,36 +525,6 @@ internal class TestCommandQueue
 		Assert.AreEqual(i, 25);
 		Assert.AreEqual(c, 20);
 	}
-
-	[Test]
-	public static void TestThread()
-	{
-		CommandQueue queue = new CommandQueue();
-
-		long startTime = 0;
-		long endTime = 0;
-
-		const int SLEEP_TIME_MS = 1000; // 1 second
-		const int SLEEP_TOLERANCE_MS = 15;
-
-		queue.Enqueue (
-			Commands.Do( () => startTime = DateTime.Now.Ticks),
-
-			Commands.Thread( () => {
-				System.Threading.Thread.Sleep(SLEEP_TIME_MS);
-			}),
-
-			Commands.Do( () => endTime = DateTime.Now.Ticks)
-		);
-
-		while (queue.Update (DELTA_TIME_RATE)) {}
-		TimeSpan timeDifference = new TimeSpan (endTime - startTime);
-
-		int diff = timeDifference.Milliseconds - SLEEP_TIME_MS;
-		// Due to system thread scheduling, the sleep command will never
-		// be exactly accurate. So we use a tolerance.
-		Assert.IsTrue(diff <= SLEEP_TOLERANCE_MS);
-	}
 }
 
 }

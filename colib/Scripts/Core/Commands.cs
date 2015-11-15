@@ -583,39 +583,6 @@ static public partial class Commands
 		};
 	}
 
-	/// <summary>
-	/// Runs the specified command on a new thread, only returning when the thread has
-	/// finished. The Thread command should be used sparingly, as it instantiates a
-	/// fresh thread each time the command is entered.
-	/// </summary>
-	/// <param name="command">
-	///  The command to run on it's own thread. Do not use commands which call Unity methods,
-	/// (this includes tweens on GameObjects).
-	/// </param>
-	/// <remarks>
-	/// This will create a thread, but it can't force the thread to finish. This means that even
-	/// if the Command is garbage collected, the thread may be left running. In Unity's editor,
-	/// poorly written threads may be left running between play sessions, which can cause strange
-	/// or unexpected behaviour. For this reason it is recommended  to avoid the Thread command 
-	/// where possible. An example of a place where a thread might be required is to wrap blocking
-	/// system methods, such as file io, or using system sockets.
-	/// </remarks>
-	public static CommandDelegate Thread(CommandDo command)
-	{
-		CheckArgumentNonNull (command);
-
-		System.Threading.Thread thread = null;
-		return Commands.Sequence (
-			Commands.Do( () => {
-				thread = new System.Threading.Thread( new System.Threading.ThreadStart(command));
-				thread.Start();
-			}),
-			Commands.While( (t) => { 
-				return thread.IsAlive;
-			})
-		);
-	}
-
 	#endregion
 
 	#region Private methods
