@@ -40,7 +40,9 @@ public class CommandQueueExample : MonoBehaviour
 				Commands.MoveFrom(gameObject,  new Vector3(0.0f, 0.0f, 0.8f), 0.5f, Ease.OutElastic()),
 				Commands.RotateFrom(gameObject, Quaternion.Euler(0.0f, 45.0f, 45.0f), 0.5f, Ease.InOutExpo()),
 				Commands.ScaleFrom(gameObject, 0.25f, 0.75f, Ease.InOutHermite()),
-				Commands.TintFrom(gameObject, Color.green, 0.25f, Ease.InOutQuint())
+				Commands.TintFrom(gameObject, Color.green, 0.25f, Ease.InOutQuint()),
+				Commands.ScaleTo(gameObject, 1.0f, 0.2f, Ease.Smooth())
+
 			)
 		);		
 	}

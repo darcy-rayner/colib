@@ -40,6 +40,40 @@ public static partial class Commands
 	
 	#endregion
 
+	#region Text
+
+	public static CommandDelegate TintTo(Text text, Color endColour, double duration, CommandEase ease = null)
+	{
+		return TintTo(text.ToColorRef(), endColour, duration, ease);
+	}
+
+	public static CommandDelegate TintFrom(Text text, Color startColour, double duration, CommandEase ease = null)
+	{
+			return TintFrom(text.ToColorRef(), startColour, duration, ease);
+	}
+
+	public static CommandDelegate TintBy(Text text, Color offset, double duration, CommandEase ease = null)
+	{
+		return TintBy(text.ToColorRef(), offset, duration, ease);
+	}
+
+	public static CommandDelegate AlphaTo(Text text, float alpha, double duration, CommandEase ease = null)
+	{
+		return AlphaTo(text.ToColorRef(), alpha, duration, ease);
+	}
+
+	public static CommandDelegate AlphaFrom(Text text, float alpha, double duration, CommandEase ease = null)
+	{
+		return AlphaFrom(text.ToColorRef(), alpha, duration, ease);
+	}
+
+	public static CommandDelegate AlphaBy(Text text, float alpha, double duration, CommandEase ease = null)
+	{
+		return AlphaBy(text.ToColorRef(), alpha, duration, ease);
+	}
+	
+	#endregion
+
 	#region RawImage
 
 	public static CommandDelegate TintTo(RawImage image, Color endColour, double duration, CommandEase ease = null)

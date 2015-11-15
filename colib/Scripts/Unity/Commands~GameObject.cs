@@ -6,53 +6,6 @@ namespace CoLib
 
 public static partial class Commands
 {
-	#region Extension methods
-
-	public static Ref<Vector3> ToPositionRef(this Transform transform, bool isLocalSpace)
-	{
-		Ref<Vector3> position = null;
-		if (isLocalSpace) {
-			position = new Ref<Vector3>( 
-				() => transform.localPosition,
-				newPosition => transform.localPosition = newPosition
-			);
-		} else {
-			position = new Ref<Vector3>( 
-				() => transform.position,
-				newPosition => transform.position = newPosition
-			);
-		}
-		return position;
-	}
-
-	public static Ref<Quaternion> ToRotationRef(this Transform transform, bool isLocalSpace)
-	{
-		Ref<Quaternion> rotation = null;
-		if (isLocalSpace) {
-			rotation = new Ref<Quaternion>( 
-				() => transform.localRotation,
-				newRotation => transform.localRotation = newRotation
-			);
-		} else {
-			rotation = new Ref<Quaternion>( 
-				() => transform.rotation,
-				newRotation => transform.rotation = newRotation
-			);
-		}
-		return rotation;
-	}
-
-	public static Ref<Vector3> ToScaleRef(this Transform transform)
-	{
-		Ref<Vector3> scale = new Ref<Vector3>( 
-			() => transform.localScale,
-			newScale => transform.localScale = newScale
-		);
-		return scale;
-	}
-
-	#endregion
-
 	#region MoveTo
 	
 	public static CommandDelegate MoveTo(GameObject gameObject, Vector3 endPosition, double duration, CommandEase ease = null, bool isLocalSpace = false)
@@ -275,44 +228,28 @@ public static partial class Commands
 	{
 		CheckArgumentNonNull(material, "material");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return TintTo(colour, endColour, duration, ease);
+		return TintTo(material.ToColorRef(), endColour, duration, ease);
 	}
 	
 	public static CommandDelegate TintTo(SpriteRenderer renderer, Color endColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-        );
-		return TintTo(colour, endColour, duration, ease);
+		return TintTo(renderer.ToColorRef(), endColour, duration, ease);
 	}
 		
 	public static CommandDelegate TintTo(GUITexture texture, Color endColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return TintTo(colour, endColour, duration, ease);
+		return TintTo(texture.ToColorRef(), endColour, duration, ease);
 	}
 
 	public static CommandDelegate TintTo(GUIText text, Color endColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return TintTo(colour, endColour, duration, ease);
+		return TintTo(text.ToColorRef(), endColour, duration, ease);
 	}
 	
 	#endregion
@@ -336,45 +273,28 @@ public static partial class Commands
 	public static CommandDelegate TintBy(Material material, Color offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(material, "material");
-
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return TintBy(colour, offset, duration, ease);
+		return TintBy(material.ToColorRef(), offset, duration, ease);
 	}
 	
 	public static CommandDelegate TintBy(SpriteRenderer renderer, Color offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-        );
-		return TintBy(colour, offset, duration, ease);
+		return TintBy(renderer.ToColorRef(), offset, duration, ease);
 	}
 		
 	public static CommandDelegate TintBy(GUITexture texture, Color offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return TintBy(colour, offset, duration, ease);
+		return TintBy(texture.ToColorRef(), offset, duration, ease);
 	}
 
 	public static CommandDelegate TintBy(GUIText text, Color offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return TintBy(colour, offset, duration, ease);
+		return TintBy(text.ToColorRef(), offset, duration, ease);
 	}
 	
 	#endregion
@@ -399,44 +319,28 @@ public static partial class Commands
 	{
 		CheckArgumentNonNull(material, "material");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return TintFrom(colour, startColour, duration, ease);
+		return TintFrom(material.ToColorRef(), startColour, duration, ease);
 	}
 	
 	public static CommandDelegate TintFrom(SpriteRenderer renderer, Color startColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-        );
-		return TintFrom(colour, startColour, duration, ease);
+		return TintFrom(renderer.ToColorRef(), startColour, duration, ease);
 	}
 		
 	public static CommandDelegate TintFrom(GUITexture texture, Color startColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return TintFrom(colour, startColour, duration, ease);
+		return TintFrom(texture.ToColorRef(), startColour, duration, ease);
 	}
 
 	public static CommandDelegate TintFrom(GUIText text, Color startColour, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return TintFrom(colour, startColour, duration, ease);
+		return TintFrom(text.ToColorRef(), startColour, duration, ease);
 	}
 	
 	#endregion
@@ -461,44 +365,28 @@ public static partial class Commands
 	{
 		CheckArgumentNonNull(material, "material");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return AlphaTo(colour, endAlpha, duration, ease);
+		return ChangeTo(material.ToAlphaRef(), endAlpha, duration, ease);
 	}
 	
 	public static CommandDelegate AlphaTo(SpriteRenderer renderer, float endAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-          );
-		return AlphaTo(colour, endAlpha, duration, ease);
+		return ChangeTo(renderer.ToAlphaRef(), endAlpha, duration, ease);
 	}
 		
 	public static CommandDelegate AlphaTo(GUITexture texture, float endAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return AlphaTo(colour, endAlpha, duration, ease);
+		return ChangeTo(texture.ToAlphaRef(), endAlpha, duration, ease);
 	}
 
 	public static CommandDelegate AlphaTo(GUIText text, float endAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return AlphaTo(colour, endAlpha, duration, ease);
+		return ChangeTo(text.ToAlphaRef(), endAlpha, duration, ease);
 	}
 	
 	#endregion
@@ -523,43 +411,27 @@ public static partial class Commands
 	{
 		CheckArgumentNonNull(material, "material");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return AlphaBy(colour, offset, duration, ease);
+		return ChangeBy(material.ToAlphaRef(), offset, duration, ease);
 	}
 	public static CommandDelegate AlphaBy(SpriteRenderer renderer, float offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-        );
-		return AlphaBy(colour, offset, duration, ease);
+		return ChangeBy(renderer.ToAlphaRef(), offset, duration, ease);
 	}
 		
 	public static CommandDelegate AlphaBy(GUITexture texture, float offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return AlphaBy(colour, offset, duration, ease);
+		return ChangeBy(texture.ToAlphaRef(), offset, duration, ease);
 	}
 
 	public static CommandDelegate AlphaBy(GUIText text, float offset, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return AlphaBy(colour, offset, duration, ease);
+		return ChangeBy(text.ToAlphaRef(), offset, duration, ease);
 	}
 	
 	#endregion
@@ -584,44 +456,28 @@ public static partial class Commands
 	{
 		CheckArgumentNonNull(material, "material");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => material.color,
-			newColour => material.color = newColour
-		);
-		return AlphaFrom(colour, startAlpha, duration, ease);
+		return ChangeFrom(material.ToAlphaRef(), startAlpha, duration, ease);
 	}
 	
 	public static CommandDelegate AlphaFrom(SpriteRenderer renderer, float startAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(renderer, "renderer");
 
-		Ref<Color> colour = new Ref<Color>( 
-           () => renderer.color,
-           newColour => renderer.color = newColour
-        );
-		return AlphaFrom(colour, startAlpha, duration, ease);
+		return ChangeFrom(renderer.ToAlphaRef(), startAlpha, duration, ease);
 	}
 		
 	public static CommandDelegate AlphaFrom(GUITexture texture, float startAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(texture, "texture");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => texture.color,
-			newColour => texture.color = newColour
-		);
-		return AlphaFrom(colour, startAlpha, duration, ease);
+		return ChangeFrom(texture.ToAlphaRef(), startAlpha, duration, ease);
 	}
 	
 	public static CommandDelegate AlphaFrom(GUIText text, float startAlpha, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(text, "text");
 
-		Ref<Color> colour = new Ref<Color>( 
-			() => text.color,
-			newColour => text.color = newColour
-		);
-		return AlphaFrom(colour, startAlpha, duration, ease);
+		return ChangeFrom(text.ToAlphaRef(), startAlpha, duration, ease);
 	}
 
 	#endregion

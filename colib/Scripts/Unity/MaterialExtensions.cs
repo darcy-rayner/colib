@@ -8,6 +8,62 @@ public static class MaterialExtensions
 {
 	#region Extension methods
 
+	public static Ref<Color> ToColorRef(this Material material)
+	{
+		CheckMaterialNonNull(material);
+		return new Ref<Color>(
+			() => material.color,
+			t => material.color = t
+		);
+	}
+	public static Ref<float> ToRedRef(this Material material)
+	{
+		return new Ref<float>(
+			() => material.color.r,
+			t => {
+				var color = material.color;
+				color.r = t;
+				material.color = color;
+			}
+		);
+	}
+
+	public static Ref<float> ToGreenRef(this Material material)
+	{
+		return new Ref<float>(
+			() => material.color.g,
+			t => {
+				var color = material.color;
+				color.g = t;
+				material.color = color;
+			}
+		);
+	}
+
+	public static Ref<float> ToBlueRef(this Material material)
+	{
+		return new Ref<float>(
+			() => material.color.b,
+			t => {
+				var color = material.color;
+				color.b = t;
+				material.color = color;
+			}
+		);
+	}
+
+	public static Ref<float> ToAlphaRef(this Material material)
+	{
+		return new Ref<float>(
+			() => material.color.a,
+			t => {
+				var color = material.color;
+				color.a = t;
+				material.color = color;
+			}
+		);
+	}
+
 	public static Ref<int> ToIntPropertyRef(this Material material, string property)
 	{
 		CheckMaterialNonNull(material);
