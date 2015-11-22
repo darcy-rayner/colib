@@ -79,7 +79,7 @@ public static partial class Commands
 	public static CommandDelegate ScaleFrom(RectTransform transform, Vector2 startScale, double duration, CommandEase ease = null)
 	{
 		CheckArgumentNonNull(transform, "transform");
-		return ChangeTo(transform.ToScaleRef(), startScale, duration, ease);
+		return ChangeFrom(transform.ToScaleRef(), startScale, duration, ease);
 	}
 
 	public static CommandDelegate ScaleBy(RectTransform transform, Vector2 scaleFactor, double duration, CommandEase ease = null)

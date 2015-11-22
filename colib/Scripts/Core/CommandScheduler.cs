@@ -57,7 +57,7 @@ public class CommandScheduler
 	/// The deltaTime, in seconds. Must be >= 0.
 	/// </param>
 	/// <exception cref="System.ArgumentOutOfRangeException"></exception>
-	public void Update(float deltaTime)
+	public void Update(double deltaTime)
 	{
 		if (deltaTime < 0.0) {
 			throw new System.ArgumentOutOfRangeException("deltaTime","deltaTime is expected to be positive.");

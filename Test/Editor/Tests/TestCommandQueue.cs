@@ -401,7 +401,7 @@ internal class TestCommandQueue
 		queue.Enqueue(
 			Commands.RepeatForever(
 				Commands.Require( () => !shouldStop,
-					Commands.RepeatForever(
+					() => Commands.RepeatForever(
 						Commands.Sequence(
 							Commands.Do( () => callCount++),
 							Commands.WaitForFrames(1)

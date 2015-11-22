@@ -20,7 +20,7 @@ public delegate void CommandDo();
 public delegate bool CommandCondition();
 public delegate bool CommandWhile(double elapsedTime);
 public delegate void CommandDuration(double t);
-public delegate CommandDelegate CommandDefer();
+public delegate CommandDelegate CommandFactory();
 public delegate IEnumerator<CommandDelegate> CommandCoroutine();
 
 static public partial class Commands
@@ -37,7 +37,7 @@ static public partial class Commands
 	public static CommandDelegate Do(CommandDo command)
 	{
 		CheckArgumentNonNull(command);
-		return delegate(ref double deltaTime) {
+		return (ref double deltaTime) => {
 			command();
 			return true;
 		};
@@ -56,7 +56,7 @@ static public partial class Commands
 		double elapsedTime = 0.0;
 		return Commands.Sequence(
 			Commands.Do(() => elapsedTime = 0.0),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 				elapsedTime += deltaTime;
 				bool finished = !command(elapsedTime);
 				if (!finished) { deltaTime = 0.0; }
@@ -99,7 +99,7 @@ static public partial class Commands
 
 		return Commands.Sequence(
 			Commands.Do( () => elapsedTime = 0.0),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 
 				elapsedTime += deltaTime;
 				deltaTime = 0.0;
@@ -128,7 +128,7 @@ static public partial class Commands
 		double elapsedTime = 0.0;
 		return Commands.Sequence(
 			Commands.Do( () => elapsedTime = 0.0),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 				elapsedTime += deltaTime;
 				deltaTime = 0.0f;
 				bool finished = elapsedTime >= duration;
@@ -181,7 +181,7 @@ static public partial class Commands
 			Commands.Do(() => {
 				list = new LinkedList<CommandDelegate>(commands);
 			}),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 				bool finished = true;
 				double smallestDeltaTime = deltaTime;
 				var node = list.First;
@@ -217,7 +217,7 @@ static public partial class Commands
 			CheckArgumentNonNull(command);
 		}
 		CommandQueue subQueue = null;
-		return delegate(ref double  deltaTime) {
+		return (ref double  deltaTime) => {
 			if (subQueue == null) {
 				// To make sequences repeatable, we set subQueue to null
 				// after the sequence finishes, so when the sequence is
@@ -243,7 +243,7 @@ static public partial class Commands
 	public static CommandDelegate Queue(CommandQueue queue)
 	{
 		CheckArgumentNonNull(queue, "queue");
-		return delegate(ref double deltaTime) {
+		return (ref double deltaTime) => {
 			return queue.Update(ref deltaTime);
 		};
 	}
@@ -270,13 +270,13 @@ static public partial class Commands
 		CheckArgumentNonNull(onTrue, "onTrue");
 		CommandDelegate result = onFalse;
 		return Sequence(
-			Commands.Do( delegate() {
+			Commands.Do( () => {
 				result = onFalse;
 				if (condition()) {
 					result = onTrue;
 				}
 			}),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 				if (result != null){
 					return result(ref deltaTime);
 				}
@@ -291,8 +291,9 @@ static public partial class Commands
 	/// <param name='condition'>
 	/// A condition which must remain true to continue executing the commands. Must be non-null.
 	/// </param>
-	/// <param name='commands'>
-	/// A list of commands to be exexuted while condition is true. Must be non-null.
+	/// <param name='command'>
+	/// A deferred command. Must be non-null. This command is deferred, so that if the require condition fails,
+	/// the command can be safely restarted.
 	/// </param>
 	/// <remarks>
 	/// The condition is only re-evaluated on new calls to Update, or after the child command finishes and restarts.
@@ -304,19 +305,31 @@ static public partial class Commands
 	/// 	CommandQueue queue = new CommandQueue();
 	/// 	queue.Enqueue(
 	/// 		Commands.Require( () => someObject != null,
-	/// 			Commands.MoveTo(someObject, somePosition, someDuration)
+	/// 			() => Commands.MoveTo(someObject, somePosition, someDuration)
 	/// 		)
 	/// 	);
 	/// </code>
 	/// </example>
 	/// <exception cref="System.ArgumentNullException"></exception>
-	public static CommandDelegate Require(CommandCondition condition,  params CommandDelegate[] commands)
+	public static CommandDelegate Require(CommandCondition condition,  CommandFactory deferredCommand)
 	{
 		CheckArgumentNonNull(condition, "condition");
-			
-		CommandDelegate sequence = Commands.Sequence(commands);
+		CheckArgumentNonNull(deferredCommand, "deferredCommand");
+
+		CommandDelegate command = null;			
 		
-		return (ref double deltaTime) => condition() ? sequence(ref deltaTime) : true;
+		return (ref double deltaTime) => {
+			if (command == null) {
+				command = deferredCommand();
+			}
+			if (command == null) { return true; }
+
+			bool finished = condition() ? command(ref deltaTime) : true;
+			if (finished) {
+				command = null;
+			}
+			return finished;
+		};
 	}
 
 	/// <summary>
@@ -396,7 +409,7 @@ static public partial class Commands
 		CommandQueue subQueue = new CommandQueue();
 		subQueue.Enqueue(commands);
 		int count  = repeatCount - 1;
-		return delegate(ref double deltaTime) {
+		return (ref double deltaTime) => {
 			bool finished = subQueue.Update(ref deltaTime);
 			while (finished) {
 				subQueue = new CommandQueue(); // Clears deltaTime state.
@@ -431,7 +444,7 @@ static public partial class Commands
 		}
 		CommandQueue subQueue = new CommandQueue();
 		subQueue.Enqueue(commands);
-		return delegate(ref double deltaTime) {
+		return (ref double deltaTime) => {
 			bool finished = subQueue.Update(ref deltaTime);
 			while (finished) {
 				subQueue = new CommandQueue();
@@ -511,7 +524,7 @@ static public partial class Commands
 				isEmpty = !coroutine.MoveNext();
 				setCurrentCommand();
 			}),
-			delegate (ref double deltaTime) {
+			(ref double deltaTime) => {
 				if (isEmpty) { return true; }
 				bool finished = currentCommand(ref deltaTime);
 				while (finished) {
@@ -554,7 +567,7 @@ static public partial class Commands
 	/// The action which will create the CommandDelegate. 
 	/// This must not be null, but it can return a null CommandDelegate.
 	/// </param>
-	public static CommandDelegate Defer(CommandDefer commandDeferred)
+	public static CommandDelegate Defer(CommandFactory commandDeferred)
 	{
 		CheckArgumentNonNull(commandDeferred, "commandDeferred");
 		CommandDelegate command = null;
@@ -562,7 +575,7 @@ static public partial class Commands
 			Commands.Do( () => {
 				command = commandDeferred();
 			}),
-			delegate(ref double deltaTime) {
+			(ref double deltaTime) => {
 				if (command != null) {
 					return command(ref deltaTime);
 				}
@@ -577,9 +590,35 @@ static public partial class Commands
 	/// </summary>
 	public static CommandDelegate ConsumeTime()
 	{
-		return delegate(ref double deltaTime) {
+		return (ref double deltaTime) => {
 			deltaTime = double.Epsilon < deltaTime ? double.Epsilon : deltaTime;
 			return true;
+		};
+	}
+
+	/// <summary>
+	/// Slows down, or increases the rate at which time flows through the given subcommands.
+	/// </summary>
+	/// <param name="dilationAmount">The scale of the dilation to perform. For instance, a dilationAmount
+	/// of 2 will make time flow twice as quickly. This number must be greater than 0.
+	/// </param>
+	/// <param name='commands'>
+	/// A list of commands to choose from at random. Only one command will be performed.
+	/// Null commands can be passed. At least one command must be specified.
+	/// </param>	
+	public static CommandDelegate DilateTime(double dilationAmount, params CommandDelegate[] commands)
+	{
+		if (dilationAmount <= 0.0) {
+			throw new System.ArgumentOutOfRangeException("dilationAmount");
+		}
+		var command = Commands.Sequence(
+			commands
+		);
+		return (ref double deltaTime) => {
+			double newDelta = deltaTime * dilationAmount;
+			bool finished = command(ref newDelta);
+			deltaTime = newDelta / dilationAmount;
+			return finished;
 		};
 	}
 

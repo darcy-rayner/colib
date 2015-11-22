@@ -68,7 +68,7 @@ public static class RectTransformExtensions
 		);
 	}
 
-	public static Ref<Vector2> ToScaleRef(this RectTransform transform)
+	public static Ref<Vector2> ToSizeRef(this RectTransform transform)
 	{
 		CheckTransformNonNull(transform);
 

@@ -12,6 +12,18 @@ public class CommandQueueExample : MonoBehaviour
 	{
 		bool condition = false;
 		gameObject.Queue(
+			Commands.RepeatForever(
+				Commands.Wiggle(gameObject.ToRotationRef(true), 30f, 2.0),
+				Commands.Wobble(transform.ToPositionYRef(true), 3f, 2.0),
+				Commands.Parallel(
+					Commands.SquashAndStretch(gameObject.ToScaleRef(), 3f, 2.0),
+					Commands.Shake(transform.ToPositionRef(true), 0.3f, 2.0),
+					Commands.Shake(transform.ToRotationRef(true), 5f, 2.0)
+				)
+			)
+		);
+
+		/*gameObject.Queue(
 			Commands.ScaleTo(gameObject, 0.05f, 2.0f, Ease.OutQuart()),
 			Commands.ScaleTo(gameObject, 1.0f, 1.0f, Ease.OutBounce()),
 			Commands.RepeatForever(
@@ -44,7 +56,7 @@ public class CommandQueueExample : MonoBehaviour
 				Commands.ScaleTo(gameObject, 1.0f, 0.2f, Ease.Smooth())
 
 			)
-		);		
+		);*/		
 	}
 }
 
