@@ -225,18 +225,21 @@ static public partial class Commands
 		foreach (var command in commands) {
 			CheckArgumentNonNull(command);
 		}
-		CommandQueue subQueue = null;
+
+		if (commands.Length == 0) { return Commands.None(); }
+
+		int index = 0;
 		return (ref double  deltaTime) => {
-			if (subQueue == null) {
-				// To make sequences repeatable, we set subQueue to null
-				// after the sequence finishes, so when the sequence is
-				// re-executed, we can recreate subQueue.
-				subQueue = new CommandQueue();
-				subQueue.Enqueue(commands);
+			bool finished = true;
+			while (finished) {
+				finished = commands[index](ref deltaTime);
+				if (finished) { index += 1; }
+				if (index == commands.Length) {
+					index = 0;
+					return true;
+				}
 			}
-			bool finished = subQueue.Update(ref deltaTime);
-			if (finished) { subQueue = null;}
-			return finished;
+			return false;
 		};
 	}
 	
