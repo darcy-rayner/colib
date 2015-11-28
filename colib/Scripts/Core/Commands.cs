@@ -414,23 +414,16 @@ static public partial class Commands
 		foreach (var command in commands) {
 			CheckArgumentNonNull(command);
 		}
-		CommandQueue subQueue = new CommandQueue();
-		subQueue.Enqueue(commands);
-		int count  = repeatCount - 1;
+		CommandDelegate sequence = Commands.Sequence(commands);
+		int count = 0;
 		return (ref double deltaTime) => {
-			bool finished = subQueue.Update(ref deltaTime);
-			while (finished) {
-				subQueue = new CommandQueue(); // Clears deltaTime state.
-				if (count > 0) {
-					subQueue.Enqueue(commands);
-					--count;
-					finished = subQueue.Update(ref deltaTime);
-				} else {
-					count = repeatCount;
-					return true;
-				}
+			bool finished = true;
+			while (finished && count < repeatCount) {
+				finished = sequence(ref deltaTime);
+				if (finished) { count++; }
 			}
-			return false;
+			count %= repeatCount;
+			return finished;
 		};
 	}
 	
@@ -450,16 +443,12 @@ static public partial class Commands
 		foreach (var command in commands) {
 			CheckArgumentNonNull(command);
 		}
-		CommandQueue subQueue = new CommandQueue();
-		subQueue.Enqueue(commands);
+		CommandDelegate sequence = Commands.Sequence(commands);
 		return (ref double deltaTime) => {
-			bool finished = subQueue.Update(ref deltaTime);
+			bool finished = true;
 			while (finished) {
-				subQueue = new CommandQueue();
-				subQueue.Enqueue(commands);
-				finished = subQueue.Update(ref deltaTime);
+				finished = sequence(ref deltaTime);
 			}
-			
 			return false;
 		};
 	}
