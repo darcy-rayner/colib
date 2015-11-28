@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 
 namespace CoLib
 {
@@ -182,35 +183,30 @@ static public partial class Commands
 	/// <exception cref="System.ArgumentNullException"></exception>
 	public static CommandDelegate Parallel(params CommandDelegate[] commands)
 	{
-		LinkedList<CommandDelegate> list = null;
 		foreach (var command in commands) {
 			CheckArgumentNonNull(command);
 		}
-		return Sequence(
-			Commands.Do(() => {
-				list = new LinkedList<CommandDelegate>(commands);
-			}),
-			(ref double deltaTime) => {
-				bool finished = true;
-				double smallestDeltaTime = deltaTime;
-				var node = list.First;
-			
-				while (node != null) {
-					var next  = node.Next;
-				
-					double deltaTimeCopy = deltaTime;
-					bool thisFinished = node.Value(ref deltaTimeCopy);
-				
-					if (thisFinished) { list.Remove(node); } else { finished = false; } 
-					smallestDeltaTime = System.Math.Min(deltaTimeCopy, smallestDeltaTime);
-				
-					node = next;
-				}
-			
-				deltaTime = smallestDeltaTime;
-			
-				return finished;
-		});
+
+		BitArray finishedCommands = new BitArray(commands.Length, false);
+
+		return (ref double deltaTime) => {
+			bool finished = true;
+			double smallestDeltaTime = deltaTime;
+			for (int i = 0; i < commands.Length; ++ i) {
+				if (finishedCommands[i]) { continue; }
+				double deltaTimeCopy = deltaTime;
+				bool thisFinished = commands[i](ref deltaTimeCopy); 
+				finishedCommands[i] = thisFinished;
+				finished = finished && thisFinished;
+				smallestDeltaTime = System.Math.Min(deltaTimeCopy, smallestDeltaTime);
+			}
+
+			if (finished) {
+				finishedCommands.SetAll(false);
+			}
+			deltaTime = smallestDeltaTime;
+			return finished;
+		};
 	}
 	
 	/// <summary>
