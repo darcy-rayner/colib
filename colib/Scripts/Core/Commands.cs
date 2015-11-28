@@ -42,6 +42,15 @@ static public partial class Commands
 			return true;
 		};
 	}
+
+	/// <summary>
+	/// A command which does nothing. Can be useful as a return value
+	/// when null is not expected.
+	/// </summary>
+	public static CommandDelegate None()
+	{
+		return (ref double deltaTime) => true;
+	}
 	
 	/// <summary>
 	/// An <c>CommandWhile</c> runs until the command returns false.
