@@ -64,15 +64,16 @@ static public partial class Commands
 	{
 		CheckArgumentNonNull(command);
 		double elapsedTime = 0.0;
-		return Commands.Sequence(
-			Commands.Do(() => elapsedTime = 0.0),
-			(ref double deltaTime) => {
-				elapsedTime += deltaTime;
-				bool finished = !command(elapsedTime);
-				if (!finished) { deltaTime = 0.0; }
-				return finished;
+		return (ref double deltaTime) => {
+			elapsedTime += deltaTime;
+			bool finished = !command(elapsedTime);
+			if (!finished) { 
+				deltaTime = 0.0;
+			} else {
+				elapsedTime = 0.0;
 			}
-		);
+			return finished;
+		};
 	}
 	
 	/// <summary>
@@ -98,30 +99,30 @@ static public partial class Commands
 		if (duration == 0.0) {
 			// Sometimes it is convenient to create duration commands with
 			// a time of zero, so we have a special case.
-			return Commands.Do( () => {
+			return (ref double deltaTime) => {
 				double t = 1.0;
 				if (ease != null) { t = ease(t); }
 				command(t);
-			});
+				return true;
+			};
 		}
 
 		double elapsedTime = 0.0;
 
-		return Commands.Sequence(
-			Commands.Do( () => elapsedTime = 0.0),
-			(ref double deltaTime) => {
-
-				elapsedTime += deltaTime;
-				deltaTime = 0.0;
-				double t = (elapsedTime / duration);
-				t = t < 0.0 ? 0.0 : (t > 1.0 ? 1.0 : t);
-				if (ease != null) { t = ease(t); }
-				command(t);
-				bool finished = elapsedTime >= duration;
-				if (finished) { deltaTime = elapsedTime - duration; }
-				return finished;
+		return (ref double deltaTime) => {
+			elapsedTime += deltaTime;
+			deltaTime = 0.0;
+			double t = (elapsedTime / duration);
+			t = t < 0.0 ? 0.0 : (t > 1.0 ? 1.0 : t);
+			if (ease != null) { t = ease(t); }
+			command(t);
+			bool finished = elapsedTime >= duration;
+			if (finished) { 
+				deltaTime = elapsedTime - duration;
+				elapsedTime = 0.0; 
 			}
-		);
+			return finished;
+		};
 	}
 	
 
@@ -136,16 +137,16 @@ static public partial class Commands
 	{
 		CheckDurationGreaterThanZero(duration);
 		double elapsedTime = 0.0;
-		return Commands.Sequence(
-			Commands.Do( () => elapsedTime = 0.0),
-			(ref double deltaTime) => {
-				elapsedTime += deltaTime;
-				deltaTime = 0.0f;
-				bool finished = elapsedTime >= duration;
-				if (finished) { deltaTime = elapsedTime - duration; }
-				return finished;
+		return (ref double deltaTime) => {
+			elapsedTime += deltaTime;
+			deltaTime = 0.0f;
+			bool finished = elapsedTime >= duration;
+			if (finished) { 
+				deltaTime = elapsedTime - duration;
+				elapsedTime = 0.0f; 
 			}
-		);
+			return finished;
+		};
 	}
 	
 	
@@ -160,17 +161,16 @@ static public partial class Commands
 	{
 		if (frameCount <= 0) { throw new System.ArgumentOutOfRangeException("frameCount",frameCount, "frameCount must be > 0."); }
 		int counter = frameCount;
-		return Commands.Sequence(
-			Commands.Do(() => counter = frameCount),
-			Commands.While((elapsedTime) => {
-				if (counter > 0) { 
-					--counter;
-					return true;
-				}
+		return (ref double deltaTime) => {
+			if (counter > 0) {
+				--counter;
+				deltaTime = 0;
 				return false;
-			})
-		);
-		
+			}
+			counter = frameCount;
+			return true;
+
+		};
 	}
 	
 	/// <summary>
