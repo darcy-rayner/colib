@@ -19,7 +19,6 @@ public delegate bool CommandDelegate(ref double deltaTime);
 
 public delegate void CommandDo();
 public delegate bool CommandCondition();
-public delegate bool CommandWhile(double elapsedTime);
 public delegate void CommandDuration(double t);
 public delegate CommandDelegate CommandFactory();
 public delegate IEnumerator<CommandDelegate> CommandCoroutine();
@@ -51,29 +50,6 @@ static public partial class Commands
 	public static CommandDelegate None()
 	{
 		return (ref double deltaTime) => true;
-	}
-	
-	/// <summary>
-	/// An <c>CommandWhile</c> runs until the command returns false.
-	/// </summary>
-	/// <param name="command"> 
-	/// The command to execute. Must be non-null.
-	/// </param>
-	/// <exception cref="System.ArgumentNullException"></exception>
-	public static CommandDelegate While(CommandWhile command)
-	{
-		CheckArgumentNonNull(command);
-		double elapsedTime = 0.0;
-		return (ref double deltaTime) => {
-			elapsedTime += deltaTime;
-			bool finished = !command(elapsedTime);
-			if (!finished) { 
-				deltaTime = 0.0;
-			} else {
-				elapsedTime = 0.0;
-			}
-			return finished;
-		};
 	}
 	
 	/// <summary>
@@ -187,6 +163,10 @@ static public partial class Commands
 			CheckArgumentNonNull(command);
 		}
 
+		// Optimization.
+		if (commands.Length == 0) { return Commands.None(); }
+		if (commands.Length == 1) { return commands[0]; }
+
 		BitArray finishedCommands = new BitArray(commands.Length, false);
 
 		return (ref double deltaTime) => {
@@ -222,7 +202,9 @@ static public partial class Commands
 			CheckArgumentNonNull(command);
 		}
 
+		// Optimization.
 		if (commands.Length == 0) { return Commands.None(); }
+		if (commands.Length == 1) { return commands[0]; }
 
 		int index = 0;
 		return (ref double  deltaTime) => {
@@ -285,7 +267,7 @@ static public partial class Commands
 				}
 			}),
 			(ref double deltaTime) => {
-				if (result != null){
+				if (result != null) {
 					return result(ref deltaTime);
 				}
 				return true;
@@ -347,7 +329,7 @@ static public partial class Commands
 	/// A condition which must remain true to continue executing the commands. Must be non-null.
 	/// </param>
 	/// <param name='commands'>
-	/// A list of commands to be exexuted while condition is true. Must be non-null.
+	/// A list of commands to be executed while condition is true. Must be non-null.
 	/// </param>
 	/// <exception cref="System.ArgumentNullException"></exception>
 	public static CommandDelegate While(CommandCondition condition, params CommandDelegate[] commands)
@@ -372,7 +354,6 @@ static public partial class Commands
 				}
 				finished = sequence(ref deltaTime);
 			}
-
 			return false;
 		};
 	}
@@ -608,9 +589,7 @@ static public partial class Commands
 		if (dilationAmount <= 0.0) {
 			throw new System.ArgumentOutOfRangeException("dilationAmount");
 		}
-		var command = Commands.Sequence(
-			commands
-		);
+		var command = Commands.Sequence(commands);
 		return (ref double deltaTime) => {
 			double newDelta = deltaTime * dilationAmount;
 			bool finished = command(ref newDelta);

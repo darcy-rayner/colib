@@ -141,25 +141,7 @@ internal class TestCommandQueue
 					})
 				)
 			),
-			Commands.Do(() => Assert.AreEqual(conditionCalledCount, 2)),
-			Commands.Repeat(2,
-				Commands.Sequence(
-					Commands.Do(() => {
-						firstWhileCall = true;
-					}),
-					Commands.While((elapsedTime) => {
-						if (firstWhileCall) {
-							Assert.IsTrue(elapsedTime < lastElapsedTime);
-							firstWhileCall = false;
-						} else {
-							Assert.IsTrue(lastElapsedTime < elapsedTime);
-						}
-						
-						lastElapsedTime = elapsedTime;
-						return elapsedTime <= TIMEOUT_WHILE;
-					})
-				)
-			)
+			Commands.Do(() => Assert.AreEqual(conditionCalledCount, 2))
 		);
 		
 		while (!queue.Update(DELTA_TIME_RATE)) {}
