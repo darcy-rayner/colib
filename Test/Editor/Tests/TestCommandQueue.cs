@@ -121,7 +121,7 @@ internal class TestCommandQueue
 	}
 
 	[Test]
-	public static void TestCommandsBasic()
+	public static void TestCondition()
 	{
 		CommandQueue queue = new CommandQueue();
 		

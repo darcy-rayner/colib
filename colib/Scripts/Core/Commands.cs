@@ -486,38 +486,36 @@ static public partial class Commands
 	{
 		CheckArgumentNonNull(command);
 		IEnumerator<CommandDelegate> coroutine = null;
-		bool isEmpty = false;
 		CommandDelegate currentCommand = null;
-		
-		System.Action setCurrentCommand = () => {
-			currentCommand = coroutine.Current;
-			if (currentCommand == null) {
-				currentCommand = Commands.WaitForFrames(1);
-			}
-		};
-		
-		return Commands.Sequence(
-			Commands.Do( () => {
-				coroutine = command();
-				isEmpty = !coroutine.MoveNext();
-				setCurrentCommand();
-			}),
-			(ref double deltaTime) => {
-				if (isEmpty) { return true; }
-				bool finished = currentCommand(ref deltaTime);
-				while (finished) {
-					bool finishedCoroutine = !coroutine.MoveNext();
 
-					if (finishedCoroutine) { 
+		return (ref double deltaTime) => {
+			// Create our coroutine, if we don't have one.
+			if (coroutine == null) {
+				coroutine = command();
+				// Finish if we couldn't create a coroutine.
+				if (coroutine == null) { return true; } 
+			}
+
+			bool finished = true;
+			while (finished) {
+				// Set the current command.
+				if (currentCommand == null) {
+					if (!coroutine.MoveNext()) {
+						coroutine = null;
 						return true;
 					}
-				
-					setCurrentCommand();
-					finished = currentCommand(ref deltaTime);
+					currentCommand = coroutine.Current;
+					if (currentCommand == null) {
+						// Yield return null will wait a frame, like with
+						// Unity coroutines.
+						currentCommand = Commands.WaitForFrames(1);
+					}
 				}
-				return false;
+				finished = currentCommand(ref deltaTime);
+				if (finished) { currentCommand = null; }
 			}
-		);
+			return false;
+		};
 	}
 	
 	/// <summary>
