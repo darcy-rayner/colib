@@ -14,14 +14,20 @@ namespace CoLib
 /// 	Debug.Log(x); // Prints 43
 /// </code>
 /// </example>
-public sealed class Ref<T>
+public struct Ref<T> where T : struct
 {
 	#region Public properties
 
 	public T Value
 	{
-		get { return _getter(); }
-		set { _setter(value); }
+		get 
+		{ 
+			return _getter == null ? default(T) : _getter();
+		}
+		set 
+		{ 
+			if (_setter != null) { _setter(value); } 
+		}
 	}
 
 	#endregion

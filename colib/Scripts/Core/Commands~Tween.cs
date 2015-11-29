@@ -82,7 +82,7 @@ public static partial class Commands
 		);
 	}
 
-	public static CommandDelegate ChangeTo<T>(Ref<T> val, T endValue, IInterpolator<T> interpolator, double duration, CommandEase ease = null)
+	public static CommandDelegate ChangeTo<T>(Ref<T> val, T endValue, IInterpolator<T> interpolator, double duration, CommandEase ease = null) where T : struct
 	{
 		CheckArgumentNonNull(val, "val");
 		CheckArgumentNonNull(interpolator, "interpolator");
@@ -247,7 +247,7 @@ public static partial class Commands
 		);
 	}
 
-	public static CommandDelegate ChangeFrom<T>(Ref<T> val, T startValue, IInterpolator<T> interpolator, double duration, CommandEase ease = null)
+	public static CommandDelegate ChangeFrom<T>(Ref<T> val, T startValue, IInterpolator<T> interpolator, double duration, CommandEase ease = null) where T : struct
 	{
 		CheckArgumentNonNull(val, "val");
 		CheckArgumentNonNull(interpolator, "interpolator");
