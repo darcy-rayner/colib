@@ -5,6 +5,10 @@ CoLib is a control flow library designed to simplify writing complex timed logic
 in Unity. The library is modular and highly extensible, making heavy use of closures.
 It's design is similar to the Cocos2d and LibGDX Action systems.
 
+Compatibilty
+-
+CoLib is compatible with Unity 5.0 and upward.
+
 Basic Usage
 -
 
@@ -309,6 +313,6 @@ hybrid eases. Try using Ease.Smooth(), which produces a nice Hermite curve.
 License
 -
 
-Modified BSD
+[Modified BSD](License.txt)
 
 *&copy; 2015 Darcy Rayner*
