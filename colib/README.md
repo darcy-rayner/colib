@@ -309,6 +309,6 @@ hybrid eases. Try using Ease.Smooth(), which produces a nice Hermite curve.
 License
 -
 
-Modified BSD
+[Modified BSD](License.txt)
 
 *&copy; 2015 Darcy Rayner*
