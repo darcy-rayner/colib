@@ -11,19 +11,8 @@ public class CommandQueueExample : MonoBehaviour
 	private void Start () 
 	{
 		bool condition = false;
-		gameObject.Queue(
-			Commands.RepeatForever(
-				Commands.Wiggle(gameObject.ToRotationRef(true), 30f, 2.0),
-				Commands.Wobble(transform.ToPositionYRef(true), 3f, 2.0),
-				Commands.Parallel(
-					Commands.SquashAndStretch(gameObject.ToScaleRef(), 3f, 2.0),
-					Commands.Shake(transform.ToPositionRef(true), 0.3f, 2.0),
-					Commands.Shake(transform.ToRotationRef(true), 5f, 2.0)
-				)
-			)
-		);
 
-		/*gameObject.Queue(
+		gameObject.Queue(
 			Commands.ScaleTo(gameObject, 0.05f, 2.0f, Ease.OutQuart()),
 			Commands.ScaleTo(gameObject, 1.0f, 1.0f, Ease.OutBounce()),
 			Commands.RepeatForever(
@@ -46,17 +35,20 @@ public class CommandQueueExample : MonoBehaviour
 					Commands.RotateTo(gameObject, Quaternion.identity, 0.5f, Ease.InOutHermite())
 				),
 				Commands.TintTo(gameObject, Color.white, 0.25f, Ease.InOutSin()),
-				Commands.While(delegate(double elapsedTime) {
-					return elapsedTime <= 0.5f; 	
-				}),
 				Commands.MoveFrom(gameObject,  new Vector3(0.0f, 0.0f, 0.8f), 0.5f, Ease.OutElastic()),
 				Commands.RotateFrom(gameObject, Quaternion.Euler(0.0f, 45.0f, 45.0f), 0.5f, Ease.InOutExpo()),
 				Commands.ScaleFrom(gameObject, 0.25f, 0.75f, Ease.InOutHermite()),
 				Commands.TintFrom(gameObject, Color.green, 0.25f, Ease.InOutQuint()),
-				Commands.ScaleTo(gameObject, 1.0f, 0.2f, Ease.Smooth())
-
+				Commands.ScaleTo(gameObject, 1.0f, 0.2f, Ease.Smooth()),
+				Commands.Wiggle(gameObject.ToRotationRef(true), 30f, 2.0),
+				Commands.Wobble(transform.ToPositionYRef(true), 3f, 2.0),
+				Commands.Parallel(
+					Commands.SquashAndStretch(gameObject.ToScaleRef(), 3f, 2.0),
+					Commands.Shake(transform.ToPositionRef(true), 0.3f, 2.0),
+					Commands.Shake(transform.ToRotationRef(true), 5f, 2.0)
+				)
 			)
-		);*/		
+		);		
 	}
 }
 

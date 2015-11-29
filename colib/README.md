@@ -13,10 +13,14 @@ Below is a simple tweening example:
     void Start()
     {
         double duration = 8.0;
+        Vector2 secondPosition = new Vector2(0.0f, 10.0f, 0.0f);
         Vector2 finalPosition = new Vector2(10.0f, 0.0f, 0.0f);
-        // Move the current gameObject to (10.0f, 0.0f, 0.0f) over 8 seconds.
+
+        // Move the current gameObject secondPosition over 8 seconds,
+        // then to finalPosition over 8 seconds.
         gameObject.Schedule(
-            Commands.MoveTo(gameObject, finalPosition, duration),
+            Commands.MoveTo(gameObject, secondPosition, duration),
+            Commands.MoveTo(gameObject, finalPosition, duration)
         );
     }
 
@@ -167,8 +171,8 @@ A command, or CommandDelegate, is a method or (more commonly) a closure which co
 amount of time and then completes. The first argument deltaTime is the amount of time to
 update the command by. The command will subtract the amount of time it has used, then output
 it back into deltaTime. When the command has completed, it will return true, otherwise it
-will return false to indicate furthur updates are required. After a command has completed,
-furthur calls to it will restart it. Here is the implementation of the Do command:
+will return false to indicate further updates are required. After a command has completed,
+further calls to it will restart it. Here is the implementation of the Do command:
 
 	public static CommandDelegate Do(CommandDo command)
 	{
@@ -184,31 +188,31 @@ can be used to compose more complex ones:
 
         // Do an action. This action won't consume any time.
         Commands.Do(() => Debug.Log("Hello"))
-        
-        // Do an action over a duration. The input value t is normalized between 0 and 
+
+        // Do an action over a duration. The input value t is normalized between 0 and
         // 1, and  can have a custom easing function applied.
         Commands.Duration( t => a = (b - c) * t + c, 3.0, Ease.Smooth())
-        
+
         // Wait 3 seconds
         Commands.WaitForSeconds(3.0)
-        
+
         // Do a series of commands in sequence, (as we've seen before).
         Commands.Sequence(
             Commands.WaitForSeconds(3.0),
             Commands.Do( () => Debug.Log("A"))
         )
-        
+
         // Do commands in parallel
         Commands.Parallel(
             Commands.Duration( t => Debug.Log(t), 3.0)
             Commands.Do( () => Debug.Log("B")),
         )
-        
+
         // Repeat a command 5 times.
         Commands.Repeat(
             5, Commands.Do( () => Debug.Log("Hello"))
         )
-        
+
         // Repeat a command forever, (be careful, this should take some amount of time
         // otherwise it will be an infinite loop).
         Commands.RepeatForever(
@@ -220,7 +224,7 @@ can be used to compose more complex ones:
 Coroutines
 -
 
-CoLib has it's own version of Coroutines which can be useful for expressing certain kinds 
+CoLib has it's own version of Coroutines which can be useful for expressing certain kinds
 of logic efficiently which regular Commands can't. They look like this :
 
     IEnumerator<CommandDelegate> CoroutineMethod(int firstVal, int secondVal, int thirdVal)
@@ -232,11 +236,11 @@ of logic efficiently which regular Commands can't. They look like this :
         Debug.Log(thirdVal);
 
         // Launch another coroutine without any parameters.
-        yield Commands.Coroutine(ASecondCoroutine); 
+        yield return Commands.Coroutine(ASecondCoroutine);
 
         // Execute whatever CommandDelegates we want in parallel, and wait for them to finish
         // before returning.
-        yield Commands.Parallel(
+        yield return Commands.Parallel(
             Commands.Coroutine( () => AThirdCoroutine()),
             Commands.Coroutine( () => AForthCoroutine())
         );
@@ -254,13 +258,13 @@ More complex examples can be found in the Examples folder.
 
 Tweening
 -
-CoLib comes with a light weight tweening library built in. The following types can be 
+CoLib comes with a light weight tweening library built in. The following types can be
 tweened.
 
         float, double, short, int, long, Vector2, Vector3, Vector4, Colour, Quaternion, Rect
-    
-Fields on objects are captured by using the Ref<T> class.
- 
+
+Fields on objects are captured by using the Ref<T> struct.
+
         float someVariable = 0f;
         Ref<float> ref = new Ref(
             () => someVariable, // Getter
@@ -270,10 +274,10 @@ Fields on objects are captured by using the Ref<T> class.
         gameObject.Schedule(
             Commands.ChangeTo(ref, 4f, duration, Ease.Smooth()),
             Commands.ChangeBy(ref, -1f, duration, Ease.Smooth()),
-            Commands.ChangeFrom(ref, 0f, duration, Ease.Smooth()) 
+            Commands.ChangeFrom(ref, 0f, duration, Ease.Smooth())
         );
 
-There are a number of extensions which cut this syntax down for commonly tweened types, 
+There are a number of extensions which cut this syntax down for commonly tweened types,
 including transforms, gameObjects, materials, renderers, and uGUI components.
 
     gameObject.Schedule(
@@ -284,9 +288,9 @@ including transforms, gameObjects, materials, renderers, and uGUI components.
     );
 
 For custom types you would like to ease, you can write your own interpolators using
-the IInterpolator interface, or you can make the type implement the IInterpolatable 
-interface. Or, if you are feeling really adventurous, you could write your own custom
-command.
+the IInterpolator interface, or you can make the type implement the IInterpolatable
+interface. If you are feeling really adventurous, you could even write your own
+custom command.
 
 Eases
 -
@@ -296,11 +300,11 @@ signature:
 
     delegate double CommandEase(double t);
 
-An easing function takes an input value t where an uneased t ranges from 0 <= t <= 1 . 
+An easing function takes an input value t where an uneased t ranges from 0 <= t <= 1 .
 Some easing functions, (such as BackEase) return values outside the range 0 <= t <= 1.
 For a given valid easing function, f(t),  f(0) = 0 and f(1) = 1. The library implements
 the full list of penner easing functions, and a few utilities to help compose your own
-hybrid eases. 
+hybrid eases. Try using Ease.Smooth(), which produces a nice Hermite curve.
 
 License
 -

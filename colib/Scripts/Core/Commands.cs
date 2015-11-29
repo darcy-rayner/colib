@@ -375,7 +375,7 @@ static public partial class Commands
 	/// 			// Reset state here. 
 	/// 			counter = 0;
 	/// 		}),
-	/// 		Commands.While(delegate(double elapsedTime) {
+	/// 		Commands.While(() => {
 	/// 			counter++;
 	/// 			Debug.Log(counter);
 	/// 			return (counter <= 5);
