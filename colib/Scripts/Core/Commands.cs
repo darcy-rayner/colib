@@ -124,8 +124,7 @@ static public partial class Commands
 			return finished;
 		};
 	}
-	
-	
+
 	/// <summary>
 	/// Waits a specified number of calls to update. This ignores time althogether.
 	/// </summary>

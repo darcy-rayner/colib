@@ -16,6 +16,7 @@ public static class MaterialExtensions
 			t => material.color = t
 		);
 	}
+
 	public static Ref<float> ToRedRef(this Material material)
 	{
 		return new Ref<float>(

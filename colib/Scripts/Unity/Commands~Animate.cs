@@ -138,6 +138,12 @@ public static partial class Commands
 		);	
 	}
 
+	/// <summary>
+	/// Squashes the y axis, while inversely stretching the x axis.
+	/// </summary>
+	/// <param name="val">The value to animate.</param>
+	/// <param name="amplitude">The size of the squash.</param>
+	/// <param name="duration">The duration of the squash.</param>
 	public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration) 
 	{
 		CheckArgumentNonNull(scale, "scale");
@@ -145,7 +151,7 @@ public static partial class Commands
 	}
 
 	/// <summary>
-	/// Squashes the y axis, while inversely stretching the x axis.
+	/// Squashes the normal axis, while inversely stretching the tangent axis.
 	/// </summary>
 	/// <param name="val">The value to animate.</param>
 	/// <param name="amplitude">The size of the squash.</param>
