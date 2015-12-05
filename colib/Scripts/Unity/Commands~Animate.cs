@@ -371,20 +371,21 @@ public static partial class Commands
 			() => {
 				var baseVal = rotation.Value;
 				for (int i = 0; i < numShakes; ++i) {
-					// Generate an offset within the range -1, 1
+					// Generate an offset within the range -amount, amount
 					var offset = Quaternion.Euler(
 						UnityEngine.Random.Range(-amount, amount),
 						UnityEngine.Random.Range(-amount, amount),
 						UnityEngine.Random.Range(-amount, amount)
 					);
 
-					float angle = Quaternion.Angle(baseVal, offset) ;
+					float angle = Quaternion.Angle(Quaternion.identity, offset);
+					// Clamp the offset
 					if (angle > amount) {
 						float t = UnityEngine.Random.Range(0f, angle / amount);
-						offset = Quaternion.LerpUnclamped(baseVal, offset, t);
+						offset = Quaternion.LerpUnclamped(Quaternion.identity, offset, t);
 					}
 
-					list[i] = Commands.RotateTo(rotation, offset, avgDuration);						
+					list[i] = Commands.RotateTo(rotation, baseVal * offset, avgDuration);						
 				}
 				list[numShakes] = Commands.RotateTo(rotation, baseVal, avgDuration);
 				return Commands.Sequence(list);
