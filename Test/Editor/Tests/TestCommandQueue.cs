@@ -127,9 +127,6 @@ internal class TestCommandQueue
 		
 		int testCount = 0;
 		int conditionCalledCount = 0;
-		const double TIMEOUT_WHILE = 3.0;
-		double lastElapsedTime = float.PositiveInfinity;
-		bool firstWhileCall = true;
 		queue.Enqueue(
 			Commands.Repeat(4,
 				Commands.Condition(() => testCount % 2 == 0,
