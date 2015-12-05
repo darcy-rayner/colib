@@ -31,6 +31,18 @@ public struct Ref<T> where T : struct
 	}
 
 	#endregion
+
+	#region Public static methods
+
+	public static Ref<T> Create(T value = default(T))
+	{
+		return new Ref<T>( 
+			() => value,
+			t => value = t
+		);
+	}
+
+	#endregion
 	
 	#region Public methods
 

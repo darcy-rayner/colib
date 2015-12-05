@@ -156,6 +156,8 @@ public static partial class Commands
 	/// <param name="val">The value to animate.</param>
 	/// <param name="amplitude">The size of the squash.</param>
 	/// <param name="duration">The duration of the squash.</param>
+	/// <param name="normal"> The normal of the animation. </param>
+	/// <param name="tangent"> The tangent of the animation. </param>
 	public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration, Vector3 normal, Vector3 tangent) 
 	{
 		CheckArgumentNonNull(scale, "scale");
@@ -215,6 +217,71 @@ public static partial class Commands
 			Commands.Do( () => {
 				scale.Value = startScale;
 			})
+		);
+	}
+
+	/// <summary>
+	/// Performs a squash and stretch animation, while changing to a target scale.
+	/// </summary>
+	/// <param name="scale">The value to animate.</param>
+	/// <param name="endScale">The final scale.</param>
+	/// <param name="amplitude">The amplitude of a squash and strech</param>
+	/// <param name="duration">The duration of the animation</param>
+	public static CommandDelegate ScaleSquashAndStretchTo(Ref<Vector3> scale, Vector3 endScale, float amplitude, double duration)
+	{
+		CheckArgumentNonNull(scale, "scale");
+		return ScaleSquashAndStretchTo(scale, endScale, amplitude, duration, Vector3.up, new Vector3(0.5f, 0f, 0.5f).normalized);
+	}
+
+	/// <summary>
+	/// Performs a squash and stretch animation, while changing to a target scale.
+	/// </summary>
+	/// <param name="scale">The value to animate.</param>
+	/// <param name="endScale">The final scale.</param>
+	/// <param name="amplitude">The amplitude of a squash and strech</param>
+	/// <param name="duration">The duration of the animation</param>
+	/// <param name="normal"> The normal of the animation. </param>
+	/// <param name="tangent"> The tangent of the animation. </param>
+	public static CommandDelegate ScaleSquashAndStretchTo(Ref<Vector3> scale, Vector3 endScale, float amplitude, double duration, Vector3 normal, Vector3 tangent)
+	{	
+		CheckArgumentNonNull(scale, "scale");
+		var squashRef = Ref<Vector3>.Create(Vector3.one);
+		var scaleRef = Ref<Vector3>.Create();
+		return Commands.Sequence(
+			Commands.Do( () => scaleRef.Value = scale.Value),
+			Commands.Parallel(
+				SquashAndStretch(squashRef, amplitude, duration, normal, tangent),
+				Commands.ChangeTo(scaleRef, endScale, duration / 4, Ease.Smooth()),
+				Commands.Duration(t => scale.Value = Vector3.Scale(squashRef.Value,scaleRef.Value), duration)
+			)
+		);
+	}
+
+	public static CommandDelegate ScaleSquashAndStretchFrom(Ref<Vector3> scale, Vector3 startScale, float amplitude, double duration)
+	{
+		CheckArgumentNonNull(scale, "scale");
+		return ScaleSquashAndStretchFrom(scale, startScale, amplitude, duration, Vector3.up, new Vector3(0.5f, 0f, 0.5f).normalized);
+	}
+
+	/// <summary>
+	/// Performs a squash and stretch animation, while changing from a target scale.
+	/// </summary>
+	/// <param name="scale">The value to animate.</param>
+	/// <param name="startScale">The scale to animate from.</param>
+	/// <param name="amplitude">The amplitude of a squash and strech</param>
+	/// <param name="duration">The duration of the animation</param>
+	/// <param name="normal"> The normal of the animation. </param>
+	/// <param name="tangent"> The tangent of the animation. </param>
+	public static CommandDelegate ScaleSquashAndStretchFrom(Ref<Vector3> scale, Vector3 startScale, float amplitude, double duration, Vector3 normal, Vector3 tangent)
+	{
+		CheckArgumentNonNull(scale, "scale");
+		Vector3 targetScale = Vector3.zero;
+		return Commands.Sequence(
+			Commands.Do( () => {
+				targetScale = scale.Value;
+				scale.Value = startScale;
+			}),
+			Commands.Defer( () => Commands.ScaleSquashAndStretchTo(scale, targetScale, amplitude, duration, normal, tangent))
 		);
 	}
 
