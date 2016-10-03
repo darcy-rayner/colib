@@ -504,6 +504,52 @@ internal class TestCommandQueue
 		Assert.AreEqual(i, 25);
 		Assert.AreEqual(c, 20);
 	}
+
+	[Test]
+	public static void TestProcess()
+	{
+		CommandQueue queue = new CommandQueue();
+
+		double time = 0.0;
+		bool started = false;
+		bool finished = false;
+
+		queue.Enqueue(
+			Commands.Do( () => started = true),
+			Commands.Duration( t => time = t, 1.0),
+			Commands.Do( () => finished = true)
+		);
+
+		Assert.AreEqual(false, started);
+		queue.Process();
+		Assert.AreEqual(true, started);
+		Assert.AreEqual(0.0, time);
+		Assert.AreEqual(false, finished);
+		queue.Process();
+		Assert.AreEqual(0.0, time);
+	}
+
+	[Test]
+	public static void TestRunToEnd()
+	{
+		CommandQueue queue = new CommandQueue();
+
+		double time = 0.0;
+		bool started = false;
+		bool finished = false;
+
+		queue.Enqueue(
+			Commands.Do( () => started = true),
+			Commands.Duration( t => time = t, 1.0),
+			Commands.Do( () => finished = true)
+		);
+
+		Assert.AreEqual(false, started);
+		queue.RunToEnd();
+		Assert.AreEqual(true, started);
+		Assert.AreEqual(1.0, time);
+		Assert.AreEqual(true, finished);
+	}
 }
 
 }

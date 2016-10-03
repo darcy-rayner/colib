@@ -68,7 +68,24 @@ public class CommandQueue
 		}
 		return this;
 	}
-	
+
+	/// <summary>
+	/// Updates the queue with a zero time update. This will make sure the first available command is started.
+	/// </summary>
+	public void Process()
+	{
+		Update(0.0);
+	}
+
+	/// <summary>
+	/// Tries to update a queue until it has complete. Note, this can result in an infinite loop if
+	/// commands in the queue rely on external state changes.
+	/// </summary>
+	public void RunToEnd()
+	{
+		Update(double.MaxValue);
+	}
+
 	public bool Update(double deltaTime)
 	{
 		return Update(ref deltaTime);
