@@ -18,25 +18,25 @@ internal class TestCommandQueue
 		
 		string lastCalled = "";
 		queue.Enqueue(
-			Commands.Do( () => {
+			Cmd.Do( () => {
 				Assert.AreEqual(lastCalled, "");
 				lastCalled = "a";
 			}),
-			Commands.Do( () => {
+			Cmd.Do( () => {
 				Assert.AreEqual(lastCalled, "a");
 				lastCalled = "b";
 			}),
-			Commands.Do( () => {
+			Cmd.Do( () => {
 				Assert.AreEqual(lastCalled, "b");
 				lastCalled = "c";
 				// Any Command pushed to the queue now, should
 				// execute after d.
-				queue.Enqueue( Commands.Do( () => {
+				queue.Enqueue( Cmd.Do( () => {
 					Assert.AreEqual(lastCalled, "d");
 					lastCalled = "e";
 				}));
 			}),
-			Commands.Do( () => {
+			Cmd.Do( () => {
 				Assert.AreEqual(lastCalled, "c");
 				lastCalled = "d";
 			})
@@ -63,21 +63,21 @@ internal class TestCommandQueue
 		// there is no accumulation of error in timing. We use a repeat
 		// here to accentuate the error.
 		queue.Enqueue(
-			Commands.Repeat(REPEAT_COUNT,
-				Commands.Sequence(
-					Commands.WaitForSeconds(WAIT_DURATION),
-					Commands.Do(() => lastT = 0.0),
-					Commands.Duration( (t) => {
+			Cmd.Repeat(REPEAT_COUNT,
+				Cmd.Sequence(
+					Cmd.WaitForSeconds(WAIT_DURATION),
+					Cmd.Do(() => lastT = 0.0),
+					Cmd.Duration( (t) => {
 						Assert.IsTrue(t <= 1.0);
 						Assert.IsTrue(lastT <= t);
 						lastT = t;
 					}, FIRST_Command_DURATION),
-					Commands.Do(() => lastT = 0.0),
-					Commands.Parallel(
-						Commands.Duration( (t) => {} , SECOND_Command_DURATION / 2.0),
-						// The following two  Duration Commands should finish in the same Update call.
-						Commands.Duration( (t) => {}, SECOND_Command_DURATION - (DELTA_TIME_RATE / 2.0)),
-						Commands.Duration( (t) => {
+					Cmd.Do(() => lastT = 0.0),
+					Cmd.Parallel(
+						Cmd.Duration( (t) => {} , SECOND_Command_DURATION / 2.0),
+						// The following two  Duration Cmd should finish in the same Update call.
+						Cmd.Duration( (t) => {}, SECOND_Command_DURATION - (DELTA_TIME_RATE / 2.0)),
+						Cmd.Duration( (t) => {
 							Assert.IsTrue(t <= 1.0);
 							Assert.IsTrue(lastT <= t);
 							lastT = t;
@@ -106,8 +106,8 @@ internal class TestCommandQueue
 		bool secondCommandCalled = false;
 		
 		queue.Enqueue(
-			Commands.Do( () => queue.Paused = true),
-			Commands.Do( () => {
+			Cmd.Do( () => queue.Paused = true),
+			Cmd.Do( () => {
 				Assert.AreEqual(shouldBePaused, false, "Executed Command while CommandQueue paused.");
 				secondCommandCalled = true;
 			})	
@@ -128,17 +128,17 @@ internal class TestCommandQueue
 		int testCount = 0;
 		int conditionCalledCount = 0;
 		queue.Enqueue(
-			Commands.Repeat(4,
-				Commands.Condition(() => testCount % 2 == 0,
-					Commands.Do( () => testCount += 1),
-					Commands.Do( () => {
+			Cmd.Repeat(4,
+				Cmd.Condition(() => testCount % 2 == 0,
+					Cmd.Do( () => testCount += 1),
+					Cmd.Do( () => {
 						Assert.IsTrue(testCount % 2 == 1, "Unexpected state in condition branch.");
 						conditionCalledCount += 1;
 						testCount += 1;
 					})
 				)
 			),
-			Commands.Do(() => Assert.AreEqual(conditionCalledCount, 2))
+			Cmd.Do(() => Assert.AreEqual(conditionCalledCount, 2))
 		);
 		
 		while (!queue.Update(DELTA_TIME_RATE)) {}
@@ -150,7 +150,7 @@ internal class TestCommandQueue
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Queue(queue)
+			Cmd.Queue(queue)
 		);
 		
 		bool threwException = false;
@@ -164,7 +164,7 @@ internal class TestCommandQueue
 		
 		queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Do(() => {
+			Cmd.Do(() => {
 				queue.Update(DELTA_TIME_RATE);
 			})
 		);
@@ -185,11 +185,11 @@ internal class TestCommandQueue
 		CommandQueue queue = new CommandQueue();
 		double a = 0.0, b = 0.0, c = 0.0;;
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Parallel(
-					Commands.Duration((t) => a = t, 4.0),
-					Commands.Duration((t) => b = t, 3.0),
-					Commands.Duration((t) => {
+			Cmd.Repeat(2,
+				Cmd.Parallel(
+					Cmd.Duration((t) => a = t, 4.0),
+					Cmd.Duration((t) => b = t, 3.0),
+					Cmd.Duration((t) => {
 						c = t;
 						Assert.IsTrue(b < c, "Runner not operating con-currently.");
 						Assert.IsTrue(a < b, "Runner not operating con-currently.");
@@ -212,8 +212,8 @@ internal class TestCommandQueue
 		const int MAX_REPEAT_COUNT = 100;
 		int repeatCount = 0;
 		queue.Enqueue(
-			Commands.RepeatForever( 
-				Commands.Do(() => {
+			Cmd.RepeatForever( 
+				Cmd.Do(() => {
 					if (repeatCount < MAX_REPEAT_COUNT) { 
 						repeatCount++; 
 					} else {
@@ -245,16 +245,16 @@ internal class TestCommandQueue
 		bool secondCommandTriggered = false;
 		bool thirdCommandTriggered = false;
 		secondQueue.Enqueue(
-			Commands.Do(() => {
+			Cmd.Do(() => {
 				Assert.IsTrue(!firstCommandTriggered);
 				firstCommandTriggered = true;
 			}),
-			Commands.Do(() => {
+			Cmd.Do(() => {
 				Assert.IsTrue(firstCommandTriggered);
 				Assert.IsTrue(!secondCommandTriggered);
 				secondCommandTriggered = true;
 			}),
-			Commands.Do(() => {
+			Cmd.Do(() => {
 				Assert.IsTrue(firstCommandTriggered);
 				Assert.IsTrue(secondCommandTriggered);
 				Assert.IsTrue(!thirdCommandTriggered);
@@ -263,8 +263,8 @@ internal class TestCommandQueue
 		);
 		
 		mainQueue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Queue(secondQueue)
+			Cmd.Repeat(2,
+				Cmd.Queue(secondQueue)
 			)
 		);
 		
@@ -275,16 +275,16 @@ internal class TestCommandQueue
 	public static void TestWaitFrames()
 	{
 		int count = 0;
-		CommandDelegate incr = Commands.Do(() => ++count);
+		CommandDelegate incr = Cmd.Do(() => ++count);
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.WaitForFrames(1),
+			Cmd.WaitForFrames(1),
 			incr,
-			Commands.WaitForFrames(2),
+			Cmd.WaitForFrames(2),
 			incr,
-			Commands.Repeat(3,
-				Commands.Sequence(
-					Commands.WaitForFrames(2),
+			Cmd.Repeat(3,
+				Cmd.Sequence(
+					Cmd.WaitForFrames(2),
 					incr
 				)
 			)
@@ -314,11 +314,11 @@ internal class TestCommandQueue
 	{
 		if (depth > 0) {
 			++calledCount.Value;
-			yield return Commands.ChangeTo(val, 5.0f, 4.0f);
-			yield return Commands.WaitForSeconds(1.0f);
-			yield return Commands.ChangeBy(val, -4.0f, 4.0f);
+			yield return Cmd.ChangeTo(val, 5.0f, 4.0f);
+			yield return Cmd.WaitForSeconds(1.0f);
+			yield return Cmd.ChangeBy(val, -4.0f, 4.0f);
 			yield return null; // Wait for a single frame
-			yield return Commands.Coroutine(() => CoroutineOne(val, depth - 1, calledCount));
+			yield return Cmd.Coroutine(() => CoroutineOne(val, depth - 1, calledCount));
 		}
 		
 	}
@@ -340,8 +340,8 @@ internal class TestCommandQueue
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Coroutine(() => CoroutineOne(floatRef, 2, calledCountRef))
+			Cmd.Repeat(2,
+				Cmd.Coroutine(() => CoroutineOne(floatRef, 2, calledCountRef))
 			)
 		);
 		
@@ -378,17 +378,17 @@ internal class TestCommandQueue
 		int callCount = 0;
 		
 		queue.Enqueue(
-			Commands.RepeatForever(
-				Commands.Require( () => !shouldStop,
-					() => Commands.RepeatForever(
-						Commands.Sequence(
-							Commands.Do( () => callCount++),
-							Commands.WaitForFrames(1)
+			Cmd.RepeatForever(
+				Cmd.Require( () => !shouldStop,
+					() => Cmd.RepeatForever(
+						Cmd.Sequence(
+							Cmd.Do( () => callCount++),
+							Cmd.WaitForFrames(1)
 						)
 					)
 				),
-				Commands.Do( () => didFinish = true),
-				Commands.WaitForFrames(1)
+				Cmd.Do( () => didFinish = true),
+				Cmd.WaitForFrames(1)
 			)
 		);
 		
@@ -426,21 +426,21 @@ internal class TestCommandQueue
 		int[] selections = new int[NUM_SELECTIONS];
 		int i = 0;
 		queue.Enqueue(
-			Commands.Repeat(NUM_SELECTIONS,
-				Commands.Do(() => selections[i] = 0),
-				Commands.ChooseRandom(
-					Commands.Do(() => selections[i] = 1),
-					Commands.Do(() => selections[i] = 2),
-					Commands.Do(() => selections[i] = 3),
-					Commands.Do(() => selections[i] = 4),
-					Commands.Do(() => selections[i] = 5),
-					Commands.Do(() => selections[i] = 6),
-					Commands.Do(() => selections[i] = 7),
-					Commands.Do(() => selections[i] = 8),
-					Commands.Do(() => selections[i] = 9),
+			Cmd.Repeat(NUM_SELECTIONS,
+				Cmd.Do(() => selections[i] = 0),
+				Cmd.ChooseRandom(
+					Cmd.Do(() => selections[i] = 1),
+					Cmd.Do(() => selections[i] = 2),
+					Cmd.Do(() => selections[i] = 3),
+					Cmd.Do(() => selections[i] = 4),
+					Cmd.Do(() => selections[i] = 5),
+					Cmd.Do(() => selections[i] = 6),
+					Cmd.Do(() => selections[i] = 7),
+					Cmd.Do(() => selections[i] = 8),
+					Cmd.Do(() => selections[i] = 9),
 					null
 				),
-				Commands.Do( () => i++)
+				Cmd.Do( () => i++)
 			)
 		);
 		
@@ -467,14 +467,14 @@ internal class TestCommandQueue
 		int i = 0;
 		int c = 0;
 		queue.Enqueue(
-			Commands.Repeat(5,
-		        Commands.Do( () => ++i),
-				Commands.While( () => i % 5 != 0,
-		        	Commands.Do( () => ++i),
-		            Commands.WaitForFrames(1),
-		            Commands.Do( () => ++c)
+			Cmd.Repeat(5,
+		        Cmd.Do( () => ++i),
+				Cmd.While( () => i % 5 != 0,
+		        	Cmd.Do( () => ++i),
+		            Cmd.WaitForFrames(1),
+		            Cmd.Do( () => ++c)
 				),
-		        Commands.WaitForFrames(1)
+		        Cmd.WaitForFrames(1)
 			)
 		);
 
@@ -515,9 +515,9 @@ internal class TestCommandQueue
 		bool finished = false;
 
 		queue.Enqueue(
-			Commands.Do( () => started = true),
-			Commands.Duration( t => time = t, 1.0),
-			Commands.Do( () => finished = true)
+			Cmd.Do( () => started = true),
+			Cmd.Duration( t => time = t, 1.0),
+			Cmd.Do( () => finished = true)
 		);
 
 		Assert.AreEqual(false, started);
@@ -539,9 +539,9 @@ internal class TestCommandQueue
 		bool finished = false;
 
 		queue.Enqueue(
-			Commands.Do( () => started = true),
-			Commands.Duration( t => time = t, 1.0),
-			Commands.Do( () => finished = true)
+			Cmd.Do( () => started = true),
+			Cmd.Duration( t => time = t, 1.0),
+			Cmd.Do( () => finished = true)
 		);
 
 		Assert.AreEqual(false, started);
