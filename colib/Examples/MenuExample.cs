@@ -88,8 +88,8 @@ public class MenuExample : MonoBehaviour
             }
             _highlighted = true;
             _queue.Enqueue(
-                Commands.While( () => _highlighted,
-                    Commands.Oscillate(ToScaleRef(), 0.1f, 0.5)
+                Cmd.While( () => _highlighted,
+                    Cmd.Oscillate(ToScaleRef(), 0.1f, 0.5)
                 )
             );
         }
@@ -118,7 +118,7 @@ public class MenuExample : MonoBehaviour
         _backButton = new MenuButton { Region = new Rect(-RECT_WIDTH,0f, RECT_WIDTH, RECT_HEIGHT), Text = "Back" };
 
         _queue.Enqueue(
-            Commands.WaitForSeconds(1.0f)
+            Cmd.WaitForSeconds(1.0f)
         );
         AnimateIn();
 
@@ -158,9 +158,9 @@ public class MenuExample : MonoBehaviour
         float rotation = 360f;
         foreach (var button in _buttons) {
             _moves.Add(
-                Commands.Parallel(
-                    Commands.ChangeBy( button.ToRotationRef(), rotation, duration, Ease.Smooth()),
-                    Commands.ChangeTo( button.ToPositionRef(), offset, duration, Ease.OutBounce())
+                Cmd.Parallel(
+                    Cmd.ChangeBy( button.ToRotationRef(), rotation, duration, Ease.Smooth()),
+                    Cmd.ChangeTo( button.ToPositionRef(), offset, duration, Ease.OutBounce())
                 )
             );
             offset.y += RECT_HEIGHT * 1.5f;
@@ -168,8 +168,8 @@ public class MenuExample : MonoBehaviour
             rotation = - rotation;
         }
         _queue.Enqueue(
-            Commands.ChangeTo(_backButton.ToPositionRef(), new Vector2(-RECT_WIDTH / 2, RECT_HEIGHT / 2), 0.3f, Ease.Smooth()), 
-            Commands.Parallel( _moves.ToArray())
+            Cmd.ChangeTo(_backButton.ToPositionRef(), new Vector2(-RECT_WIDTH / 2, RECT_HEIGHT / 2), 0.3f, Ease.Smooth()), 
+            Cmd.Parallel( _moves.ToArray())
         );
     }
 
@@ -183,13 +183,13 @@ public class MenuExample : MonoBehaviour
 
         List<CommandDelegate> _moves = new List<CommandDelegate>();
         foreach (var button in _buttons) {
-            _moves.Add(Commands.ChangeTo(button.ToPositionRef(), origin, 0.7f, Ease.Smooth()));
+            _moves.Add(Cmd.ChangeTo(button.ToPositionRef(), origin, 0.7f, Ease.Smooth()));
         }
 
         _queue.Enqueue(
-            Commands.Parallel(_moves.ToArray()),
-            Commands.ChangeBy(_backButton.ToPositionRef(), new Vector2(RECT_WIDTH, 0f), 0.3f, Ease.Smooth()), 
-            Commands.Do( () => _hidingMenu = false)
+            Cmd.Parallel(_moves.ToArray()),
+            Cmd.ChangeBy(_backButton.ToPositionRef(), new Vector2(RECT_WIDTH, 0f), 0.3f, Ease.Smooth()), 
+            Cmd.Do( () => _hidingMenu = false)
         );
 
     }
@@ -203,7 +203,7 @@ public class MenuExample : MonoBehaviour
         AnimateOut();
         GameObject gm = null;
         _queue.Enqueue(
-            Commands.Do( () => {
+            Cmd.Do( () => {
                 gm = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 gm.transform.position = Vector3.zero;
                 gm.AddComponent<CommandQueueExample>();
@@ -221,7 +221,7 @@ public class MenuExample : MonoBehaviour
         AnimateOut();
         GameObject gm = null;
         _queue.Enqueue(
-            Commands.Do( () => {
+            Cmd.Do( () => {
                 gm = new GameObject();
                 gm.AddComponent<RectangleExample>();
             })
@@ -239,7 +239,7 @@ public class MenuExample : MonoBehaviour
         GameObject gm = null;
 
         _queue.Enqueue(
-            Commands.Do(() => {
+            Cmd.Do(() => {
                 gm = new GameObject();
 
                 gm.AddComponent<EaseExample>();

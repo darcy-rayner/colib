@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace CoLib
 {
     
-public static partial class Commands
+public static partial class Cmd
 {
     #region Graphic
 

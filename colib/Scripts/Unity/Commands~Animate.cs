@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CoLib
 {
 
-public static partial class Commands
+public static partial class Cmd
 {
     /// <summary>
     /// Pulsates the scale.
@@ -15,13 +15,13 @@ public static partial class Commands
     {
         CheckArgumentNonNull(scale, "scale");
         CommandDelegate tweenBack = null;
-        return Commands.Sequence(
-            Commands.Do( () => {
+        return Cmd.Sequence(
+            Cmd.Do( () => {
                 // Because we don't know what the original scale is at this point,
                 // we have to recreate the scale back tween every time.
-                tweenBack = Commands.ChangeTo(scale, scale.Value, duration / 2.0, Ease.Smooth());
+                tweenBack = Cmd.ChangeTo(scale, scale.Value, duration / 2.0, Ease.Smooth());
             }),
-            Commands.ScaleBy(scale, Vector3.one * (amount + 1.0f), duration / 2.0, Ease.Smooth()),
+            Cmd.ScaleBy(scale, Vector3.one * (amount + 1.0f), duration / 2.0, Ease.Smooth()),
             (ref double deltaTime) => tweenBack(ref deltaTime)
         );
     }
@@ -34,14 +34,14 @@ public static partial class Commands
     {
         CheckArgumentNonNull(scale, "scale");
         CommandDelegate tweenBack = null;
-        return Commands.Sequence(
-            Commands.Do( () => {
+        return Cmd.Sequence(
+            Cmd.Do( () => {
                 // Because we don't know what the original scale is at this point,
                 // we have to recreate the scale back tween every time.
-                tweenBack = Commands.ChangeTo(scale, scale.Value, duration / 2.0, Ease.Smooth());
+                tweenBack = Cmd.ChangeTo(scale, scale.Value, duration / 2.0, Ease.Smooth());
             }),
-            Commands.ChangeBy(scale, amount, duration / 2.0, Ease.Smooth()),
-            Commands.Defer( () => tweenBack)
+            Cmd.ChangeBy(scale, amount, duration / 2.0, Ease.Smooth()),
+            Cmd.Defer( () => tweenBack)
         );
     }
 
@@ -57,9 +57,9 @@ public static partial class Commands
     {
         CheckArgumentNonNull(single, "single");
         float baseValue = 0f;
-        return Commands.Sequence(
-            Commands.Do( () => baseValue = single.Value),
-            Commands.Duration( t => {
+        return Cmd.Sequence(
+            Cmd.Do( () => baseValue = single.Value),
+            Cmd.Duration( t => {
                 single.Value = baseValue + Mathf.Sin((float) t * 2f * Mathf.PI) * amount;
             }, duration, ease)
         );
@@ -96,13 +96,13 @@ public static partial class Commands
             }
         );
         
-        return Commands.Sequence(
-            Commands.Do( () => { 
+        return Cmd.Sequence(
+            Cmd.Do( () => { 
                 startQuaternion = rotation.Value; 
                 val = 0.0f;
             }),
             
-            Commands.Oscillate(
+            Cmd.Oscillate(
                 floatRef, amount, duration, Ease.Smooth()
             )
         );
@@ -121,18 +121,18 @@ public static partial class Commands
         float decay = Mathf.Log(100f * amount);
         
         float baseVal = 0f;
-        return Commands.Sequence(
-            Commands.Do( () => {
+        return Cmd.Sequence(
+            Cmd.Do( () => {
                 baseVal = single.Value;
             }),
-              Commands.Duration(
+              Cmd.Duration(
                 t => {
                     float decayCoeef = Mathf.Exp((float)t * decay);
                     single.Value = baseVal + amount * Mathf.Sin(intervals * (float)t * 2 * Mathf.PI) / decayCoeef;
                 },
                 duration
             ), 
-            Commands.Do( () => {
+            Cmd.Do( () => {
                 single.Value = baseVal;
             })
         );    
@@ -199,14 +199,14 @@ public static partial class Commands
             }
         );    
         
-        return Commands.Sequence(
-            Commands.Do( () => {
+        return Cmd.Sequence(
+            Cmd.Do( () => {
                 area = scale.Value.x * scale.Value.y;
                 startScale = scale.Value;
             }),
-            Commands.Parallel(
+            Cmd.Parallel(
                 Wobble(widthRef, amplitude, duration),
-                Commands.Duration((t) => {
+                Cmd.Duration((t) => {
                     Vector2 tempVal = scale.Value;
                     if (tempVal.x != 0f) {
                         tempVal.y = area / tempVal.x;
@@ -214,7 +214,7 @@ public static partial class Commands
                     scale.Value = tempVal;
                 }, duration)
             ),
-            Commands.Do( () => {
+            Cmd.Do( () => {
                 scale.Value = startScale;
             })
         );
@@ -247,12 +247,12 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
         var squashRef = Ref<Vector3>.Create(Vector3.one);
         var scaleRef = Ref<Vector3>.Create();
-        return Commands.Sequence(
-            Commands.Do( () => scaleRef.Value = scale.Value),
-            Commands.Parallel(
+        return Cmd.Sequence(
+            Cmd.Do( () => scaleRef.Value = scale.Value),
+            Cmd.Parallel(
                 SquashAndStretch(squashRef, amplitude, duration, normal, tangent),
-                Commands.ChangeTo(scaleRef, endScale, duration / 4, Ease.Smooth()),
-                Commands.Duration(t => scale.Value = Vector3.Scale(squashRef.Value,scaleRef.Value), duration)
+                Cmd.ChangeTo(scaleRef, endScale, duration / 4, Ease.Smooth()),
+                Cmd.Duration(t => scale.Value = Vector3.Scale(squashRef.Value,scaleRef.Value), duration)
             )
         );
     }
@@ -276,12 +276,12 @@ public static partial class Commands
     {
         CheckArgumentNonNull(scale, "scale");
         Vector3 targetScale = Vector3.zero;
-        return Commands.Sequence(
-            Commands.Do( () => {
+        return Cmd.Sequence(
+            Cmd.Do( () => {
                 targetScale = scale.Value;
                 scale.Value = startScale;
             }),
-            Commands.Defer( () => Commands.ScaleSquashAndStretchTo(scale, targetScale, amplitude, duration, normal, tangent))
+            Cmd.Defer( () => Cmd.ScaleSquashAndStretchTo(scale, targetScale, amplitude, duration, normal, tangent))
         );
     }
 
@@ -318,7 +318,7 @@ public static partial class Commands
         }
         double avgDuration = duration / (numShakes + 1);
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Commands.Defer( 
+        return Cmd.Defer( 
             () => {
                 var baseVal = vector.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -333,10 +333,10 @@ public static partial class Commands
                     }
                     // Scale the offset, by the amount, and the scale factor.
                     offset = new Vector2(offset.x * amount.x, offset.y * amount.y);
-                    list[i] = Commands.ChangeTo(vector, baseVal + offset, avgDuration);                        
+                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);                        
                 }
-                list[numShakes] = Commands.ChangeTo(vector, baseVal, avgDuration);
-                return Commands.Sequence(list);
+                list[numShakes] = Cmd.ChangeTo(vector, baseVal, avgDuration);
+                return Cmd.Sequence(list);
             }
         );
     }
@@ -376,7 +376,7 @@ public static partial class Commands
         double avgDuration = duration / (numShakes + 1);
 
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Commands.Defer( 
+        return Cmd.Defer( 
             () => {
                 var baseVal = vector.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -394,10 +394,10 @@ public static partial class Commands
 
                     // Scale the offset, by the amount, and the scale factor.
                     offset = new Vector3(offset.x * amount.x, offset.y * amount.y, offset.z * amount.z);
-                    list[i] = Commands.ChangeTo(vector, baseVal + offset, avgDuration);                        
+                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);                        
                 }
-                list[numShakes] = Commands.ChangeTo(vector, baseVal, avgDuration);
-                return Commands.Sequence(list);
+                list[numShakes] = Cmd.ChangeTo(vector, baseVal, avgDuration);
+                return Cmd.Sequence(list);
             }
         );
     }
@@ -434,7 +434,7 @@ public static partial class Commands
         double avgDuration = duration / (numShakes + 1);
 
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Commands.Defer( 
+        return Cmd.Defer( 
             () => {
                 var baseVal = rotation.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -452,10 +452,10 @@ public static partial class Commands
                         offset = Quaternion.LerpUnclamped(Quaternion.identity, offset, t);
                     }
 
-                    list[i] = Commands.RotateTo(rotation, baseVal * offset, avgDuration);                        
+                    list[i] = Cmd.RotateTo(rotation, baseVal * offset, avgDuration);                        
                 }
-                list[numShakes] = Commands.RotateTo(rotation, baseVal, avgDuration);
-                return Commands.Sequence(list);
+                list[numShakes] = Cmd.RotateTo(rotation, baseVal, avgDuration);
+                return Cmd.Sequence(list);
             }
         );
     }

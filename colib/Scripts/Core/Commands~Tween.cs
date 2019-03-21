@@ -1,7 +1,7 @@
 namespace CoLib
 {
 
-public static partial class Commands
+public static partial class Cmd
 {
     #region ChangeTo
     
@@ -9,11 +9,11 @@ public static partial class Commands
     {
         CheckArgumentNonNull(single, "single");
         float startSingle = 0.0f;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startSingle = single.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value = (endSingle - startSingle) * (float) t + startSingle;
             }, duration, ease)
         );
@@ -24,11 +24,11 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         double startSingle = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startSingle = single.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value = (endSingle - startSingle) * t + startSingle;
             }, duration, ease)
         );
@@ -39,9 +39,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeTo(reference, (double) endValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeTo(reference, (double) endValue, duration, ease)
         );
     }
 
@@ -50,9 +50,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef (single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeTo(reference, (double) endValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeTo(reference, (double) endValue, duration, ease)
         );
     }
 
@@ -61,9 +61,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef (single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeTo(reference, (double) endValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeTo(reference, (double) endValue, duration, ease)
         );
     }
 
@@ -72,11 +72,11 @@ public static partial class Commands
         CheckArgumentNonNull(interpolatable, "interpolatable");
 
         T startValue = interpolatable.GetValue();
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startValue = interpolatable.GetValue();
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 interpolatable.Interpolate(startValue, endValue, t);
             }, duration, ease)
         );
@@ -88,11 +88,11 @@ public static partial class Commands
         CheckArgumentNonNull(interpolator, "interpolator");
 
         T startValue = val.Value;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startValue = val.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 val.Value = interpolator.Interpolate(startValue, endValue, t);
             }, duration, ease)
         );
@@ -106,11 +106,11 @@ public static partial class Commands
     {
         CheckArgumentNonNull(single, "single");
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 lastT = 0.0;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value +=  offset * (float) (t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -122,11 +122,11 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 lastT = 0.0;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value +=  offset * (t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -138,9 +138,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeBy(reference, (double) offset, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeBy(reference, (double) offset, duration, ease)
         );
     }
 
@@ -149,9 +149,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeBy(reference, (double) offset, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeBy(reference, (double) offset, duration, ease)
         );
     }
 
@@ -160,9 +160,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeBy(reference, (double) offset, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeBy(reference, (double) offset, duration, ease)
         );
     }
 
@@ -175,11 +175,11 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         float endSingle = 0.0f;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endSingle = single.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value = (endSingle - startSingle) * (float) t + startSingle;    
             }, duration, ease)
         );
@@ -190,11 +190,11 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         double endSingle = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endSingle = single.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 single.Value = (endSingle - startSingle) * t + startSingle;    
             }, duration, ease)
         );
@@ -205,9 +205,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeFrom(reference, (double) startValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeFrom(reference, (double) startValue, duration, ease)
         );
     }
 
@@ -216,9 +216,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeFrom(reference, (double) startValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeFrom(reference, (double) startValue, duration, ease)
         );    }
 
     public static CommandDelegate ChangeFrom(Ref<long> single, long startValue, double duration , CommandEase ease = null)
@@ -226,9 +226,9 @@ public static partial class Commands
         CheckArgumentNonNull(single, "single");
 
         var reference = ToDoubleRef(single);
-        return Commands.Sequence (
-            Commands.Do( () => reference.Value = (double) single.Value),
-            Commands.ChangeFrom(reference, (double) startValue, duration, ease)
+        return Cmd.Sequence (
+            Cmd.Do( () => reference.Value = (double) single.Value),
+            Cmd.ChangeFrom(reference, (double) startValue, duration, ease)
         );
     }
 
@@ -237,11 +237,11 @@ public static partial class Commands
         CheckArgumentNonNull(interpolatable, "interpolatable");
 
         T endValue = interpolatable.GetValue();
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endValue = interpolatable.GetValue();
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 interpolatable.Interpolate(startValue, endValue, t);
             }, duration, ease)
         );
@@ -253,11 +253,11 @@ public static partial class Commands
         CheckArgumentNonNull(interpolator, "interpolator");
 
         T endValue = val.Value;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endValue = val.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 val.Value = interpolator.Interpolate(startValue, endValue, t);
             }, duration, ease)
         );
@@ -272,11 +272,11 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
 
         float lastScaleFactor = 1.0f;
-        return Commands.Sequence(
-            Commands.Do(delegate(){
+        return Cmd.Sequence(
+            Cmd.Do(delegate(){
                 lastScaleFactor = 1.0f;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 float newScaleFactor = (float)t * (scaleFactor - 1.0f) + 1.0f;
                 scale.Value = scale.Value * newScaleFactor / lastScaleFactor;
                 lastScaleFactor = newScaleFactor;
@@ -289,11 +289,11 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
 
         double lastScaleFactor = 1.0;
-        return Commands.Sequence(
-            Commands.Do(delegate(){
+        return Cmd.Sequence(
+            Cmd.Do(delegate(){
                 lastScaleFactor = 1.0;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 double newScaleFactor = t * (scaleFactor - 1.0) + 1.0;
                 scale.Value = scale.Value * newScaleFactor / lastScaleFactor;
                 lastScaleFactor = newScaleFactor;

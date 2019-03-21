@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CoLib
 {
 
-public static partial class Commands
+public static partial class Cmd
 {
     /// <summary>
     /// Takes an Enumerable of a given type, and a function that converts
@@ -21,7 +21,7 @@ public static partial class Commands
             CommandDelegate output = factory(item);
             commands.Add(output);
         }
-        return Commands.Parallel(commands.ToArray());
+        return Cmd.Parallel(commands.ToArray());
     }
 
     /// <summary>
@@ -41,15 +41,15 @@ public static partial class Commands
         foreach (var item in collection) {
             CommandDelegate output = factory(item);
             if (totalDelay > 0.0) {
-                output = Commands.Sequence(
-                    Commands.WaitForSeconds(totalDelay),
+                output = Cmd.Sequence(
+                    Cmd.WaitForSeconds(totalDelay),
                     output
                 );
             }
             totalDelay += delay;
             commands.Add(output);
         }
-        return Commands.Parallel(commands.ToArray());
+        return Cmd.Parallel(commands.ToArray());
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public static partial class Commands
             CommandDelegate output = factory(item);
             commands.Add(output);
         }
-        return Commands.Sequence(commands.ToArray());
+        return Cmd.Sequence(commands.ToArray());
     }
 }
 

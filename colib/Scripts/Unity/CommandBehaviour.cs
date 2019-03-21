@@ -18,8 +18,8 @@ public class CommandBehaviour : MonoBehaviour
     /// Create a new Queue with the specified commands. The CommandBehaviour
     /// will take care of updating the Queue.
     /// </summary>
-    /// <returns> A new Queue that the Commands will run on. </returns>
-    /// <param name="commands">Commands to be run sequentially.</param>
+    /// <returns> A new Queue that the Cmd will run on. </returns>
+    /// <param name="commands">Cmd to be run sequentially.</param>
     public CommandQueue Queue(params CommandDelegate[] commands)
     {
         var queue = new CommandQueue ();
@@ -69,7 +69,7 @@ public class CommandBehaviour : MonoBehaviour
     /// <param name="commands"> The commands to be executed sequentially.</param>
     public void Schedule(params CommandDelegate[] commands)
     {
-        _scheduler.Add(Commands.Sequence(commands));
+        _scheduler.Add(Cmd.Sequence(commands));
     }
 
     #endregion

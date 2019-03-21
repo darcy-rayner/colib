@@ -6,7 +6,7 @@ namespace CoLib
 /// <summary>
 /// Tweening for unity specific classes.
 /// </summary>
-public static partial class Commands
+public static partial class Cmd
 {
     #region ChangeTo
 
@@ -14,11 +14,11 @@ public static partial class Commands
     {
         CheckArgumentNonNull(vector, "vector");
         Vector2 startVector = Vector2.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value = (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
@@ -29,11 +29,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         Vector3 startVector = Vector3.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value = (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
@@ -44,11 +44,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         Vector4 startVector = Vector4.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value = (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
@@ -68,8 +68,8 @@ public static partial class Commands
         Rect startRect = new Rect();
         Vector2 startAnchorPoint = Vector2.zero;
         Vector2 endAnchorPoint = Vector2.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 startRect = rect.Value;
                 startAnchorPoint = new Vector2(
                     startRect.x + startRect.width * anchorPoint.x,
@@ -80,7 +80,7 @@ public static partial class Commands
                     endRect.y + endRect.height * anchorPoint.y
                 );
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 Rect newRect = new Rect();
                 newRect.width = (endRect.width - startRect.width) * (float)t + startRect.width;
                 newRect.height = (endRect.height - startRect.height) * (float)t + startRect.height;
@@ -101,11 +101,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 lastT = 0.0;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -117,11 +117,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 lastT = 0.0;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -133,11 +133,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 lastT = 0.0;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -153,11 +153,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         Vector2 endVector = Vector2.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value =  (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
@@ -168,11 +168,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         Vector3 endVector = Vector3.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value = (endVector - startVector) * (float)t + startVector;    
             }, duration, ease)
         );
@@ -183,11 +183,11 @@ public static partial class Commands
         CheckArgumentNonNull(vector, "vector");
 
         Vector4 endVector = Vector4.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endVector = vector.Value;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 vector.Value = (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
@@ -207,8 +207,8 @@ public static partial class Commands
         Rect endRect = new Rect();
         Vector2 startAnchorPoint = Vector2.zero;
         Vector2 endAnchorPoint = Vector2.zero;
-        return Commands.Sequence(
-            Commands.Do(delegate() {
+        return Cmd.Sequence(
+            Cmd.Do(delegate() {
                 endRect = rect.Value;
                 startAnchorPoint = new Vector2(
                     startRect.x + startRect.width * anchorPoint.x,
@@ -219,7 +219,7 @@ public static partial class Commands
                     endRect.y + endRect.height * anchorPoint.y
                 );
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 Rect newRect = new Rect();
                 newRect.width = (endRect.width - startRect.width) * (float)t + startRect.width;
                 newRect.height = (endRect.height - startRect.height) * (float)t + startRect.height;
@@ -240,11 +240,11 @@ public static partial class Commands
         CheckArgumentNonNull(rotation, "rotation");
 
         Quaternion startRotation = Quaternion.identity;
-        return Commands.Sequence(
-            Commands.Do( delegate() {
+        return Cmd.Sequence(
+            Cmd.Do( delegate() {
                 startRotation = rotation.Value;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 rotation.Value = Quaternion.LerpUnclamped(startRotation, endRotation, (float) t);
             }, duration, ease)
         );
@@ -255,11 +255,11 @@ public static partial class Commands
         CheckArgumentNonNull(rotation, "rotation");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do( delegate() {
+        return Cmd.Sequence(
+            Cmd.Do( delegate() {
                 lastT = 0.0;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 rotation.Value *= Quaternion.LerpUnclamped(Quaternion.identity, offsetRotation, (float) t) * 
                     Quaternion.Inverse(Quaternion.LerpUnclamped(Quaternion.identity, offsetRotation, (float) lastT));
                 lastT = t;
@@ -272,11 +272,11 @@ public static partial class Commands
         CheckArgumentNonNull(rotation, "rotation");
 
         Quaternion endRotation = Quaternion.identity;
-        return Commands.Sequence(
-            Commands.Do( delegate() {
+        return Cmd.Sequence(
+            Cmd.Do( delegate() {
                 endRotation = rotation.Value;    
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 rotation.Value = Quaternion.LerpUnclamped(startRotation, endRotation, (float)t);
             }, duration, ease)
         );
@@ -291,11 +291,11 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
 
         Vector2 lastScaleFactor = Vector2.one;
-        return Commands.Sequence(
-            Commands.Do(delegate(){
+        return Cmd.Sequence(
+            Cmd.Do(delegate(){
                 lastScaleFactor = Vector2.one;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 Vector2 newScaleFactor = (float)t * (scaleFactor - Vector2.one) + Vector2.one;
                 scale.Value = new Vector2(
                     scale.Value.x * newScaleFactor.x / lastScaleFactor.x,
@@ -311,11 +311,11 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
 
         Vector3 lastScaleFactor = Vector3.one;
-        return Commands.Sequence(
-            Commands.Do(delegate(){
+        return Cmd.Sequence(
+            Cmd.Do(delegate(){
                 lastScaleFactor = Vector3.one;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 Vector3 newScaleFactor = (float)t * (scaleFactor - Vector3.one) + Vector3.one;
                 scale.Value = new Vector3(
                     scale.Value.x * newScaleFactor.x / lastScaleFactor.x,
@@ -332,11 +332,11 @@ public static partial class Commands
         CheckArgumentNonNull(scale, "scale");
 
         Vector4 lastScaleFactor = Vector4.one;
-        return Commands.Sequence(
-            Commands.Do(delegate(){
+        return Cmd.Sequence(
+            Cmd.Do(delegate(){
                 lastScaleFactor = Vector4.one;
             }),
-            Commands.Duration( delegate(double t) {
+            Cmd.Duration( delegate(double t) {
                 Vector4 newScaleFactor = (float)t * (scaleFactor - Vector4.one) + Vector4.one;
                 scale.Value = new Vector4(
                     scale.Value.x * newScaleFactor.x / lastScaleFactor.x,
@@ -358,11 +358,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         Color startColor = Color.white;
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 startColor = color.Value;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value = Color.Lerp(startColor, endColor, (float)t);
             }, duration, ease)
         );
@@ -373,11 +373,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         Color32 startColor = new Color32();
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 startColor = color.Value;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value = Color32.Lerp(startColor, endColor, (float)t);
             }, duration, ease)
         );
@@ -388,11 +388,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 lastT = 0.0;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value += offset * (float)(t - lastT);
                 lastT = t;
             }, duration, ease)
@@ -404,11 +404,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         double lastT = 0.0;
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 lastT = 0.0;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value = new Color32(
                     (byte) (color.Value.r + offset.r * (t - lastT)),
                     (byte) (color.Value.g + offset.g * (t - lastT)),
@@ -425,11 +425,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         Color endColor = Color.white;
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 endColor = color.Value;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value = Color.Lerp(startColor, endColor, (float)t);
             }, duration, ease)
         );
@@ -440,11 +440,11 @@ public static partial class Commands
         CheckArgumentNonNull(color, "color");
 
         Color32 endColor = new Color32();
-        return Commands.Sequence(
-            Commands.Do (delegate() {
+        return Cmd.Sequence(
+            Cmd.Do (delegate() {
                 endColor = color.Value;
             }),
-            Commands.Duration(delegate(double t) {
+            Cmd.Duration(delegate(double t) {
                 color.Value = Color32.Lerp(startColor, endColor, (float)t);
             }, duration, ease)
         );

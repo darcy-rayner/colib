@@ -74,14 +74,14 @@ public class EaseExample : MonoBehaviour
         _queue = new CommandQueue();
 
         _queue.Enqueue(
-            Commands.RepeatForever(
-                Commands.Do( () => _sphere.transform.position = startPosition),
-                Commands.Do( () => _cube.transform.rotation = startRotation),
-                Commands.Parallel(
-                    Commands.MoveTo(_sphere, endPosition, 2f, _eases[_keys[_position]]),
-                    Commands.RotateBy(_cube, endRotation, 2f, _eases[_keys[_position]])
+            Cmd.RepeatForever(
+                Cmd.Do( () => _sphere.transform.position = startPosition),
+                Cmd.Do( () => _cube.transform.rotation = startRotation),
+                Cmd.Parallel(
+                    Cmd.MoveTo(_sphere, endPosition, 2f, _eases[_keys[_position]]),
+                    Cmd.RotateBy(_cube, endRotation, 2f, _eases[_keys[_position]])
                 ),
-                Commands.WaitForSeconds(0.5f)
+                Cmd.WaitForSeconds(0.5f)
             )
          );
     }

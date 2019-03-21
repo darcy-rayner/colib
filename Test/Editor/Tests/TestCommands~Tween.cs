@@ -7,7 +7,7 @@ namespace CoLib
 {
 
 [TestFixture]
-[Category("Commands~Tween")]
+[Category("Cmd~Tween")]
 internal class TestCommands_Tween
 {	
 	public static void AreEqual(double first, double second, double tolerance, string message = null)
@@ -78,13 +78,13 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Parallel(
-					Commands.ChangeBy(floatRef, floatOffset, 1.0), 
-					Commands.ChangeBy(doubleRef, doubleOffset, 1.0), 
-					Commands.ChangeBy(vec2Ref, vec2Offset, 1.0), 
-					Commands.ChangeBy(vec3Ref, vec3Offset, 1.0), 
-					Commands.ChangeBy(vec4Ref, vec4Offset, 1.0) 
+			Cmd.Repeat(2,
+				Cmd.Parallel(
+					Cmd.ChangeBy(floatRef, floatOffset, 1.0), 
+					Cmd.ChangeBy(doubleRef, doubleOffset, 1.0), 
+					Cmd.ChangeBy(vec2Ref, vec2Offset, 1.0), 
+					Cmd.ChangeBy(vec3Ref, vec3Offset, 1.0), 
+					Cmd.ChangeBy(vec4Ref, vec4Offset, 1.0) 
 				)
 			)
 		);
@@ -171,13 +171,13 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Parallel(
-					Commands.ChangeTo(floatRef, floatEnd, 1.0), 
-					Commands.ChangeTo(doubleRef, doubleEnd, 1.0), 
-					Commands.ChangeTo(vec2Ref, vec2End, 1.0), 
-					Commands.ChangeTo(vec3Ref, vec3End, 1.0), 
-					Commands.ChangeTo(vec4Ref, vec4End, 1.0) 
+			Cmd.Repeat(2,
+				Cmd.Parallel(
+					Cmd.ChangeTo(floatRef, floatEnd, 1.0), 
+					Cmd.ChangeTo(doubleRef, doubleEnd, 1.0), 
+					Cmd.ChangeTo(vec2Ref, vec2End, 1.0), 
+					Cmd.ChangeTo(vec3Ref, vec3End, 1.0), 
+					Cmd.ChangeTo(vec4Ref, vec4End, 1.0) 
 				)
 			)
 		);
@@ -231,20 +231,20 @@ internal class TestCommands_Tween
 		Vector3 thirdAnchor = new Vector2(0.0f, 1.0f);
 		Vector2 forthAnchor = new Vector2(1.0f, 1.0f);
 		
-		CommandDelegate reset = Commands.Do(() => { rectVal = rectStart; });
+		CommandDelegate reset = Cmd.Do(() => { rectVal = rectStart; });
 		queue = new CommandQueue();
 		queue.Enqueue(
 			reset,
-			Commands.ChangeTo(rectRef, rectEnd, 1.0, firstAnchor),
-			Commands.WaitForFrames(1),
+			Cmd.ChangeTo(rectRef, rectEnd, 1.0, firstAnchor),
+			Cmd.WaitForFrames(1),
 			reset,
-			Commands.ChangeTo(rectRef, rectEnd, 1.0, secondAnchor),
-			Commands.WaitForFrames(1),
+			Cmd.ChangeTo(rectRef, rectEnd, 1.0, secondAnchor),
+			Cmd.WaitForFrames(1),
 			reset,
-			Commands.ChangeTo(rectRef, rectEnd, 1.0, thirdAnchor),
-			Commands.WaitForFrames(1),
+			Cmd.ChangeTo(rectRef, rectEnd, 1.0, thirdAnchor),
+			Cmd.WaitForFrames(1),
 			reset,
-			Commands.ChangeTo(rectRef, rectEnd, 1.0, forthAnchor)
+			Cmd.ChangeTo(rectRef, rectEnd, 1.0, forthAnchor)
 		);
 		
 		// Test the top left corner.
@@ -340,16 +340,16 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Sequence(
-					Commands.Parallel(
-						Commands.ChangeFrom(floatRef, floatEnd, 1.0), 
-						Commands.ChangeFrom(doubleRef, doubleEnd, 1.0), 
-						Commands.ChangeFrom(vec2Ref, vec2End, 1.0), 
-						Commands.ChangeFrom(vec3Ref, vec3End, 1.0), 
-						Commands.ChangeFrom(vec4Ref, vec4End, 1.0) 
+			Cmd.Repeat(2,
+				Cmd.Sequence(
+					Cmd.Parallel(
+						Cmd.ChangeFrom(floatRef, floatEnd, 1.0), 
+						Cmd.ChangeFrom(doubleRef, doubleEnd, 1.0), 
+						Cmd.ChangeFrom(vec2Ref, vec2End, 1.0), 
+						Cmd.ChangeFrom(vec3Ref, vec3End, 1.0), 
+						Cmd.ChangeFrom(vec4Ref, vec4End, 1.0) 
 					),
-					Commands.WaitForFrames(1)
+					Cmd.WaitForFrames(1)
 				)
 			)
 		);
@@ -407,13 +407,13 @@ internal class TestCommands_Tween
 		
 		queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.ChangeFrom(rectRef, rectEnd, 1.0, firstAnchor),
-			Commands.WaitForFrames(1),
-			Commands.ChangeFrom(rectRef, rectEnd, 1.0, secondAnchor),
-			Commands.WaitForFrames(1),
-			Commands.ChangeFrom(rectRef, rectEnd, 1.0, thirdAnchor),
-			Commands.WaitForFrames(1),
-			Commands.ChangeFrom(rectRef, rectEnd, 1.0, forthAnchor)
+			Cmd.ChangeFrom(rectRef, rectEnd, 1.0, firstAnchor),
+			Cmd.WaitForFrames(1),
+			Cmd.ChangeFrom(rectRef, rectEnd, 1.0, secondAnchor),
+			Cmd.WaitForFrames(1),
+			Cmd.ChangeFrom(rectRef, rectEnd, 1.0, thirdAnchor),
+			Cmd.WaitForFrames(1),
+			Cmd.ChangeFrom(rectRef, rectEnd, 1.0, forthAnchor)
 		);
 		
 		// Test the top left corner.
@@ -474,8 +474,8 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.RotateBy(quatRef, quatOffset, 1.0)
+			Cmd.Repeat(2,
+				Cmd.RotateBy(quatRef, quatOffset, 1.0)
 			)
 		);
 		
@@ -495,7 +495,7 @@ internal class TestCommands_Tween
 		// Make sure the rotation ends in the correct position when given a complex easing function.
 		quatVal = Quaternion.identity;		
 		queue.Enqueue(
-			Commands.RotateBy(quatRef, quatOffset, 1f, Ease.OutElastic())
+			Cmd.RotateBy(quatRef, quatOffset, 1f, Ease.OutElastic())
 		);
 		
 		while (!queue.Update(1 / 30f)) {}
@@ -516,8 +516,8 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.RotateTo(quatRef, quatEnd, 1.0)
+			Cmd.Repeat(2,
+				Cmd.RotateTo(quatRef, quatEnd, 1.0)
 			)
 		);
 		
@@ -535,7 +535,7 @@ internal class TestCommands_Tween
 
 		quatVal = quatStart;		
 		queue.Enqueue(
-			Commands.RotateTo(quatRef, quatEnd, 1f, Ease.OutElastic())
+			Cmd.RotateTo(quatRef, quatEnd, 1f, Ease.OutElastic())
 		);
 
 		while (!queue.Update(1 / 30f)) {}
@@ -556,10 +556,10 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Sequence(
-					Commands.RotateFrom(quatRef, quatEnd, 1.0),
-					Commands.WaitForFrames(1)
+			Cmd.Repeat(2,
+				Cmd.Sequence(
+					Cmd.RotateFrom(quatRef, quatEnd, 1.0),
+					Cmd.WaitForFrames(1)
 				)
 			)
 		);
@@ -579,7 +579,7 @@ internal class TestCommands_Tween
 
 		quatVal = quatStart;		
 		queue.Enqueue(
-			Commands.RotateFrom(quatRef, quatEnd, 1f, Ease.OutElastic())
+			Cmd.RotateFrom(quatRef, quatEnd, 1f, Ease.OutElastic())
 		);
 
 		while (!queue.Update(1 / 30f)) {}
@@ -632,16 +632,16 @@ internal class TestCommands_Tween
 		
 		CommandQueue queue = new CommandQueue();
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Sequence(
-					Commands.Parallel(
-						Commands.ScaleBy(floatRef, floatScale, 1.0), 
-						Commands.ScaleBy(doubleRef, doubleScale, 1.0), 
-						Commands.ScaleBy(vec2Ref, vec2Scale, 1.0), 
-						Commands.ScaleBy(vec3Ref, vec3Scale, 1.0), 
-						Commands.ScaleBy(vec4Ref, vec4Scale, 1.0) 
+			Cmd.Repeat(2,
+				Cmd.Sequence(
+					Cmd.Parallel(
+						Cmd.ScaleBy(floatRef, floatScale, 1.0), 
+						Cmd.ScaleBy(doubleRef, doubleScale, 1.0), 
+						Cmd.ScaleBy(vec2Ref, vec2Scale, 1.0), 
+						Cmd.ScaleBy(vec3Ref, vec3Scale, 1.0), 
+						Cmd.ScaleBy(vec4Ref, vec4Scale, 1.0) 
 					),
-					Commands.WaitForFrames(1)
+					Cmd.WaitForFrames(1)
 				)
 			)
 		);
@@ -720,8 +720,8 @@ internal class TestCommands_Tween
 		CommandQueue queue = new CommandQueue();
 		
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.TintBy(colourRef, colourOffset, 1.0)
+			Cmd.Repeat(2,
+				Cmd.TintBy(colourRef, colourOffset, 1.0)
 			)
 		);
 		
@@ -748,8 +748,8 @@ internal class TestCommands_Tween
 		CommandQueue queue = new CommandQueue();
 		
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.TintTo(colourRef, colourEnd, 1.0)
+			Cmd.Repeat(2,
+				Cmd.TintTo(colourRef, colourEnd, 1.0)
 			)
 		);
 		
@@ -776,10 +776,10 @@ internal class TestCommands_Tween
 		CommandQueue queue = new CommandQueue();
 		
 		queue.Enqueue(
-			Commands.Repeat(2,
-				Commands.Sequence(
-					Commands.TintFrom(colourRef, colourEnd, 1.0),
-					Commands.WaitForFrames(1)
+			Cmd.Repeat(2,
+				Cmd.Sequence(
+					Cmd.TintFrom(colourRef, colourEnd, 1.0),
+					Cmd.WaitForFrames(1)
 				)
 			)
 		);

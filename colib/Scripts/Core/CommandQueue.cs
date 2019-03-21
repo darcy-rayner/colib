@@ -5,9 +5,9 @@ namespace CoLib
 
 /// <summary>
 /// The CommandQueue class is one of core primitives for running commands.
-/// It operates, as its name suggests, as a FIFO queue. All Commands Enqueued
+/// It operates, as its name suggests, as a FIFO queue. All Cmd Enqueued
 /// to the queue run in sequential order. When it is fed time via Update, it
-/// will remove Commands from the queue as they complete. 
+/// will remove Cmd from the queue as they complete. 
 /// </summary>
 public class CommandQueue
 {
@@ -43,7 +43,7 @@ public class CommandQueue
     #region Public Methods
     
     /// <summary>
-    /// Enqueue the specified command. Commands are queued up in the order specified.
+    /// Enqueue the specified command. Cmd are queued up in the order specified.
     /// Multiple calls to <c>Enqueue<</c> result is the same sequential ordering ie. 
     /// <code>
     ///     CommandQueue queue = new CommandQueue();
