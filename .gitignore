@@ -5,6 +5,9 @@
 /Builds/
 /obj/
 /Temp/
+/[Pp]ackages/
+
+/bin/
 
 # Visual Studio cache directory
 .vs/
