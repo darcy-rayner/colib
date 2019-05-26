@@ -3,11 +3,13 @@
 # Unity output folders
 /Library/
 /Builds/
-/obj/
 /Temp/
 /[Pp]ackages/
 
 /bin/
+/obj/
+/bin.meta
+/obj.meta
 
 # Visual Studio cache directory
 .vs/
