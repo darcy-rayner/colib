@@ -1,0 +1,261 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.11.0\build\NUnit.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3644898F-F978-4239-82EC-B2F99A00822D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <NoStandardLibraries>false</NoStandardLibraries>
+    <AssemblyName>CoLib</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RootNamespace>CoLib</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include=".git\COMMIT_EDITMSG" />
+    <None Include=".git\config" />
+    <None Include=".git\description" />
+    <None Include=".git\FETCH_HEAD" />
+    <None Include=".git\HEAD" />
+    <None Include=".git\hooks\applypatch-msg.sample" />
+    <None Include=".git\hooks\commit-msg.sample" />
+    <None Include=".git\hooks\fsmonitor-watchman.sample" />
+    <None Include=".git\hooks\post-update.sample" />
+    <None Include=".git\hooks\pre-applypatch.sample" />
+    <None Include=".git\hooks\pre-commit.sample" />
+    <None Include=".git\hooks\pre-push.sample" />
+    <None Include=".git\hooks\pre-rebase.sample" />
+    <None Include=".git\hooks\pre-receive.sample" />
+    <None Include=".git\hooks\prepare-commit-msg.sample" />
+    <None Include=".git\hooks\update.sample" />
+    <None Include=".git\index" />
+    <None Include=".git\info\exclude" />
+    <None Include=".git\logs\HEAD" />
+    <None Include=".git\logs\refs\heads\develop" />
+    <None Include=".git\logs\refs\heads\master" />
+    <None Include=".git\logs\refs\remotes\origin\HEAD" />
+    <None Include=".git\objects\05\152a2f20fdd5fd0c43be327b383c9dab54d4c0" />
+    <None Include=".git\objects\08\83ae0c924b65d3f19961ebce868619dd052966" />
+    <None Include=".git\objects\0d\42f8f1c202b0438561ecde171cf2bc9b353cd9" />
+    <None Include=".git\objects\0d\fdf12a912b7fc62395053313a2ad7dd287046a" />
+    <None Include=".git\objects\11\cd423fc1296eee0456cad86900b4dcac874216" />
+    <None Include=".git\objects\13\3bbf76673b6ef23acf396c51d56db906098d9b" />
+    <None Include=".git\objects\1f\5c441f896bf99d85446bc8afcfba2763b1df17" />
+    <None Include=".git\objects\23\75a09671b06e04efae77da56f5d449c2e020f3" />
+    <None Include=".git\objects\23\b1eea4741dcf87a84fe7ce3fdf25bb3ac81332" />
+    <None Include=".git\objects\25\5ebf1f29c61213defd610cb4b36525e70d0de0" />
+    <None Include=".git\objects\25\620d00fd144fc156e1800a841023d4c8e7bd28" />
+    <None Include=".git\objects\26\d8767fc546ab23e385071af475a544065d1e4c" />
+    <None Include=".git\objects\2a\488ecd6c9cd316ec6153afcf08306d7b7c8acc" />
+    <None Include=".git\objects\36\d8211262c7897d5f56d87a29b4fba63fe6932c" />
+    <None Include=".git\objects\36\eb4bb720bf090427bf080bf515cb3b47cdfe0f" />
+    <None Include=".git\objects\39\96df97026b5138cdf2e90a03b39c6aa88da459" />
+    <None Include=".git\objects\3b\d01c33e8fb534d59427dff878ed38c9a9aa30f" />
+    <None Include=".git\objects\3e\d8222e81195a087090dd07f2f7b9dd34c128b5" />
+    <None Include=".git\objects\44\35add03d5e75c2ee24aa6abec9c346dafa82af" />
+    <None Include=".git\objects\44\36f911fc275536d22e97781422e042b8cfbe88" />
+    <None Include=".git\objects\45\ae723b937917692a0a18b000cb39bd1bec566b" />
+    <None Include=".git\objects\46\5aa59553e6b10defd5038fff82ed7c38db6881" />
+    <None Include=".git\objects\48\37e4a9885cd942b5407059ee1ff462535ae9c1" />
+    <None Include=".git\objects\59\ea4ab95d2bbb3b8d4c754f9bc0541b32b6298c" />
+    <None Include=".git\objects\5c\05de178732b944aac2245efaab0bae6dbfb843" />
+    <None Include=".git\objects\5c\8399c5e7c5138de21f0049898063683a9f516c" />
+    <None Include=".git\objects\5f\82c25eac33655e8ffc118cebee73d1d1517375" />
+    <None Include=".git\objects\61\179d2cff010cf93259d59b1b4fd60c8a7d609c" />
+    <None Include=".git\objects\61\faf925327800e16f0ffb162e0a6b9597081083" />
+    <None Include=".git\objects\64\4cf562a1aab592fd3189d1402f3559a2d67186" />
+    <None Include=".git\objects\64\d68a6f2a6d98e2f6f7c9fc51852c09aa13af30" />
+    <None Include=".git\objects\69\d6bb00e9563bc94dae6c126f24002d78e58250" />
+    <None Include=".git\objects\6b\f38dca0839cb333991159288cf41e82b7dcd1e" />
+    <None Include=".git\objects\6d\5ba28922f1255d780b89a98ed6af671787ed03" />
+    <None Include=".git\objects\6f\eaeb814d2a0d1710df865a7df2b533dff5f534" />
+    <None Include=".git\objects\75\b5876df7aef3a1a2c09ab828c4b665208e213b" />
+    <None Include=".git\objects\75\cb997147e9c8cc07d17ac0bb61749bf78dbe0f" />
+    <None Include=".git\objects\7b\3709812a1078615892a0920fd3660bcea1e954" />
+    <None Include=".git\objects\82\a7e5a8faeeb6a024f803c390843f230410bd9f" />
+    <None Include=".git\objects\83\c7e792f5bf9315d54538d5605120e0792fdc39" />
+    <None Include=".git\objects\87\08378e5d5104de57499fea7d6d6bbfa185fc4e" />
+    <None Include=".git\objects\91\2a612e5860d928931db2be5ac577c236d65dfd" />
+    <None Include=".git\objects\92\73418501f83c0d2d246edcb898e2b9b98fbb0d" />
+    <None Include=".git\objects\95\8d7fe825aad28e481b59c3b06ba5ffa7566afb" />
+    <None Include=".git\objects\99\67e5ac61158d50df1155e1e1e5a80ec446ffaf" />
+    <None Include=".git\objects\9b\380f111a23a9f76aa3634d34c6ba7be32b6798" />
+    <None Include=".git\objects\9d\4ec87b4f35d2eae5ce2bcbaa04cc9151a4c5d7" />
+    <None Include=".git\objects\a0\febce3e3e430eaf7d7834330705611e717a56c" />
+    <None Include=".git\objects\a2\c149b8527f570da0023a5e034ce2a956408d6d" />
+    <None Include=".git\objects\a4\92841479f88c68a8b955bc9e13445ee341fce3" />
+    <None Include=".git\objects\a9\49110c6e9777aa25cfbb834cab3d50a4d649b1" />
+    <None Include=".git\objects\b2\211800ac622602bd7fe032ba99b7664181ecc3" />
+    <None Include=".git\objects\b4\c22729e2998e4a0f0bf7e5002f0adc4241889b" />
+    <None Include=".git\objects\ba\7b90ec8a14659c36439811140e7e7fbf125fed" />
+    <None Include=".git\objects\bf\33772e440f6125a1242605fd3c1981c62998dd" />
+    <None Include=".git\objects\c0\28f6f54f76f55ac1c56e5f7fa1acc43beaa985" />
+    <None Include=".git\objects\ce\4297102b7230e1fc1ab9b4f830a77e4e968aac" />
+    <None Include=".git\objects\d0\cbc418b40ecc1a1103f6689a13ebe97931b7d1" />
+    <None Include=".git\objects\d8\514556833a8ed5665d7549e4e430087125c04a" />
+    <None Include=".git\objects\d8\bf0daa5a29bd32a0a4288d8008755d833c135e" />
+    <None Include=".git\objects\da\5b72609a09563580f097c31b7b9571791fbb65" />
+    <None Include=".git\objects\dc\463d4e9f978f5ddc855d4a38d9cad87ccc0e4f" />
+    <None Include=".git\objects\dc\f304ea2241a91a10e5da882fe66fb87fe43e25" />
+    <None Include=".git\objects\e0\3b03cd62417a8d7b2fb42e029095d77ec6a4c5" />
+    <None Include=".git\objects\e0\b53574394b1bdc0a5db5fa7caa6d77ae2e8dfa" />
+    <None Include=".git\objects\e6\85255cd548f361b1bf2f8ade17abcc56e8d2bd" />
+    <None Include=".git\objects\e7\1abd622ac22c6f44cccd539dc4a6546475c6ef" />
+    <None Include=".git\objects\e7\9da2356d4370d042d020a961ca64fdbaf3f114" />
+    <None Include=".git\objects\ea\f926ccab14b6175f773cf2b2345f999a9783c7" />
+    <None Include=".git\objects\ee\4d5067311e6e694ce54687b8eec991b8e5604f" />
+    <None Include=".git\objects\f1\cb510e7e812e0909ce0d72bfe655dcd118bb08" />
+    <None Include=".git\objects\f8\56ebc5c6014bcd0abd5f81929a66085e9bf3a5" />
+    <None Include=".git\objects\f8\5f04584017ac3358faa5c975234bfbb4be93f4" />
+    <None Include=".git\objects\fd\846018b05f182cb03c0f47152550f5e09d29a1" />
+    <None Include=".git\objects\pack\pack-68b63a9bfca5e7c7b9f224587fa66bc2a2f67df7.idx" />
+    <None Include=".git\objects\pack\pack-68b63a9bfca5e7c7b9f224587fa66bc2a2f67df7.pack" />
+    <None Include=".git\ORIG_HEAD" />
+    <None Include=".git\packed-refs" />
+    <None Include=".git\refs\heads\develop" />
+    <None Include=".git\refs\heads\master" />
+    <None Include=".git\refs\remotes\origin\HEAD" />
+    <None Include=".git\shallow" />
+    <None Include=".vs\colib\v15\.suo" />
+    <None Include="CoLib.asmdef" />
+    <None Include="colib\Examples\CommandQueueExample.cs.meta" />
+    <None Include="colib\Examples\EaseExample.cs.meta" />
+    <None Include="colib\Examples\ExampleScene.unity" />
+    <None Include="colib\Examples\ExampleScene.unity.meta" />
+    <None Include="colib\Examples\MenuExample.cs.meta" />
+    <None Include="colib\Examples\RectangleExample.cs.meta" />
+    <None Include="colib\README.md" />
+    <None Include="colib\Scripts\Core.meta" />
+    <None Include="colib\Scripts\Core\Cmd.cs.meta" />
+    <None Include="colib\Scripts\Core\CommandQueue.cs.meta" />
+    <None Include="colib\Scripts\Core\CommandScheduler.cs.meta" />
+    <None Include="colib\Scripts\Core\Commands~Functional.cs.meta" />
+    <None Include="colib\Scripts\Core\Commands~Tween.cs.meta" />
+    <None Include="colib\Scripts\Core\Ease.cs.meta" />
+    <None Include="colib\Scripts\Core\IInterpolatable.cs.meta" />
+    <None Include="colib\Scripts\Core\IInterpolator.cs.meta" />
+    <None Include="colib\Scripts\Core\Ref.cs.meta" />
+    <None Include="colib\Scripts\Unity.meta" />
+    <None Include="colib\Scripts\Unity\CameraExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\CommandBehaviour.cs.meta" />
+    <None Include="colib\Scripts\Unity\Commands~Animate.cs.meta" />
+    <None Include="colib\Scripts\Unity\Commands~GameObject.cs.meta" />
+    <None Include="colib\Scripts\Unity\Commands~TweenUnity.cs.meta" />
+    <None Include="colib\Scripts\Unity\Commands~Unity.cs.meta" />
+    <None Include="colib\Scripts\Unity\GameObjectExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\GUITextExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\GUITextureExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\MaterialExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\SpriteRendererExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\TransformExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\UI.meta" />
+    <None Include="colib\Scripts\Unity\UI\CanvasGroupExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\UI\Commands~UI.cs.meta" />
+    <None Include="colib\Scripts\Unity\UI\GraphicExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\UI\LayoutElementExtensions.cs.meta" />
+    <None Include="colib\Scripts\Unity\UI\RectTransformExtensions.cs.meta" />
+    <None Include="package.json" />
+    <None Include="packages.config" />
+    <None Include="Readme.md" />
+    <None Include="Test\Editor\Tests.meta" />
+    <None Include="Test\Editor\Tests\CoLibTest.asmdef" />
+    <None Include="Test\Editor\Tests\CoLibTest.asmdef.meta" />
+    <None Include="Test\Editor\Tests\TestCommandQueue.cs.meta" />
+    <None Include="Test\Editor\Tests\TestCommandScheduler.cs.meta" />
+    <None Include="Test\Editor\Tests\TestCommands~Tween.cs.meta" />
+    <None Include="Test\Editor\Tests\TestEase.cs.meta" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="colib\License.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="colib\Examples\CommandQueueExample.cs" />
+    <Compile Include="colib\Examples\EaseExample.cs" />
+    <Compile Include="colib\Examples\MenuExample.cs" />
+    <Compile Include="colib\Examples\RectangleExample.cs" />
+    <Compile Include="colib\Scripts\Core\Cmd.cs" />
+    <Compile Include="colib\Scripts\Core\CommandQueue.cs" />
+    <Compile Include="colib\Scripts\Core\CommandScheduler.cs" />
+    <Compile Include="colib\Scripts\Core\Commands~Functional.cs" />
+    <Compile Include="colib\Scripts\Core\Commands~Tween.cs" />
+    <Compile Include="colib\Scripts\Core\Ease.cs" />
+    <Compile Include="colib\Scripts\Core\IInterpolatable.cs" />
+    <Compile Include="colib\Scripts\Core\IInterpolator.cs" />
+    <Compile Include="colib\Scripts\Core\Ref.cs" />
+    <Compile Include="colib\Scripts\Unity\CameraExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\CommandBehaviour.cs" />
+    <Compile Include="colib\Scripts\Unity\Commands~Animate.cs" />
+    <Compile Include="colib\Scripts\Unity\Commands~GameObject.cs" />
+    <Compile Include="colib\Scripts\Unity\Commands~TweenUnity.cs" />
+    <Compile Include="colib\Scripts\Unity\Commands~Unity.cs" />
+    <Compile Include="colib\Scripts\Unity\GameObjectExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\GUITextExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\GUITextureExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\MaterialExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\SpriteRendererExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\TransformExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\UI\CanvasGroupExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\UI\Commands~UI.cs" />
+    <Compile Include="colib\Scripts\Unity\UI\GraphicExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\UI\LayoutElementExtensions.cs" />
+    <Compile Include="colib\Scripts\Unity\UI\RectTransformExtensions.cs" />
+    <Compile Include="Test\Editor\Tests\TestCommandQueue.cs" />
+    <Compile Include="Test\Editor\Tests\TestCommandScheduler.cs" />
+    <Compile Include="Test\Editor\Tests\TestCommands~Tween.cs" />
+    <Compile Include="Test\Editor\Tests\TestEase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".git\objects\info\" />
+    <Folder Include=".git\refs\tags\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
+  <ProjectExtensions>
+    <VisualStudio AllowExistingFolder="true" />
+  </ProjectExtensions>
+</Project>

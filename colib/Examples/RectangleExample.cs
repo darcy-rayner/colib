@@ -7,35 +7,35 @@ using CoLib;
 namespace CoLib.Example
 {
 
-public class RectangleExample : MonoBehaviour 
+public class RectangleExample : MonoBehaviour
 {
-    
+
     CommandQueue _queue = new CommandQueue();
     Ref<Rect> _rectRef;
     Ref<Rect> _secondRectRef;
-    
-    void Start () 
+
+    void Start ()
     {
         Rect rect = new Rect(0,0, 350.0f, 300.0f);
         _rectRef = new Ref<Rect>(
             () => rect,
             t => rect = t
         );
-        
+
         Rect secondRect = new Rect(0,0, 350.0f, 300.0f);
         _secondRectRef = new Ref<Rect>(
             () => secondRect,
             t => secondRect = t
         );
-        
+
         _queue.Enqueue(
             Cmd.RepeatForever(
                 Cmd.Coroutine( () => AnimateRects())
             )
         );
-    
+
     }
-    
+
     IEnumerator<CommandDelegate> AnimateRects()
     {
         List<CommandDelegate> commands =  new List<CommandDelegate>();
@@ -47,22 +47,22 @@ public class RectangleExample : MonoBehaviour
                 Cmd.ChangeTo(_rectRef, new Rect(0.0f, 0.0f, 350.0f, 300.0f), 1.0f, Ease.InCirc())
             )
         );
-        
+
         commands.Add(
             Cmd.Sequence(
                 Cmd.ChangeTo(_secondRectRef, new Rect(350.0f, 100.0f, 300.0f, 200.0f), 4.0f, new Vector2(0.0f, 0.0f), Ease.OutQuad()),
                 Cmd.ChangeTo(_secondRectRef, new Rect(Screen.width, Screen.height, 0.0f, 0.0f), 3.0f, Ease.OutElastic())
             )
         );
-        
+
         yield return Cmd.Parallel(commands.ToArray());
     }
-    
-    void Update () 
+
+    void Update ()
     {
         _queue.Update(Time.deltaTime);
     }
-    
+
     void OnGUI()
     {
         GUI.Box(_rectRef.Value, "One");

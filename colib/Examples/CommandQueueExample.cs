@@ -5,10 +5,10 @@ using CoLib;
 namespace CoLib.Example
 {
 
-public class CommandQueueExample : MonoBehaviour 
+public class CommandQueueExample : MonoBehaviour
 {
     // Use this for initialization
-    private void Start () 
+    private void Start ()
     {
         bool condition = false;
 
@@ -25,7 +25,7 @@ public class CommandQueueExample : MonoBehaviour
                 Cmd.WaitForSeconds(0.25f),
                 Cmd.TintTo(gameObject, Color.red, 0.5f, Ease.InBack(0.2f)),
                 Cmd.TintBy(gameObject, Color.blue, 0.5f),
-                Cmd.Condition(delegate() { condition = !condition; return condition; }, 
+                Cmd.Condition(delegate() { condition = !condition; return condition; },
                     Cmd.MoveBy(gameObject, new Vector3(0.0f, 2.0f, 0.0f), 0.25f, Ease.InOutHermite()),
                     Cmd.MoveBy(gameObject, new Vector3(0.0f, -2.0f, 0.0f), 0.25f, Ease.InOutHermite())
                 ),
@@ -48,7 +48,7 @@ public class CommandQueueExample : MonoBehaviour
                     Cmd.Shake(transform.ToRotationRef(true), 5f, 2.0)
                 )
             )
-        );        
+        );
     }
 }
 

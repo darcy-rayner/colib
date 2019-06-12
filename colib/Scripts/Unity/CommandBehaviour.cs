@@ -46,7 +46,7 @@ public class CommandBehaviour : MonoBehaviour
     }
 
     /// <summary>
-    /// Removes a queue the behaviour. 
+    /// Removes a queue the behaviour.
     /// </summary>
     /// <param name="queue">
     /// The CommandQueue to remove. This queue should have been created, or added
@@ -75,7 +75,7 @@ public class CommandBehaviour : MonoBehaviour
     #endregion
 
     #region MonoBehaviour events
-    
+
     private void Update()
     {
         foreach (var queue in _queues) {
@@ -84,9 +84,9 @@ public class CommandBehaviour : MonoBehaviour
 
         _scheduler.Update (Time.deltaTime);
     }
-    
+
     #endregion
-    
+
     #region Private fields
 
     private HashSet<CommandQueue> _queues = new HashSet<CommandQueue>();

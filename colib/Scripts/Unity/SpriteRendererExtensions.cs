@@ -4,7 +4,7 @@ using System;
 namespace CoLib
 {
 
-public static class SpriteRendererExtensions 
+public static class SpriteRendererExtensions
 {
     #region Extension methods
 

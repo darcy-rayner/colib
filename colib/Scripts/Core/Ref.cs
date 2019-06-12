@@ -20,13 +20,13 @@ public struct Ref<T> where T : struct
 
     public T Value
     {
-        get 
-        { 
+        get
+        {
             return _getter == null ? default(T) : _getter();
         }
-        set 
-        { 
-            if (_setter != null) { _setter(value); } 
+        set
+        {
+            if (_setter != null) { _setter(value); }
         }
     }
 
@@ -36,14 +36,14 @@ public struct Ref<T> where T : struct
 
     public static Ref<T> Create(T value = default(T))
     {
-        return new Ref<T>( 
+        return new Ref<T>(
             () => value,
             t => value = t
         );
     }
 
     #endregion
-    
+
     #region Public methods
 
     /// <summary>
@@ -63,7 +63,7 @@ public struct Ref<T> where T : struct
     }
 
     #endregion
-    
+
     #region Private fields
 
     private readonly Func<T> _getter;
@@ -71,6 +71,6 @@ public struct Ref<T> where T : struct
 
     #endregion
 }
-    
+
 }
 

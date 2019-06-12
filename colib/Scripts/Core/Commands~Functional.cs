@@ -26,7 +26,7 @@ public static partial class Cmd
 
     /// <summary>
     /// Takes an Enumerable of a given type, and a function that converts
-    /// T into a CommandDelegate, the executes them in parallel. 
+    /// T into a CommandDelegate, the executes them in parallel.
     /// </summary>
     /// <param name="collection">A collection of objects.</param>
     /// <param name="factory">The conversion method.</param>

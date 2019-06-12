@@ -30,7 +30,7 @@ public class EaseExample : MonoBehaviour
     void OnGUI()
     {
         Rect rect = new Rect(Screen.width / 2, 200, 100, 25);
-        GUI.Label(rect, _keys[_position]); 
+        GUI.Label(rect, _keys[_position]);
         rect.x += 150;
         rect.width = 70;
         if (GUI.Button(rect, "Next")) {
@@ -91,24 +91,24 @@ public class EaseExample : MonoBehaviour
     private GameObject _sphere;
     private GameObject _cube;
     private CommandQueue _queue = new CommandQueue();
-           
+
     private List<string> _keys;
     private Dictionary<string, CommandEase> _eases = new Dictionary<string, CommandEase>{
-        {"Linear" , Ease.Linear()}, 
+        {"Linear" , Ease.Linear()},
         {"InQuad", Ease.InQuad() }, {"OutQuad", Ease.OutQuad() }, {"InOutQuad", Ease.InOutQuad() },
         {"InCubic",Ease.InCubic()}, {"OutCubic",Ease.OutCubic()}, {"InOutCubic",Ease.InOutCubic()},
         {"InQuart",Ease.InQuart()}, {"OutQuart",Ease.OutQuart()}, {"InOutQuart",Ease.InOutQuart()},
         {"InQuint",Ease.InQuint()}, {"OutQuint",Ease.OutQuint()}, {"InOutQuint",Ease.InOutQuint()},
-        {"InSin",Ease.InSin() }, {"OutSin",Ease.OutSin()}, {"InOutSin" ,Ease.InOutSin()}, 
+        {"InSin",Ease.InSin() }, {"OutSin",Ease.OutSin()}, {"InOutSin" ,Ease.InOutSin()},
         {"InElastic", Ease.InElastic()},  {"OutElastic", Ease.OutElastic()}, {"InOutElastic", Ease.InOutElastic()},
-        {"InExpo",Ease.InExpo() }, {"OutExpo",Ease.OutExpo()}, {"InOutExpo",Ease.InOutExpo()}, 
-        {"InCirc",Ease.InCirc() }, {"OutCirc",Ease.OutCirc()}, {"InOutCirc",Ease.InOutCirc()}, 
-        {"InBack",Ease.InBack(0.5f) }, {"OutBack",Ease.OutBack(0.5f)},  {"InOutBack",Ease.InOutBack(0.5f)}, 
-        {"InBounce",Ease.InBounce()}, {"OutBounce",Ease.OutBounce()}, {"InOutBounce",Ease.InOutBounce()}, 
-        {"InHermite",Ease.InHermite()}, {"OutHermite",Ease.OutHermite()}, {"InOutHermite",Ease.InOutHermite()}, 
+        {"InExpo",Ease.InExpo() }, {"OutExpo",Ease.OutExpo()}, {"InOutExpo",Ease.InOutExpo()},
+        {"InCirc",Ease.InCirc() }, {"OutCirc",Ease.OutCirc()}, {"InOutCirc",Ease.InOutCirc()},
+        {"InBack",Ease.InBack(0.5f) }, {"OutBack",Ease.OutBack(0.5f)},  {"InOutBack",Ease.InOutBack(0.5f)},
+        {"InBounce",Ease.InBounce()}, {"OutBounce",Ease.OutBounce()}, {"InOutBounce",Ease.InOutBounce()},
+        {"InHermite",Ease.InHermite()}, {"OutHermite",Ease.OutHermite()}, {"InOutHermite",Ease.InOutHermite()},
         {"RoundStep" ,Ease.RoundStep(4) },  { "CeilStep", Ease.CeilStep(4) }, {"FloorStep", Ease.FloorStep(4) }
     };
-    
+
 }
 
 }

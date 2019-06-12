@@ -4,7 +4,7 @@ using System;
 namespace CoLib
 {
 
-public static class MaterialExtensions 
+public static class MaterialExtensions
 {
     #region Extension methods
 

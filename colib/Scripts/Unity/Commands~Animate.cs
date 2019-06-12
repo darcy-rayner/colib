@@ -11,7 +11,7 @@ public static partial class Cmd
     /// Pulsates the scale.
     /// </summary>
     /// <param name="amount">The amount to increase the scale by.</param>
-    public static CommandDelegate PulsateScale(Ref<Vector3> scale, float amount, double duration) 
+    public static CommandDelegate PulsateScale(Ref<Vector3> scale, float amount, double duration)
     {
         CheckArgumentNonNull(scale, "scale");
         CommandDelegate tweenBack = null;
@@ -30,7 +30,7 @@ public static partial class Cmd
     /// Pulsates a value.
     /// </summary>
     /// <param name="amount">The amount to increase the value by.</param>
-    public static CommandDelegate PulsateScale(Ref<float> scale, float amount, double duration) 
+    public static CommandDelegate PulsateScale(Ref<float> scale, float amount, double duration)
     {
         CheckArgumentNonNull(scale, "scale");
         CommandDelegate tweenBack = null;
@@ -47,7 +47,7 @@ public static partial class Cmd
 
     /// <summary>
     /// Oscillates around a value. This will animation from
-    ///  startValue > startValue + amount > startValue - amount- > startValue, 
+    ///  startValue > startValue + amount > startValue - amount- > startValue,
     /// in a smooth circular motion.
     /// </summary>
     /// <param name="amount">
@@ -85,9 +85,9 @@ public static partial class Cmd
         CheckArgumentNonNull(rotation, "rotation");
 
         Quaternion startQuaternion = Quaternion.identity;
-        
+
         float val = 0.0f;
-        
+
         Ref<float> floatRef = new Ref<float>(
             () => val,
             (t) => {
@@ -95,13 +95,13 @@ public static partial class Cmd
                 rotation.Value = startQuaternion * Quaternion.AngleAxis(val, axis);
             }
         );
-        
+
         return Cmd.Sequence(
-            Cmd.Do( () => { 
-                startQuaternion = rotation.Value; 
+            Cmd.Do( () => {
+                startQuaternion = rotation.Value;
                 val = 0.0f;
             }),
-            
+
             Cmd.Oscillate(
                 floatRef, amount, duration, Ease.Smooth()
             )
@@ -113,13 +113,13 @@ public static partial class Cmd
     /// </summary>
     /// <param name="amplitude">Amplitude.</param>
     /// <param name="duration">Duration.</param>
-    public static CommandDelegate Wobble(Ref<float> single, float amount, double duration) 
+    public static CommandDelegate Wobble(Ref<float> single, float amount, double duration)
     {
         CheckArgumentNonNull(single, "val");
 
-        float intervals = 3f; 
+        float intervals = 3f;
         float decay = Mathf.Log(100f * amount);
-        
+
         float baseVal = 0f;
         return Cmd.Sequence(
             Cmd.Do( () => {
@@ -131,11 +131,11 @@ public static partial class Cmd
                     single.Value = baseVal + amount * Mathf.Sin(intervals * (float)t * 2 * Mathf.PI) / decayCoeef;
                 },
                 duration
-            ), 
+            ),
             Cmd.Do( () => {
                 single.Value = baseVal;
             })
-        );    
+        );
     }
 
     /// <summary>
@@ -144,7 +144,7 @@ public static partial class Cmd
     /// <param name="val">The value to animate.</param>
     /// <param name="amplitude">The size of the squash.</param>
     /// <param name="duration">The duration of the squash.</param>
-    public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration) 
+    public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration)
     {
         CheckArgumentNonNull(scale, "scale");
         return SquashAndStretch(scale, amplitude, duration, Vector3.up, new Vector3(0.5f, 0f, 0.5f).normalized);
@@ -158,7 +158,7 @@ public static partial class Cmd
     /// <param name="duration">The duration of the squash.</param>
     /// <param name="normal"> The normal of the animation. </param>
     /// <param name="tangent"> The tangent of the animation. </param>
-    public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration, Vector3 normal, Vector3 tangent) 
+    public static CommandDelegate SquashAndStretch(Ref<Vector3> scale, float amplitude, double duration, Vector3 normal, Vector3 tangent)
     {
         CheckArgumentNonNull(scale, "scale");
         if (normal.magnitude == 0f) {
@@ -184,7 +184,7 @@ public static partial class Cmd
     /// <param name="val">The value to animate.</param>
     /// <param name="amplitude">The size of the squash.</param>
     /// <param name="duration">The duration of the squash.</param>
-    public static CommandDelegate SquashAndStretch(Ref<Vector2> scale, float amplitude, double duration) 
+    public static CommandDelegate SquashAndStretch(Ref<Vector2> scale, float amplitude, double duration)
     {
         CheckArgumentNonNull(scale, "scale");
 
@@ -197,8 +197,8 @@ public static partial class Cmd
                 tempVal.x = t;
                 scale.Value = tempVal;
             }
-        );    
-        
+        );
+
         return Cmd.Sequence(
             Cmd.Do( () => {
                 area = scale.Value.x * scale.Value.y;
@@ -243,7 +243,7 @@ public static partial class Cmd
     /// <param name="normal"> The normal of the animation. </param>
     /// <param name="tangent"> The tangent of the animation. </param>
     public static CommandDelegate ScaleSquashAndStretchTo(Ref<Vector3> scale, Vector3 endScale, float amplitude, double duration, Vector3 normal, Vector3 tangent)
-    {    
+    {
         CheckArgumentNonNull(scale, "scale");
         var squashRef = Ref<Vector3>.Create(Vector3.one);
         var scaleRef = Ref<Vector3>.Create();
@@ -318,7 +318,7 @@ public static partial class Cmd
         }
         double avgDuration = duration / (numShakes + 1);
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Cmd.Defer( 
+        return Cmd.Defer(
             () => {
                 var baseVal = vector.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -329,11 +329,11 @@ public static partial class Cmd
                     );
                     if (offset.magnitude > 1f) {
                         // Randomize the length of the offset if it is too large.
-                        offset = offset.normalized * UnityEngine.Random.Range(0f, 1f);    
+                        offset = offset.normalized * UnityEngine.Random.Range(0f, 1f);
                     }
                     // Scale the offset, by the amount, and the scale factor.
                     offset = new Vector2(offset.x * amount.x, offset.y * amount.y);
-                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);                        
+                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);
                 }
                 list[numShakes] = Cmd.ChangeTo(vector, baseVal, avgDuration);
                 return Cmd.Sequence(list);
@@ -376,7 +376,7 @@ public static partial class Cmd
         double avgDuration = duration / (numShakes + 1);
 
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Cmd.Defer( 
+        return Cmd.Defer(
             () => {
                 var baseVal = vector.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -389,12 +389,12 @@ public static partial class Cmd
                     );
                     if (offset.magnitude > 1f) {
                         // Randomize the length of the offset if it is too large.
-                        offset = offset.normalized * UnityEngine.Random.Range(0f, 1f);    
+                        offset = offset.normalized * UnityEngine.Random.Range(0f, 1f);
                     }
 
                     // Scale the offset, by the amount, and the scale factor.
                     offset = new Vector3(offset.x * amount.x, offset.y * amount.y, offset.z * amount.z);
-                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);                        
+                    list[i] = Cmd.ChangeTo(vector, baseVal + offset, avgDuration);
                 }
                 list[numShakes] = Cmd.ChangeTo(vector, baseVal, avgDuration);
                 return Cmd.Sequence(list);
@@ -434,7 +434,7 @@ public static partial class Cmd
         double avgDuration = duration / (numShakes + 1);
 
         CommandDelegate[] list = new CommandDelegate[numShakes + 1];
-        return Cmd.Defer( 
+        return Cmd.Defer(
             () => {
                 var baseVal = rotation.Value;
                 for (int i = 0; i < numShakes; ++i) {
@@ -452,7 +452,7 @@ public static partial class Cmd
                         offset = Quaternion.LerpUnclamped(Quaternion.identity, offset, t);
                     }
 
-                    list[i] = Cmd.RotateTo(rotation, baseVal * offset, avgDuration);                        
+                    list[i] = Cmd.RotateTo(rotation, baseVal * offset, avgDuration);
                 }
                 list[numShakes] = Cmd.RotateTo(rotation, baseVal, avgDuration);
                 return Cmd.Sequence(list);

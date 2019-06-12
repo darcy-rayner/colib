@@ -7,7 +7,7 @@ namespace CoLib
 /// CommandScheduler takes commands, and runs them in parallel.
 /// The CommandScheduler is single threaded, but with a single
 /// call to update, several different commands can be updated
-/// and running at the same time. 
+/// and running at the same time.
 /// </summary>
 public class CommandScheduler
 {
@@ -22,7 +22,7 @@ public class CommandScheduler
     public bool Paused { get; set; }
 
     #endregion
-    
+
     #region Public Methods
 
     /// <summary>
@@ -31,11 +31,11 @@ public class CommandScheduler
     /// execute any action given to it in parallel.
     /// </summary>>
     public CommandScheduler() {}
-    
+
     /// <summary>
     /// Add a command to be executed in parallel.
     /// </summary>
-    /// <param name="command"> 
+    /// <param name="command">
     /// The command to execute. Should be non-null.
     /// </param>
     /// <exception cref="System.ArgumentNullException"></exception>
@@ -48,7 +48,7 @@ public class CommandScheduler
         queue.Enqueue(command);
         _queues.AddLast(queue);
     }
-    
+
     /// <summary>
     /// Updates the scheduler's deltaTime. This will in turn update the deltaTimes of any
     /// command running om this scheduler.
@@ -64,25 +64,25 @@ public class CommandScheduler
         }
         if (!Paused) {
             var node = _queues.First;
-        
+
             while (node != null) {
                 var next = node.Next;
                 bool finished = node.Value.Update(deltaTime);
                 if (finished) {
                     _queues.Remove(node);
                 }
-                
+
                 node = next;
             }
         }
     }
-    
+
     #endregion
-    
+
     #region Private fields
-    
+
     private LinkedList<CommandQueue> _queues = new LinkedList<CommandQueue>();
-    
+
     #endregion
 }
 

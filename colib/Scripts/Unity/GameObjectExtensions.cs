@@ -57,7 +57,7 @@ public static class GameObjectExtensions
     private static void CheckArgumentNonNull(GameObject gameObject)
     {
         if (gameObject == null) {
-            throw new ArgumentNullException("gameObject"); 
+            throw new ArgumentNullException("gameObject");
         }
     }
 
