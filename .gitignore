@@ -1,3 +1,4 @@
 *.meta
 *.orig
 UnityTestTools
+obj/
