@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: fe023671a39482548ae06c63bacc2bbf
+=======
+guid: 2309a437d55d24042941788efacab733
+>>>>>>> c80312fb84a7db954f28efcc5e06c81b33253f22
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -9,6 +13,10 @@ PluginImporter:
   isPreloaded: 0
   isOverridable: 1
   isExplicitlyReferenced: 0
+<<<<<<< HEAD
+=======
+  validateReferences: 1
+>>>>>>> c80312fb84a7db954f28efcc5e06c81b33253f22
   platformData:
   - first:
       Any: 
