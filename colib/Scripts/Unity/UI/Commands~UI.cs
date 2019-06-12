@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace CoLib
 {
-    
+
 public static partial class Cmd
 {
     #region Graphic
@@ -43,7 +43,7 @@ public static partial class Cmd
         CheckArgumentNonNull(graphic, "graphic");
         return AlphaBy(graphic.ToColorRef(), alpha, duration, ease);
     }
-    
+
     #endregion
 
     #region CanvasGroup

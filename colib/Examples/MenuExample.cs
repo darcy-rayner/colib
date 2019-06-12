@@ -43,7 +43,7 @@ public class MenuExample : MonoBehaviour
             }
         }
 
-        public Ref<float> ToScaleRef() 
+        public Ref<float> ToScaleRef()
         {
             return new Ref<float>(
                 () => Region.width / RECT_WIDTH,
@@ -59,7 +59,7 @@ public class MenuExample : MonoBehaviour
             );
         }
 
-        public Ref<float> ToRotationRef() 
+        public Ref<float> ToRotationRef()
         {
             return new Ref<float>(
                 () => Rotation,
@@ -80,7 +80,7 @@ public class MenuExample : MonoBehaviour
                 }
             );
         }
-    
+
         public void AnimateHighlighted()
         {
             if (_highlighted) {
@@ -168,7 +168,7 @@ public class MenuExample : MonoBehaviour
             rotation = - rotation;
         }
         _queue.Enqueue(
-            Cmd.ChangeTo(_backButton.ToPositionRef(), new Vector2(-RECT_WIDTH / 2, RECT_HEIGHT / 2), 0.3f, Ease.Smooth()), 
+            Cmd.ChangeTo(_backButton.ToPositionRef(), new Vector2(-RECT_WIDTH / 2, RECT_HEIGHT / 2), 0.3f, Ease.Smooth()),
             Cmd.Parallel( _moves.ToArray())
         );
     }
@@ -188,7 +188,7 @@ public class MenuExample : MonoBehaviour
 
         _queue.Enqueue(
             Cmd.Parallel(_moves.ToArray()),
-            Cmd.ChangeBy(_backButton.ToPositionRef(), new Vector2(RECT_WIDTH, 0f), 0.3f, Ease.Smooth()), 
+            Cmd.ChangeBy(_backButton.ToPositionRef(), new Vector2(RECT_WIDTH, 0f), 0.3f, Ease.Smooth()),
             Cmd.Do( () => _hidingMenu = false)
         );
 
@@ -198,7 +198,7 @@ public class MenuExample : MonoBehaviour
 
     #region Button Callbacks
 
-    private void Example1() 
+    private void Example1()
     {
         AnimateOut();
         GameObject gm = null;

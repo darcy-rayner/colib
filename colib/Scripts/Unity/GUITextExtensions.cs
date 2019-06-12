@@ -4,7 +4,7 @@
 //namespace CoLib
 //{
 
-//public static class GUITextExtensions 
+//public static class GUITextExtensions
 //{
 //	#region Extension methods
 

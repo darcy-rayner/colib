@@ -4,7 +4,7 @@ using UnityEngine;
 namespace CoLib
 {
 
-public  static class TransformExtensions 
+public  static class TransformExtensions
 {
     #region Extension methods
 
@@ -12,12 +12,12 @@ public  static class TransformExtensions
     {
         CheckTransformNonNull(transform);
         if (isLocalSpace) {
-            return new Ref<Vector3>( 
+            return new Ref<Vector3>(
                 () => transform.localPosition,
                 newPosition => transform.localPosition = newPosition
             );
         } else {
-            return new Ref<Vector3>( 
+            return new Ref<Vector3>(
                 () => transform.position,
                 newPosition => transform.position = newPosition
             );
@@ -29,7 +29,7 @@ public  static class TransformExtensions
         CheckTransformNonNull(transform);
 
         if (isLocalSpace) {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.x,
                 t => {
                     var position = transform.localPosition;
@@ -38,7 +38,7 @@ public  static class TransformExtensions
                 }
             );
         } else {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.x,
                 t => {
                     var position = transform.position;
@@ -54,7 +54,7 @@ public  static class TransformExtensions
         CheckTransformNonNull(transform);
 
         if (isLocalSpace) {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.y,
                 t => {
                     var position = transform.localPosition;
@@ -63,7 +63,7 @@ public  static class TransformExtensions
                 }
             );
         } else {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.y,
                 t => {
                     var position = transform.position;
@@ -79,7 +79,7 @@ public  static class TransformExtensions
         CheckTransformNonNull(transform);
 
         if (isLocalSpace) {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.z,
                 t => {
                     var position = transform.localPosition;
@@ -88,7 +88,7 @@ public  static class TransformExtensions
                 }
             );
         } else {
-            return new Ref<float>( 
+            return new Ref<float>(
                 () => transform.localPosition.z,
                 t => {
                     var position = transform.position;
@@ -104,12 +104,12 @@ public  static class TransformExtensions
         CheckTransformNonNull(transform);
 
         if (isLocalSpace) {
-            return new Ref<Quaternion>( 
+            return new Ref<Quaternion>(
                 () => transform.localRotation,
                 newRotation => transform.localRotation = newRotation
             );
         } else {
-            return new Ref<Quaternion>( 
+            return new Ref<Quaternion>(
                 () => transform.rotation,
                 newRotation => transform.rotation = newRotation
             );
@@ -120,7 +120,7 @@ public  static class TransformExtensions
     {
         CheckTransformNonNull(transform);
 
-        return new Ref<Vector3>( 
+        return new Ref<Vector3>(
             () => transform.localScale,
             newScale => transform.localScale = newScale
         );
@@ -130,7 +130,7 @@ public  static class TransformExtensions
     {
         CheckTransformNonNull(transform);
 
-        return new Ref<float>( 
+        return new Ref<float>(
             () => transform.localScale.x,
             t => {
                 var scale = transform.localScale;
@@ -144,7 +144,7 @@ public  static class TransformExtensions
     {
         CheckTransformNonNull(transform);
 
-        return new Ref<float>( 
+        return new Ref<float>(
             () => transform.localScale.y,
             t => {
                 var scale = transform.localScale;
@@ -158,7 +158,7 @@ public  static class TransformExtensions
     {
         CheckTransformNonNull(transform);
 
-        return new Ref<float>( 
+        return new Ref<float>(
             () => transform.localScale.z,
             t => {
                 var scale = transform.localScale;
@@ -175,7 +175,7 @@ public  static class TransformExtensions
     private static void CheckTransformNonNull(Transform transform)
     {
         if (transform == null) {
-            throw new ArgumentNullException("transform"); 
+            throw new ArgumentNullException("transform");
         }
     }
 

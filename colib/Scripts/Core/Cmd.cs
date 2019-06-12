@@ -7,7 +7,7 @@ namespace CoLib
     /// The base building block for all commands.
     /// </summary>
     /// <remarks>
-    /// This is what the CommandQueue and CommandScheduler update. 
+    /// This is what the CommandQueue and CommandScheduler update.
     /// DeltaTime is the time to update the command by. The delegate should
     /// modify deltaTime, subtracting the time it has consumed.
     /// The delegate returns true when it has completed, and false
@@ -28,7 +28,7 @@ namespace CoLib
         /// <summary>
         /// An <c>CommandDo</c> runs precisely once.
         /// </summary>
-        /// <param name="command"> 
+        /// <param name="command">
         /// The command to execute. Must be non-null.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -50,7 +50,7 @@ namespace CoLib
         {
             return (ref double deltaTime) => true;
         }
-        
+
         /// <summary>
         /// An <c>CommandDuration</c> runs over a duration of time.
         /// </summary>
@@ -58,7 +58,7 @@ namespace CoLib
         /// The command to execute. Must be non-null.
         /// </param>
         /// <param name="duration">
-        /// The duration of time, in seconds, to apply the command over. 
+        /// The duration of time, in seconds, to apply the command over.
         /// Must be greater than or equal to 0.
         /// </param>
         /// <param name="ease">
@@ -78,7 +78,7 @@ namespace CoLib
                 return (ref double deltaTime) =>
                 {
                     var t = 1.0;
-                    if (ease != null) 
+                    if (ease != null)
                         t = ease(t);
                     command(t);
                     return true;
@@ -96,7 +96,7 @@ namespace CoLib
                 if (ease != null) { t = ease(t); }
                 command(t);
                 var finished = elapsedTime >= duration;
-                if (!finished) 
+                if (!finished)
                     return false;
 
                 deltaTime = elapsedTime - duration;
@@ -109,7 +109,7 @@ namespace CoLib
         /// <summary>
         /// A Wait command does nothing until duration has elapsed
         /// </summary>
-        /// <param name="duration"> 
+        /// <param name="duration">
         /// The duration of time, in seconds, to wait. Must be greater than 0.
         /// </param>
         /// <exception>
@@ -124,7 +124,7 @@ namespace CoLib
                 elapsedTime += deltaTime;
                 deltaTime = 0.0f;
                 var finished = elapsedTime >= duration;
-                if (!finished) 
+                if (!finished)
                     return false;
                 deltaTime = elapsedTime - duration;
                 elapsedTime = 0.0f;
@@ -141,11 +141,11 @@ namespace CoLib
         /// <exception cref="System.ArgumentOutOfRangeException"></exception>
         public static CommandDelegate WaitForFrames(int frameCount)
         {
-            if (frameCount <= 0) 
+            if (frameCount <= 0)
                 throw new System.ArgumentOutOfRangeException(nameof(frameCount),frameCount, "frameCount must be > 0.");
 
             var counter = frameCount;
-            return (ref double deltaTime) => 
+            return (ref double deltaTime) =>
             {
                 if (counter > 0)
                 {
@@ -157,12 +157,12 @@ namespace CoLib
                 return true;
             };
         }
-        
+
         /// <summary>
         /// A Parallel command executes several commands in parallel. It finishes
         /// when the last command has finished.
         /// </summary>
-        /// <param name="commands"> 
+        /// <param name="commands">
         /// The commands to execute. Must be non-null.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -188,7 +188,7 @@ namespace CoLib
                 {
                     if (finishedCommands[i]) { continue; }
                     var deltaTimeCopy = deltaTime;
-                    var thisFinished = commands[i](ref deltaTimeCopy); 
+                    var thisFinished = commands[i](ref deltaTimeCopy);
                     finishedCommands[i] = thisFinished;
                     finished = finished && thisFinished;
                     smallestDeltaTime = System.Math.Min(deltaTimeCopy, smallestDeltaTime);
@@ -196,16 +196,16 @@ namespace CoLib
 
                 if (finished)
                     finishedCommands.SetAll(false);
-                
+
                 deltaTime = smallestDeltaTime;
                 return finished;
             };
         }
-        
+
         /// <summary>
         /// A Sequence command executes several commands sequentially.
         /// </summary>
-        /// <param name="commands"> 
+        /// <param name="commands">
         /// A parameter list of commands to execute sequentially. All commands must be non-null.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -232,7 +232,7 @@ namespace CoLib
                     finished = commands[index](ref deltaTime);
                     if (finished) { index += 1; }
 
-                    if (index != commands.Length) 
+                    if (index != commands.Length)
                         continue;
 
                     index = 0;
@@ -241,13 +241,13 @@ namespace CoLib
                 return false;
             };
         }
-        
+
         /// <summary>
         /// A  Queue command allows Cmd to be nested recursively in queues. Queues
         /// are different to Sequences in that they are depletable, (so be careful if
         /// you are wrapping a queue in a Repeat command).
         /// </summary>
-        /// <param name="queue"> 
+        /// <param name="queue">
         /// The queue to execute. Must be non-null.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -256,20 +256,20 @@ namespace CoLib
             CheckArgumentNonNull(queue, "queue");
             return (ref double deltaTime) => queue.Update(ref deltaTime);
         }
-        
+
         /// <summary>
         /// A Condition command allows branching behaviour. After a condition evaluates to <c>true</c>
-        /// then onTrue will be evaluated until it finishes. Otherise onFalse will be evaluated, (if it 
+        /// then onTrue will be evaluated until it finishes. Otherise onFalse will be evaluated, (if it
         /// isn't null). When nested in a Repeat command, conditions will be re-evaluated once for every
         /// repeat.
         /// </summary>
-        /// <param name="condition"> 
+        /// <param name="condition">
         /// The condition to evaluate. Must be non-null.
         /// </param>
-        /// <param name="onTrue"> 
+        /// <param name="onTrue">
         /// The command to execute if condition evaluates to true. Must be non-null.
         /// </param>
-        /// <param name="onFalse"> 
+        /// <param name="onFalse">
         /// The command to execute if condition evaluates to false.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -288,9 +288,9 @@ namespace CoLib
                 }),
                 (ref double deltaTime) => result == null || result(ref deltaTime));
         }
-            
+
         /// <summary>
-        /// Require the specified condition to be true to continue executing the given command. 
+        /// Require the specified condition to be true to continue executing the given command.
         /// <param name='condition'>
         /// A condition which must remain true to continue executing the commands. Must be non-null.
         /// </param>
@@ -320,20 +320,20 @@ namespace CoLib
             CheckArgumentNonNull(condition, "condition");
             CheckArgumentNonNull(deferredCommand, "deferredCommand");
 
-            CommandDelegate command = null;            
-            
+            CommandDelegate command = null;
+
             return (ref double deltaTime) =>
             {
                 if (command == null)
                     command = deferredCommand();
-                
-                if (command == null) 
+
+                if (command == null)
                     return true;
 
                 var finished = !condition() || command(ref deltaTime);
                 if (finished)
                     command = null;
-                
+
                 return finished;
             };
         }
@@ -359,22 +359,22 @@ namespace CoLib
             {
                 if (!finished)
                     finished = sequence(ref deltaTime);
-                
+
                 while (finished)
                 {
                     if (!condition())
                         return true;
-                    
+
                     finished = sequence(ref deltaTime);
                 }
                 return false;
             };
         }
-        
+
         /// <summary>
         /// The Repeat command repeats a delegate a given number of times.
         /// </summary>
-        /// <param name="repeatCount"> 
+        /// <param name="repeatCount">
         /// The number of times to repeat the given command. Must be > 0.
         /// </param>
         /// <param name='commands'>
@@ -386,7 +386,7 @@ namespace CoLib
         ///     int counter = 0;
         ///     CommandDelegate someCommand = Cmd.Sequence(
         ///         Cmd.Do(delegate() {
-        ///             // Reset state here. 
+        ///             // Reset state here.
         ///             counter = 0;
         ///         }),
         ///         Cmd.While(() => {
@@ -403,8 +403,8 @@ namespace CoLib
         public static CommandDelegate Repeat(int repeatCount, params CommandDelegate[] commands)
         {
             if (repeatCount <= 0)
-                throw new System.ArgumentOutOfRangeException(nameof(repeatCount),repeatCount, "repeatCount must be > 0."); 
-            
+                throw new System.ArgumentOutOfRangeException(nameof(repeatCount),repeatCount, "repeatCount must be > 0.");
+
             foreach (var command in commands) {
                 CheckArgumentNonNull(command);
             }
@@ -422,7 +422,7 @@ namespace CoLib
                 return finished;
             };
         }
-        
+
         /// <summary>
         /// Repeats a command forever.
         /// </summary>
@@ -430,7 +430,7 @@ namespace CoLib
         /// Make sure that the commands you are repeating will consume some time,
         /// otherwise this will create a infinite loop.
         /// </remarks>
-        /// <param name="commands"> 
+        /// <param name="commands">
         /// The commands to execute. Must be non-null.
         /// </param>
         /// <exception cref="System.ArgumentNullException"></exception>
@@ -438,7 +438,7 @@ namespace CoLib
         {
             foreach (var command in commands)
                 CheckArgumentNonNull(command);
-            
+
             var sequence = Sequence(commands);
             return (ref double deltaTime) =>
             {
@@ -448,7 +448,7 @@ namespace CoLib
                 return false;
             };
         }
-        
+
         /// <summary>
         /// Creates a command which runs a coroutine.
         /// </summary>
@@ -466,7 +466,7 @@ namespace CoLib
         /// <example>
         /// <code>
         ///     private CommandQueue _queue = new CommandQueue();
-        /// 
+        ///
         ///     IEnumerator<CommandDelegate> CoroutineMethod(int firstVal, int secondVal, int thirdVal)
         ///     {
         ///            Debug.Log(firstVal);
@@ -476,25 +476,25 @@ namespace CoLib
         ///         Debug.Log(thirdVal);
         ///         yield break; // Force exits the coroutine.
         ///     }
-        ///     
+        ///
         ///     IEnumerator<CommandDelegate> CoroutineNoArguments()
         ///     {
         ///        yield return Cmd.WaitForSeconds(2.0);
         ///     }
-        /// 
-        ///     void Start() 
-        ///     { 
+        ///
+        ///     void Start()
+        ///     {
         ///         _queue.Enqueue(
         ///             Cmd.Coroutine( () => CoroutineMethod(1,2,3)),
         ///             Cmd.Coroutine(CoroutineNoArguments)
         ///         );
         ///     }
-        /// 
+        ///
         ///     void Update()
         ///     {
         ///         _queue.Update(Time.deltaTime);
         ///     }
-        ///     
+        ///
         /// </code>
         /// </example>
         public static CommandDelegate Coroutine(CommandCoroutine command)
@@ -509,7 +509,7 @@ namespace CoLib
                 if (coroutine == null) {
                     coroutine = command();
                     // Finish if we couldn't create a coroutine.
-                    if (coroutine == null) { return true; } 
+                    if (coroutine == null) { return true; }
                 }
 
                 var finished = true;
@@ -532,7 +532,7 @@ namespace CoLib
                 return false;
             };
         }
-        
+
         /// <summary>
         /// Chooses a random child command to perform. Re-evaluated on repeat.
         /// </summary>
@@ -545,7 +545,7 @@ namespace CoLib
         {
             if (commands.Length == 0)
                 throw new System.ArgumentException("Must have at least one command parameter.", nameof(commands));
-                
+
             var random = new System.Random();
             return Defer(() => commands[random.Next(0, commands.Length)]);
         }
@@ -554,7 +554,7 @@ namespace CoLib
         /// Defers the creation of the Command until just before the point of execution.
         /// </summary>
         /// <param name="commandDeferred">
-        /// The action which will create the CommandDelegate. 
+        /// The action which will create the CommandDelegate.
         /// This must not be null, but it can return a null CommandDelegate.
         /// </param>
         public static CommandDelegate Defer(CommandFactory commandDeferred)
@@ -568,9 +568,9 @@ namespace CoLib
                 }),
                 (ref double deltaTime) => command == null || command(ref deltaTime));
         }
-        
+
         /// <summary>
-        /// Consumes all the time from the current update, but let's execution continue. 
+        /// Consumes all the time from the current update, but let's execution continue.
         /// Useful for compensating for loading bumps.
         /// </summary>
         public static CommandDelegate ConsumeTime()
@@ -591,12 +591,12 @@ namespace CoLib
         /// <param name='commands'>
         /// A list of commands to choose from at random. Only one command will be performed.
         /// Null commands can be passed. At least one command must be specified.
-        /// </param>    
+        /// </param>
         public static CommandDelegate DilateTime(double dilationAmount, params CommandDelegate[] commands)
         {
             if (dilationAmount <= 0.0)
                 throw new System.ArgumentOutOfRangeException(nameof(dilationAmount));
-            
+
             var command = Sequence(commands);
             return (ref double deltaTime) =>
             {
@@ -614,9 +614,9 @@ namespace CoLib
         private static void CheckArgumentNonNull(object obj, string argumentName = "command")
         {
             if (obj == null)
-                throw new System.ArgumentNullException(argumentName); 
+                throw new System.ArgumentNullException(argumentName);
         }
-        
+
         private static void CheckDurationGreaterThanZero(double duration)
         {
             if (duration <= 0.0)

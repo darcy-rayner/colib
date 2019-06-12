@@ -7,12 +7,12 @@ namespace CoLib
 /// The CommandQueue class is one of core primitives for running commands.
 /// It operates, as its name suggests, as a FIFO queue. All Cmd Enqueued
 /// to the queue run in sequential order. When it is fed time via Update, it
-/// will remove Cmd from the queue as they complete. 
+/// will remove Cmd from the queue as they complete.
 /// </summary>
 public class CommandQueue
 {
     #region Properties
-    
+
     /// <summary>
     /// Gets or sets a value indicating whether this <see cref="CommandQueue"/> is paused.
     /// </summary>
@@ -37,14 +37,14 @@ public class CommandQueue
     /// </summary>
     /// <value><c>true</c> if updating; otherwise, <c>false</c>.</value>
     public bool Updating { get { return _updateRunning; }}
-    
+
     #endregion
 
     #region Public Methods
-    
+
     /// <summary>
     /// Enqueue the specified command. Cmd are queued up in the order specified.
-    /// Multiple calls to <c>Enqueue<</c> result is the same sequential ordering ie. 
+    /// Multiple calls to <c>Enqueue<</c> result is the same sequential ordering ie.
     /// <code>
     ///     CommandQueue queue = new CommandQueue();
     ///     queue.Enqueue(commandOne);
@@ -54,7 +54,7 @@ public class CommandQueue
     /// </code>
     /// </summary>
     /// <param name='commands'>
-    /// The <c>CommandDelegate</c>s to be enqueued. The <c>CommandQueue</c> will 
+    /// The <c>CommandDelegate</c>s to be enqueued. The <c>CommandQueue</c> will
     /// dequeue the commands over succesive calls to Update. Must be non-null.
     /// </param>
     /// <exception cref="System.ArgumentNullException"></exception>
@@ -90,7 +90,7 @@ public class CommandQueue
     {
         return Update(ref deltaTime);
     }
-    
+
     /// <summary>
     /// Updates the <c>CommandQueue</c>. This causes CommandDelegates to be executed
     /// in the order than are enqueued. Update will return after an <c>CommandDelegate</c>
@@ -101,7 +101,7 @@ public class CommandQueue
     /// </param>
     /// <returns>
     /// If the queue is finished as no <c>CommandDelegate</c>s remain, returns <c>true</c>,
-    /// <c>false</c> otherwise. 
+    /// <c>false</c> otherwise.
     /// </returns>
     /// <exception cref="System.ArgumentOutOfRangeException"></exception>
     /// <exception cref="System.InvalidOperationException"></exception>
@@ -114,7 +114,7 @@ public class CommandQueue
             throw new System.InvalidOperationException("Update can't be called recursively.");
         }
         _updateRunning = true;
-        
+
         try {
             if (!Paused) {
                 _deltaTimeAccumulation += deltaTime;
@@ -123,13 +123,13 @@ public class CommandQueue
                     if (_currentCommand == null) {
                         _currentCommand = _commandDelegates.Dequeue();
                     }
-            
+
                     bool finished = _currentCommand(ref _deltaTimeAccumulation);
                     if (finished) {
                         _currentCommand = null;
                     }
-            
-                    // Only run again if an action just finished, 
+
+                    // Only run again if an action just finished,
                     // (indicated by currentCommand == null), and we have more actions.
                     shouldRun = finished && _commandDelegates.Count != 0 && !Paused;
                 }
@@ -144,18 +144,18 @@ public class CommandQueue
             }
         }
     }
-    
+
     #endregion
-    
+
     #region Private fields
-    
+
     private Queue<CommandDelegate> _commandDelegates = new Queue<CommandDelegate>();
     private CommandDelegate _currentCommand = null;
     private double _deltaTimeAccumulation = 0.0;
     private bool _updateRunning = false;
-    
+
     #endregion
-    
+
 }
-    
+
 }

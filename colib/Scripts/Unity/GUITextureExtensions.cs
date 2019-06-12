@@ -4,7 +4,7 @@
 //namespace CoLib
 //{
 
-//public static class GUITextureExtensions 
+//public static class GUITextureExtensions
 //{
 //	#region Extension methods
 

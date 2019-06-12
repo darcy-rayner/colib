@@ -17,7 +17,7 @@ public static class RectTransformExtensions
             (t) => transform.offsetMin = t
         );
     }
-    
+
     public static Ref<Vector2> ToOffsetMaxRef(this RectTransform transform)
     {
         CheckTransformNonNull(transform);
@@ -37,7 +37,7 @@ public static class RectTransformExtensions
             (t) => transform.anchorMin = t
         );
     }
-    
+
     public static Ref<Vector2> ToAnchorMaxRef(this RectTransform transform)
     {
         CheckTransformNonNull(transform);
@@ -47,7 +47,7 @@ public static class RectTransformExtensions
             (t) => transform.anchorMax = t
         );
     }
-    
+
     public static Ref<Vector2> ToAnchorRef(this RectTransform transform)
     {
         CheckTransformNonNull(transform);
@@ -57,7 +57,7 @@ public static class RectTransformExtensions
             (t) => transform.anchoredPosition = t
         );
     }
-    
+
     public static Ref<Vector2> ToSizeDeltaRef(this RectTransform transform)
     {
         CheckTransformNonNull(transform);

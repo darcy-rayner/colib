@@ -95,7 +95,7 @@ public static partial class Cmd
     #endregion
 
     #region ChangeBy
-    
+
     public static CommandDelegate ChangeBy(Ref<Vector2> vector, Vector2 offset, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(vector, "vector");
@@ -103,7 +103,7 @@ public static partial class Cmd
         double lastT = 0.0;
         return Cmd.Sequence(
             Cmd.Do(delegate() {
-                lastT = 0.0;    
+                lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
@@ -119,7 +119,7 @@ public static partial class Cmd
         double lastT = 0.0;
         return Cmd.Sequence(
             Cmd.Do(delegate() {
-                lastT = 0.0;    
+                lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
@@ -135,7 +135,7 @@ public static partial class Cmd
         double lastT = 0.0;
         return Cmd.Sequence(
             Cmd.Do(delegate() {
-                lastT = 0.0;    
+                lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
                 vector.Value +=  offset * (float) (t - lastT);
@@ -173,7 +173,7 @@ public static partial class Cmd
                 endVector = vector.Value;
             }),
             Cmd.Duration( delegate(double t) {
-                vector.Value = (endVector - startVector) * (float)t + startVector;    
+                vector.Value = (endVector - startVector) * (float)t + startVector;
             }, duration, ease)
         );
     }
@@ -242,7 +242,7 @@ public static partial class Cmd
         Quaternion startRotation = Quaternion.identity;
         return Cmd.Sequence(
             Cmd.Do( delegate() {
-                startRotation = rotation.Value;    
+                startRotation = rotation.Value;
             }),
             Cmd.Duration( delegate(double t) {
                 rotation.Value = Quaternion.LerpUnclamped(startRotation, endRotation, (float) t);
@@ -260,7 +260,7 @@ public static partial class Cmd
                 lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
-                rotation.Value *= Quaternion.LerpUnclamped(Quaternion.identity, offsetRotation, (float) t) * 
+                rotation.Value *= Quaternion.LerpUnclamped(Quaternion.identity, offsetRotation, (float) t) *
                     Quaternion.Inverse(Quaternion.LerpUnclamped(Quaternion.identity, offsetRotation, (float) lastT));
                 lastT = t;
             }, duration, ease)
@@ -274,7 +274,7 @@ public static partial class Cmd
         Quaternion endRotation = Quaternion.identity;
         return Cmd.Sequence(
             Cmd.Do( delegate() {
-                endRotation = rotation.Value;    
+                endRotation = rotation.Value;
             }),
             Cmd.Duration( delegate(double t) {
                 rotation.Value = Quaternion.LerpUnclamped(startRotation, endRotation, (float)t);
@@ -463,7 +463,7 @@ public static partial class Cmd
             (t) => {
                 Color tempColor = color.Value;
                 tempColor.a = t;
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
         return ChangeTo(alphaRef, endAlpha, duration, ease);
@@ -478,7 +478,7 @@ public static partial class Cmd
             (t) => {
                 Color32 tempColor = color.Value;
                 tempColor.a = (byte) (t * 255);
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
         return ChangeTo(alphaRef, endAlpha, duration, ease);
@@ -493,7 +493,7 @@ public static partial class Cmd
             (t) => {
                 Color tempColor = color.Value;
                 tempColor.a = t;
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
 
@@ -509,7 +509,7 @@ public static partial class Cmd
             (t) => {
                 Color32 tempColor = color.Value;
                 tempColor.a = (byte) (t * 255);
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
         return ChangeBy(alphaRef, offset, duration, ease);
@@ -524,7 +524,7 @@ public static partial class Cmd
             (t) => {
                 Color tempColor = color.Value;
                 tempColor.a = t;
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
 
@@ -540,7 +540,7 @@ public static partial class Cmd
             (t) => {
                 Color32 tempColor = color.Value;
                 tempColor.a = (byte) (t * 255);
-                color.Value = tempColor; 
+                color.Value = tempColor;
             }
         );
         return ChangeFrom(alphaRef, startAlpha, duration, ease);

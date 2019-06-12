@@ -4,7 +4,7 @@ using System;
 namespace CoLib
 {
 
-public static class CameraExtensions 
+public static class CameraExtensions
 {
     #region Extension methods
 
@@ -52,7 +52,7 @@ public static class CameraExtensions
         CheckArgumentNonNull(camera);
         return new Ref<float>(
             () => camera.orthographicSize,
-            t => camera.orthographicSize = t 
+            t => camera.orthographicSize = t
         );
     }
 
@@ -150,7 +150,7 @@ public static class CameraExtensions
     private static void CheckArgumentNonNull(Camera camera)
     {
         if (camera == null) {
-            throw new ArgumentNullException("camera"); 
+            throw new ArgumentNullException("camera");
         }
     }
 

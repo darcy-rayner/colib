@@ -4,7 +4,7 @@ namespace CoLib
 public static partial class Cmd
 {
     #region ChangeTo
-    
+
     public static CommandDelegate ChangeTo(Ref<float> single, float endSingle, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(single, "single");
@@ -18,7 +18,7 @@ public static partial class Cmd
             }, duration, ease)
         );
     }
-    
+
     public static CommandDelegate ChangeTo(Ref<double> single, double endSingle, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(single, "single");
@@ -99,7 +99,7 @@ public static partial class Cmd
     }
 
     #endregion
-    
+
     #region ChangeBy
 
     public static CommandDelegate ChangeBy(Ref<float> single, float offset, double duration, CommandEase ease = null)
@@ -108,7 +108,7 @@ public static partial class Cmd
         double lastT = 0.0;
         return Cmd.Sequence(
             Cmd.Do(delegate() {
-                lastT = 0.0;    
+                lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
                 single.Value +=  offset * (float) (t - lastT);
@@ -116,7 +116,7 @@ public static partial class Cmd
             }, duration, ease)
         );
     }
-    
+
     public static CommandDelegate ChangeBy(Ref<double> single, double offset, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(single, "single");
@@ -124,7 +124,7 @@ public static partial class Cmd
         double lastT = 0.0;
         return Cmd.Sequence(
             Cmd.Do(delegate() {
-                lastT = 0.0;    
+                lastT = 0.0;
             }),
             Cmd.Duration( delegate(double t) {
                 single.Value +=  offset * (t - lastT);
@@ -167,9 +167,9 @@ public static partial class Cmd
     }
 
     #endregion
-    
+
     #region ChangeFrom
-    
+
     public static CommandDelegate ChangeFrom(Ref<float> single, float startSingle, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(single, "single");
@@ -180,11 +180,11 @@ public static partial class Cmd
                 endSingle = single.Value;
             }),
             Cmd.Duration( delegate(double t) {
-                single.Value = (endSingle - startSingle) * (float) t + startSingle;    
+                single.Value = (endSingle - startSingle) * (float) t + startSingle;
             }, duration, ease)
         );
     }
-    
+
     public static CommandDelegate ChangeFrom(Ref<double> single, double startSingle, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(single, "single");
@@ -195,7 +195,7 @@ public static partial class Cmd
                 endSingle = single.Value;
             }),
             Cmd.Duration( delegate(double t) {
-                single.Value = (endSingle - startSingle) * t + startSingle;    
+                single.Value = (endSingle - startSingle) * t + startSingle;
             }, duration, ease)
         );
     }
@@ -264,9 +264,9 @@ public static partial class Cmd
     }
 
     #endregion
-    
+
     #region ScaleBy
-    
+
     public static CommandDelegate ScaleBy(Ref<float> scale, float scaleFactor, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(scale, "scale");
@@ -283,7 +283,7 @@ public static partial class Cmd
             }, duration, ease)
         );
     }
-    
+
     public static CommandDelegate ScaleBy(Ref<double> scale, double scaleFactor, double duration, CommandEase ease = null)
     {
         CheckArgumentNonNull(scale, "scale");
@@ -353,7 +353,7 @@ public static partial class Cmd
 
     #endregion
 }
-    
+
 }
-    
+
 

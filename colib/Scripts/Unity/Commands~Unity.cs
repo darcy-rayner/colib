@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace CoLib 
+namespace CoLib
 {
 
 public static partial class Cmd
