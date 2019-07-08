@@ -2,3 +2,5 @@
 *.orig
 UnityTestTools
 obj/
+
+.user.meta
