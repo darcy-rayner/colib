@@ -3,4 +3,7 @@
 UnityTestTools
 obj/
 
-.user.meta
+.vs/
+
+*.user
+*.user.meta
