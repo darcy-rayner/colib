@@ -73,7 +73,7 @@ public class EaseExample : MonoBehaviour
 
         _queue = new CommandQueue();
 
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.RepeatForever(
                 Cmd.Do( () => _sphere.transform.position = startPosition),
                 Cmd.Do( () => _cube.transform.rotation = startRotation),

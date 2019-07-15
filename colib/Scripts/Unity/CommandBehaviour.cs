@@ -24,7 +24,7 @@ public class CommandBehaviour : MonoBehaviour
     {
         var queue = new CommandQueue ();
         if (commands.Length > 0) {
-            queue.Enqueue (commands);
+            queue.Sequence (commands);
         }
         _queues.Add (queue);
         return queue;
