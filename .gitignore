@@ -4,6 +4,7 @@ UnityTestTools
 obj/
 
 .vs/
+/.current
 
 *.user
 *.user.meta
