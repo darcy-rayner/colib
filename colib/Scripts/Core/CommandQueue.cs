@@ -121,7 +121,12 @@ namespace CoLib
                 while (shouldRun)
                 {
                     if (_currentCommand == null)
+                    {
+                        if (_commandDelegates.Count == 0)
+                            break;
+
                         _currentCommand = _commandDelegates.Dequeue();
+                    }
 
                     if (_currentCommand(ref _deltaTimeAccumulation))
                         _currentCommand = null;
@@ -129,8 +134,7 @@ namespace CoLib
                     // Only run again if an action just finished,
                     // (indicated by currentCommand == null), and we have more actions.
                     if (_currentCommand != null)
-                        shouldRun = _currentCommand(ref _deltaTimeAccumulation) && _commandDelegates.Count != 0 &&
-                                    !Paused;
+                        shouldRun = _currentCommand(ref _deltaTimeAccumulation) && _commandDelegates.Count != 0 && !Paused;
                 }
 
                 return _commandDelegates.Count == 0 && _currentCommand == null;
