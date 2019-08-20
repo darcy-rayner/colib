@@ -47,13 +47,13 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEditor">
-      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEditor.dll</HintPath>
+      <HintPath>colib\Assemblies\Unity-2019.1.10f1\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEngine.dll</HintPath>
+      <HintPath>colib\Assemblies\Unity-2019.1.10f1\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\LiminalPlatformSDK\Liminal.SDK\External\Unity\2018.3.2f1\UnityEngine.UI.dll</HintPath>
+      <HintPath>colib\Assemblies\Unity-2019.1.10f1\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -203,13 +203,6 @@
     <None Include="package.json" />
     <None Include="packages.config" />
     <None Include="Readme.md" />
-    <None Include="Test\Editor\Tests.meta" />
-    <None Include="Test\Editor\Tests\CoLibTest.asmdef" />
-    <None Include="Test\Editor\Tests\CoLibTest.asmdef.meta" />
-    <None Include="Test\Editor\Tests\TestCommandQueue.cs.meta" />
-    <None Include="Test\Editor\Tests\TestCommandScheduler.cs.meta" />
-    <None Include="Test\Editor\Tests\TestCommands~Tween.cs.meta" />
-    <None Include="Test\Editor\Tests\TestEase.cs.meta" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="colib\License.txt" />
@@ -245,10 +238,6 @@
     <Compile Include="colib\Scripts\Unity\UI\GraphicExtensions.cs" />
     <Compile Include="colib\Scripts\Unity\UI\LayoutElementExtensions.cs" />
     <Compile Include="colib\Scripts\Unity\UI\RectTransformExtensions.cs" />
-    <Compile Include="Test\Editor\Tests\TestCommandQueue.cs" />
-    <Compile Include="Test\Editor\Tests\TestCommandScheduler.cs" />
-    <Compile Include="Test\Editor\Tests\TestCommands~Tween.cs" />
-    <Compile Include="Test\Editor\Tests\TestEase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include=".git\objects\info\" />
