@@ -29,7 +29,7 @@ public class RectangleExample : MonoBehaviour
             t => secondRect = t
         );
 
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.RepeatForever(
                 Cmd.Coroutine( () => AnimateRects())
             )

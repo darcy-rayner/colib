@@ -46,7 +46,7 @@ public class CommandScheduler
             throw new System.ArgumentNullException("command");
         }
         CommandQueue queue = new CommandQueue();
-        queue.Enqueue(command);
+        queue.Sequence(command);
         _queues.AddLast(queue);
     }
 

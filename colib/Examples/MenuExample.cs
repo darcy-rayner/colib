@@ -88,7 +88,7 @@ public class MenuExample : MonoBehaviour
                 return;
             }
             _highlighted = true;
-            _queue.Enqueue(
+            _queue.Sequence(
                 Cmd.While( () => _highlighted,
                     Cmd.Oscillate(ToScaleRef(), 0.1f, 0.5)
                 )
@@ -118,7 +118,7 @@ public class MenuExample : MonoBehaviour
 
         _backButton = new MenuButton { Region = new Rect(-RECT_WIDTH,0f, RECT_WIDTH, RECT_HEIGHT), Text = "Back" };
 
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.WaitForSeconds(1.0f)
         );
         AnimateIn();
@@ -168,7 +168,7 @@ public class MenuExample : MonoBehaviour
             duration += 0.1f;
             rotation = - rotation;
         }
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.ChangeTo(_backButton.ToPositionRef(), new Vector2(-RECT_WIDTH / 2, RECT_HEIGHT / 2), 0.3f, Ease.Smooth()),
             Cmd.Parallel( _moves.ToArray())
         );
@@ -187,7 +187,7 @@ public class MenuExample : MonoBehaviour
             _moves.Add(Cmd.ChangeTo(button.ToPositionRef(), origin, 0.7f, Ease.Smooth()));
         }
 
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.Parallel(_moves.ToArray()),
             Cmd.ChangeBy(_backButton.ToPositionRef(), new Vector2(RECT_WIDTH, 0f), 0.3f, Ease.Smooth()),
             Cmd.Do( () => _hidingMenu = false)
@@ -203,7 +203,7 @@ public class MenuExample : MonoBehaviour
     {
         AnimateOut();
         GameObject gm = null;
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.Do( () => {
                 gm = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 gm.transform.position = Vector3.zero;
@@ -221,7 +221,7 @@ public class MenuExample : MonoBehaviour
     {
         AnimateOut();
         GameObject gm = null;
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.Do( () => {
                 gm = new GameObject();
                 gm.AddComponent<RectangleExample>();
@@ -239,7 +239,7 @@ public class MenuExample : MonoBehaviour
 
         GameObject gm = null;
 
-        _queue.Enqueue(
+        _queue.Sequence(
             Cmd.Do(() => {
                 gm = new GameObject();
 

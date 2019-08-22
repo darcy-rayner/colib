@@ -6,4 +6,10 @@
 UnityTestTools
 obj/
 
-.user.meta
+.vs/
+/.current
+/packages
+/bin
+
+*.user
+*.user.meta
