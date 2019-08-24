@@ -1,8 +1,5 @@
 # CoLib
 
-[![CodeFactor](https://www.codefactor.io/repository/github/cschladetsch/colib/badge)](https://www.codefactor.io/repository/github/cschladetsch/colib)
-
-
 CoLib is a control flow library designed to simplify writing complex timed logic
 in Unity. The library is modular and highly extensible, making heavy use of closures.
 It's design is similar to the Cocos2d and LibGDX Action systems.
