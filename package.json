@@ -1,15 +1,14 @@
 {
-    "name": "com.liminal.colib",
+    "name": "com.cschladetsch.colib",
     "displayName": "Colib",
     "version": "0.0.1",
     "unity": "2018.3",
     "description": "A library designed to simplify writing complex timed logic in Unity",
     "keywords": 
     [
-        "liminal",
         "colib",
-	"tweening",
-	"animation"
+        "tweening",
+        "animation"
     ],
     "category": "Unity"
 }
