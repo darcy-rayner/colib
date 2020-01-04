@@ -1,3 +1,15 @@
+/.vs
+/.current
+
 *.meta
 *.orig
 UnityTestTools
+obj/
+
+.vs/
+/.current
+/packages
+/bin
+
+*.user
+*.user.meta

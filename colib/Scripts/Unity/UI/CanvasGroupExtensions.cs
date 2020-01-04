@@ -2,22 +2,22 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace CoLib
-{
+ namespace CoLib
+ {
 
-public static class CanvasGroupExtensions
-{
-	public static Ref<float> ToAlphaRef(this CanvasGroup group)
-	{
-		if (group == null) {
-			throw new ArgumentNullException("group");
-		}
+     public static class CanvasGroupExtensions
+     {
+         public static Ref<float> ToAlphaRef(this CanvasGroup group)
+         {
+             if (group == null)
+             {
+                 throw new ArgumentNullException("group");
+             }
 
-		return new Ref<float>(
-			() => group.alpha,
-			(t) => group.alpha = t
-		);
-	}
-}
-
-}
+             return new Ref<float>(
+                 () => group.alpha,
+                 (t) => group.alpha = t
+             );
+         }
+     }
+ }

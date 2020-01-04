@@ -16,24 +16,24 @@ internal class TestCommandScheduler
 		
 		int a = 0;
 		scheduler.Add(
-			Commands.Sequence(
-				Commands.WaitForSeconds(1.0f),
-				Commands.Do(() => ++a)
+			Cmd.Sequence(
+				Cmd.WaitForSeconds(1.0f),
+				Cmd.Do(() => ++a)
 			)
 		);
 		
 		int b = 0;
 		scheduler.Add(
-			Commands.Sequence(
-				Commands.WaitForSeconds(1.0f),
-				Commands.Do(() => ++b)
+			Cmd.Sequence(
+				Cmd.WaitForSeconds(1.0f),
+				Cmd.Do(() => ++b)
 			)
 		);
 		
 		scheduler.Add(
-			Commands.Sequence(
-				Commands.WaitForSeconds(1.5f),
-				Commands.Do(() => ++b)
+			Cmd.Sequence(
+				Cmd.WaitForSeconds(1.5f),
+				Cmd.Do(() => ++b)
 			)
 		);
 		Assert.AreEqual(a, 0);
